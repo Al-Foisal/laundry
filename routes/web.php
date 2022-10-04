@@ -3,6 +3,8 @@
 use App\Http\Controllers\Backend\AdminAuthController;
 use App\Http\Controllers\Backend\AdminForgotPasswordController;
 use App\Http\Controllers\Backend\AdminResetPasswordController;
+use App\Http\Controllers\Backend\AreaController;
+use App\Http\Controllers\Backend\CityController;
 use App\Http\Controllers\Backend\CompanyInfoController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\PageController;
@@ -51,6 +53,26 @@ Route::prefix('/admin')->name('admin.')->middleware('auth:admin')->group(functio
         Route::delete('/delete-admin/{admin}', 'deleteAdmin')->name('deleteAdmin');
 
         Route::get('/customer-list', 'customerList')->name('customerList');
+    });
+
+    Route::controller(CityController::class)->prefix('/city')->name('city.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/store', 'store')->name('store');
+        Route::get('/edit/{city}', 'edit')->name('edit');
+        Route::put('/update/{city}', 'update')->name('update');
+        Route::post('/active/{city}', 'active')->name('active');
+        Route::post('/inactive/{city}', 'inactive')->name('inactive');
+    });
+
+    Route::controller(AreaController::class)->prefix('/area')->name('area.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/store', 'store')->name('store');
+        Route::get('/edit/{area}', 'edit')->name('edit');
+        Route::put('/update/{area}', 'update')->name('update');
+        Route::post('/active/{area}', 'active')->name('active');
+        Route::post('/inactive/{area}', 'inactive')->name('inactive');
     });
 
     //company info

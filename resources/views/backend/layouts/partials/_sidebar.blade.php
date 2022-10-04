@@ -63,6 +63,31 @@
                     </ul>
                 </li>
 
+                {{-- location info --}}
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon far fa-circle text-warning"></i>
+                        <p class="text">
+                            Location
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview nav-header">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.city.index') }}" class="nav-link">
+                                <i class="nav-icon far fa-circle text-danger"></i>
+                                <p>City</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.area.index') }}" class="nav-link">
+                                <i class="nav-icon far fa-circle text-danger"></i>
+                                <p>Area</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 {{-- company info --}}
                 <li class="nav-item">
                     <a href="#" class="nav-link">
