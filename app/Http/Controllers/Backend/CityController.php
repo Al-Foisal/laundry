@@ -20,7 +20,7 @@ class CityController extends Controller {
     public function store(Request $request) {
         City::create($request->all());
 
-        return back()->withToastSuccess('City added successfully');
+        return to_route('admin.city.index')->withToastSuccess('City added successfully');
     }
 
     public function edit(City $city) {
@@ -30,20 +30,20 @@ class CityController extends Controller {
     public function update(Request $request, City $city) {
         $city->update($request->all());
 
-        return back()->withToastSuccess('City updated successfully');
+        return to_route('admin.city.index')->withToastSuccess('City updated successfully');
     }
 
     public function active(Request $request, City $city) {
         $city->status = 1;
         $city->save();
 
-        return back()->withToastSuccess('City active successfully');
+        return to_route('admin.city.index')->withToastSuccess('City active successfully');
     }
 
     public function inactive(Request $request, City $city) {
         $city->status = 0;
         $city->save();
 
-        return back()->withToastSuccess('City inactive successfully');
+        return to_route('admin.city.index')->withToastSuccess('City inactive successfully');
     }
 }

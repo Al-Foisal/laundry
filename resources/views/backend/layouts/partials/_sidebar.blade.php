@@ -91,6 +91,12 @@
                                 <p>Services</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.working_processes.index') }}" class="nav-link">
+                                <i class="nav-icon far fa-circle text-danger"></i>
+                                <p>Working Process</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 

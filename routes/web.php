@@ -9,6 +9,7 @@ use App\Http\Controllers\Backend\CompanyInfoController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\PageController;
 use App\Http\Controllers\Backend\ServiceController;
+use App\Http\Controllers\Backend\WorkingProcessController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
@@ -78,6 +79,7 @@ Route::prefix('/admin')->name('admin.')->middleware('auth:admin')->group(functio
 
     Route::resources([
         'services' => ServiceController::class,
+        'working_processes' => WorkingProcessController::class,
     ]);
 
     //company info

@@ -23,7 +23,7 @@ class AreaController extends Controller {
     public function store(Request $request) {
         Area::create($request->all());
 
-        return back()->withToastSuccess('Area added successfully');
+        return to_route('admin.area.index')->withToastSuccess('Area added successfully');
     }
 
     public function edit(Area $area) {
@@ -35,20 +35,20 @@ class AreaController extends Controller {
     public function update(Request $request, Area $area) {
         $area->update($request->all());
 
-        return back()->withToastSuccess('Area updated successfully');
+        return to_route('admin.area.index')->withToastSuccess('Area updated successfully');
     }
 
     public function active(Request $request, Area $area) {
         $area->status = 1;
         $area->save();
 
-        return back()->withToastSuccess('Area active successfully');
+        return to_route('admin.area.index')->withToastSuccess('Area active successfully');
     }
 
     public function inactive(Request $request, Area $area) {
         $area->status = 0;
         $area->save();
 
-        return back()->withToastSuccess('Area inactive successfully');
+        return to_route('admin.area.index')->withToastSuccess('Area inactive successfully');
     }
 }
