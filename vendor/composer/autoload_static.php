@@ -538,6 +538,7 @@ class ComposerStaticIniteee2777a63c26ecaafaccdc4a7cb8291
         'App\\Models\\City' => __DIR__ . '/../..' . '/app/Models/City.php',
         'App\\Models\\CompanyInfo' => __DIR__ . '/../..' . '/app/Models/CompanyInfo.php',
         'App\\Models\\Page' => __DIR__ . '/../..' . '/app/Models/Page.php',
+        'App\\Models\\Service' => __DIR__ . '/../..' . '/app/Models/Service.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',

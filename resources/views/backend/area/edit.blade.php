@@ -33,7 +33,7 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="">Select City</label>
-                                    <select name="city_id" id="" class="form-control">
+                                    <select name="city_id" id="" class="form-control" required>
                                         <option value="">City</option>
                                         @foreach ($cities as $city)
                                             <option value="{{ $city->id }}" @if($city->id == $area->city_id) selected @endif>{{ $city->name }}</option>
@@ -43,7 +43,7 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Name*</label>
                                     <input type="text" class="form-control" id="exampleInputEmail1"
-                                        value="{{ $area->name }}" name="name">
+                                        value="{{ $area->name }}" name="name" required>
                                 </div>
                             </div>
                             <!-- /.card-body -->

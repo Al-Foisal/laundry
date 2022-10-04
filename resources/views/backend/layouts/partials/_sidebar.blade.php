@@ -68,7 +68,7 @@
                     <a href="#" class="nav-link">
                         <i class="nav-icon far fa-circle text-warning"></i>
                         <p class="text">
-                            Location
+                            Website
                             <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
@@ -83,6 +83,12 @@
                             <a href="{{ route('admin.area.index') }}" class="nav-link">
                                 <i class="nav-icon far fa-circle text-danger"></i>
                                 <p>Area</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.services.index') }}" class="nav-link">
+                                <i class="nav-icon far fa-circle text-danger"></i>
+                                <p>Services</p>
                             </a>
                         </li>
                     </ul>

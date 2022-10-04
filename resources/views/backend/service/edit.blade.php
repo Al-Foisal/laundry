@@ -1,17 +1,17 @@
 @extends('backend.layouts.master')
-@section('title', 'Edit Page')
+@section('title', 'Edit Service')
 @section('backend')
-    <!-- Content Header (Page header) -->
+    <!-- Content Header (Service header) -->
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Edit Page</h1>
+                    <h1>Edit Service</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Edit Page</li>
+                        <li class="breadcrumb-item active">Edit Service</li>
                     </ol>
                 </div>
             </div>
@@ -26,33 +26,26 @@
                     <div class="card card-primary">
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('admin.pages.pageUpdate', $page) }}" method="POST"
+                        <form action="{{ route('admin.services.update', $service) }}" method="POST"
                             enctype="multipart/form-data">
                             @csrf
                             @method('put')
                             <div class="card-body">
                                 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Title*</label>
+                                    <label for="exampleInputEmail1">Name*</label>
                                     <input type="text" class="form-control" id="exampleInputEmail1"
-                                        value="{{ $page->title }}" name="title">
+                                        value="{{ $service->name }}" name="name" required>
                                 </div>
-
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="card card-outline card-info">
-                                            <div class="card-header">
-                                                <h3 class="card-title">
-                                                    Details*
-                                                </h3>
-                                            </div>
-                                            <!-- /.card-header -->
-                                            <div class="card-body">
-                                                <textarea id="summernote"  name="details">{!! $page->details !!}</textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- /.col-->
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Short Details*</label>
+                                    <input type="text" class="form-control" id="exampleInputEmail1"
+                                        value="{{ $service->details }}" name="details" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Image*</label>
+                                    <input type="file" class="form-control" id="exampleInputEmail1" name="image">
+                                    <img src="{{ asset($service->image) }}" style="height:50px;width:50px;">
                                 </div>
                             </div>
                             <!-- /.card-body -->
@@ -69,18 +62,4 @@
         <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
-@endsection
-
-@section('jsLink')
-    <!-- Summernote -->
-    <script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
-@endsection
-@section('jsScript')
-    <!-- Page specific script -->
-    <script>
-        $(function() {
-            // Summernote
-            $('#summernote').summernote()
-        })
-    </script>
 @endsection

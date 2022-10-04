@@ -8,6 +8,7 @@ use App\Http\Controllers\Backend\CityController;
 use App\Http\Controllers\Backend\CompanyInfoController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\PageController;
+use App\Http\Controllers\Backend\ServiceController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
@@ -74,6 +75,10 @@ Route::prefix('/admin')->name('admin.')->middleware('auth:admin')->group(functio
         Route::post('/active/{area}', 'active')->name('active');
         Route::post('/inactive/{area}', 'inactive')->name('inactive');
     });
+
+    Route::resources([
+        'services' => ServiceController::class,
+    ]);
 
     //company info
     Route::controller(CompanyInfoController::class)->group(function () {
