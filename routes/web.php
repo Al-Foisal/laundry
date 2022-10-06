@@ -10,6 +10,10 @@ use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\PageController;
 use App\Http\Controllers\Backend\ServiceController;
 use App\Http\Controllers\Backend\WorkingProcessController;
+use App\Http\Controllers\Seller\SellerAuthController;
+use App\Http\Controllers\Seller\SellerDashboardController;
+use App\Http\Controllers\Seller\SellerForgotPasswordController;
+use App\Http\Controllers\Seller\SellerResetPasswordController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +28,28 @@ Route::get('/cc', function () {
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+//seller
+//backend
+Route::prefix('/seller')->name('seller.auth.')->middleware('guest:seller')->group(function () {
+    Route::get('/login', [SellerAuthController::class, 'login'])->name('login');
+    Route::post('/store-login', [SellerAuthController::class, 'storeLogin'])->name('storeLogin');
+    Route::get('/create-seller', [SellerAuthController::class, 'createSeller'])->name('createSeller');
+    Route::post('/store-seller', [SellerAuthController::class, 'storeSeller'])->name('storeSeller');
+
+    Route::get('/forgot-password', [SellerForgotPasswordController::class, 'forgotPassword'])->name('forgotPassword');
+    Route::post('/forgot-password', [SellerForgotPasswordController::class, 'storeForgotPassword'])->name('storeForgotPassword');
+
+    Route::get('/reset-password/{token}', [SellerResetPasswordController::class, 'resetPassword'])->name('resetPassword');
+    Route::post('/reset-password', [SellerResetPasswordController::class, 'storeForgotPassword'])->name('storeResetPassword');
+});
+
+Route::prefix('/seller')->name('seller.')->middleware('auth:seller')->group(function () {
+    Route::post('/logout', [SellerAuthController::class, 'logout'])->name('auth.logout');
+
+    Route::get('/dashboard', [SellerDashboardController::class, 'dashboard'])->name('dashboard');
+
 });
 
 //backend
@@ -78,7 +104,7 @@ Route::prefix('/admin')->name('admin.')->middleware('auth:admin')->group(functio
     });
 
     Route::resources([
-        'services' => ServiceController::class,
+        'services'          => ServiceController::class,
         'working_processes' => WorkingProcessController::class,
     ]);
 
