@@ -48,6 +48,10 @@ return [
             'driver'   => 'session',
             'provider' => 'sellers',
         ],
+        'deliveryman' => [
+            'driver'   => 'session',
+            'provider' => 'deliverymen',
+        ],
     ],
 
     /*
@@ -79,6 +83,10 @@ return [
         'sellers' => [
             'driver' => 'eloquent',
             'model'  => App\Models\Seller::class,
+        ],
+        'deliverymen' => [
+            'driver' => 'eloquent',
+            'model'  => App\Models\Deliveryman::class,
         ],
     ],
 
@@ -112,6 +120,12 @@ return [
         ],
         'sellers' => [
             'provider' => 'sellers',
+            'table'    => 'password_resets',
+            'expire'   => 60,
+            'throttle' => 60,
+        ],
+        'deliverymen' => [
+            'provider' => 'deliverymen',
             'table'    => 'password_resets',
             'expire'   => 60,
             'throttle' => 60,
