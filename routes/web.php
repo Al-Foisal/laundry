@@ -9,6 +9,7 @@ use App\Http\Controllers\Backend\CompanyInfoController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\DeliverymanController;
 use App\Http\Controllers\Backend\PageController;
+use App\Http\Controllers\Backend\SellerManagementController;
 use App\Http\Controllers\Backend\ServiceController;
 use App\Http\Controllers\Backend\WorkingProcessController;
 use App\Http\Controllers\Deliveryman\DeliverymanAurhController;
@@ -155,6 +156,13 @@ Route::prefix('/admin')->name('admin.')->middleware('auth:admin')->group(functio
         Route::put('/update/{city}', 'update')->name('update');
         Route::post('/active/{city}', 'active')->name('active');
         Route::post('/inactive/{city}', 'inactive')->name('inactive');
+    });
+
+    Route::controller(SellerManagementController::class)->prefix('/seller')->as('seller.')->group(function () {
+        Route::get('/list', 'list')->name('list');
+        Route::post('/active/{seller}', 'active')->name('active');
+        Route::post('/inactive/{seller}', 'inactive')->name('inactive');
+        Route::delete('/delete/{seller}', 'delete')->name('delete');
     });
 
     Route::controller(DeliverymanController::class)->prefix('/deliveryman')->name('deliveryman.')->group(function () {
