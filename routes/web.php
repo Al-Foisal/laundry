@@ -161,9 +161,11 @@ Route::prefix('/admin')->name('admin.')->middleware('auth:admin')->group(functio
 
     Route::controller(PartnerManagementController::class)->prefix('/partner')->as('partner.')->group(function () {
         Route::get('/list', 'list')->name('list');
-        Route::post('/active/{Partner}', 'active')->name('active');
-        Route::post('/inactive/{Partner}', 'inactive')->name('inactive');
-        Route::delete('/delete/{Partner}', 'delete')->name('delete');
+        Route::get('/edit_commission/{partner}', 'editCommission')->name('edit_commission');
+        Route::patch('/update_commission/{partner}', 'updateCommission')->name('update_commission');
+        Route::post('/active/{partner}', 'active')->name('active');
+        Route::post('/inactive/{partner}', 'inactive')->name('inactive');
+        Route::delete('/delete/{partner}', 'delete')->name('delete');
     });
 
     Route::controller(DeliverymanController::class)->prefix('/deliveryman')->name('deliveryman.')->group(function () {

@@ -101,7 +101,7 @@
                         <li class="nav-item">
                             <a href="{{ route('admin.partner.list') }}" class="nav-link">
                                 <i class="nav-icon far fa-circle text-danger"></i>
-                                <p>Partner Shop List</p>
+                                <p>Partner List</p>
                             </a>
                         </li>
                     </ul>

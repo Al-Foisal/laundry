@@ -32,11 +32,12 @@
                                     <tr>
                                         <th>Action</th>
                                         <th>Image</th>
+                                        <th>Statue</th>
+                                        <th>Commission</th>
                                         <th>Name</th>
                                         <th>Phone</th>
                                         <th>Email</th>
                                         <th>Address</th>
-                                        <th>Statue</th>
                                         <th>Created_at</th>
                                     </tr>
                                 </thead>
@@ -50,7 +51,10 @@
                                                         data-toggle="dropdown" aria-expanded="false">
                                                         Action
                                                     </button>
+                                                    
                                                     <div class="dropdown-menu">
+                                                        <a href="{{ route('admin.partner.edit_commission', $partner) }}"
+                                                        class="dropdown-item">Edit Commission</a>
                                                         @if ($partner->status == 0)
                                                             <form action="{{ route('admin.partner.active', $partner) }}"
                                                                 method="post">
@@ -79,11 +83,12 @@
                                             <td>
                                                 <img src="{{ asset($partner->image) }}" style="height:50px;width:50px;">
                                             </td>
+                                            <td>{{ $partner->status == 1 ? 'Active' : 'Inactive' }}</td>
+                                            <td>{{ $partner->commission }}%</td>
                                             <td>{{ $partner->name }}</td>
                                             <td>{{ $partner->phone }}</td>
                                             <td>{{ $partner->email }}</td>
                                             <td>{{ $partner->address }}</td>
-                                            <td>{{ $partner->status == 1 ? 'Active' : 'Inactive' }}</td>
                                             <td>{{ $partner->created_at }}</td>
                                         </tr>
                                     @endforeach
