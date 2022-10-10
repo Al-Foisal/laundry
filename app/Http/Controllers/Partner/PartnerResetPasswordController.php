@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Seller;
+namespace App\Http\Controllers\Partner;
 
 use App\Http\Controllers\Controller;
-use App\Models\Seller;
+use App\Models\Partner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\Rules;
-class SellerResetPasswordController extends Controller
+class PartnerResetPasswordController extends Controller
 {
     public function resetPassword(Request $request) {
-        return view('seller.auth.reset-password', ['request' => $request]);
+        return view('partner.auth.reset-password', ['request' => $request]);
     }
 
     public function storeForgotPassword(Request $request) {
@@ -33,14 +33,14 @@ class SellerResetPasswordController extends Controller
             return redirect()->back()->withToastInfo('Something went wrong, Invalid token or email!!');
         }
 
-        $seller = Seller::where('email', $request->email)->first();
+        $partner = Partner::where('email', $request->email)->first();
 
-        if ($seller && $password) {
-            $seller->update(['password' => bcrypt($request->password)]);
+        if ($partner && $password) {
+            $partner->update(['password' => bcrypt($request->password)]);
 
             $password = DB::table('password_resets')->where('email', $request->email)->delete();
 
-            return redirect()->route('seller.auth.login')->withToastSuccess('New password reset successfully!!');
+            return redirect()->route('partner.auth.login')->withToastSuccess('New password reset successfully!!');
         } else {
             return redirect()->back()->withToastError('The email is no longer our record!!');
         }

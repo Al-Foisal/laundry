@@ -1,7 +1,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="{{ route('seller.dashboard') }}" class="brand-link">
-        <img src="{{ asset($company->logo) }}" alt="seller" class="brand-image  elevation-3" style="opacity: .8">
+    <a href="{{ route('partner.dashboard') }}" class="brand-link">
+        <img src="{{ asset($company->logo) }}" alt="partner" class="brand-image  elevation-3" style="opacity: .8">
     </a>
 
     <!-- Sidebar -->
@@ -9,11 +9,11 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="{{ asset(auth()->guard('seller')->user()->image) }}" class="img-circle elevation-2"
+                <img src="{{ asset(auth()->guard('partner')->user()->image) }}" class="img-circle elevation-2"
                     alt="AI">
             </div>
             <div class="info">
-                <a href="{{ route('seller.dashboard') }}" class="d-block">{{ auth()->guard('seller')->user()->name }}</a>
+                <a href="{{ route('partner.dashboard') }}" class="d-block">{{ auth()->guard('partner')->user()->name }}</a>
             </div>
         </div>
 
@@ -24,7 +24,7 @@
                 <!-- Add icons to the links using the .nav-icon class
        with font-awesome or any other icon font library -->
                 <li class="nav-item menu-open">
-                    <a href="{{ route('seller.dashboard') }}" class="nav-link">
+                    <a href="{{ route('partner.dashboard') }}" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Dashboard

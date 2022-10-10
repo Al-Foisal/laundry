@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Seller;
+namespace App\Http\Controllers\Partner;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class SellerDashboardController extends Controller
+class PartnerDashboardController extends Controller
 {
     public function dashboard()
     {
         $data = [];
-        return view('seller.dashboard',$data);
+        return view('partner.dashboard',$data);
     }
 }

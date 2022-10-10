@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Seller;
+namespace App\Http\Controllers\Partner;
 
 use App\Http\Controllers\Controller;
 use App\Mail\ResetPasswordLink;
-use App\Models\Seller;
+use App\Models\Partner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
-class SellerForgotPasswordController extends Controller
+class PartnerForgotPasswordController extends Controller
 {
     public function forgotPassword() {
-        return view('seller.auth.forgot-password');
+        return view('partner.auth.forgot-password');
     }
 
     public function storeForgotPassword(Request $request) {
@@ -25,13 +25,13 @@ class SellerForgotPasswordController extends Controller
             return back()->with('toast_error', $validator->messages()->all())->withInput();
         }
 
-        $seller = Seller::where('email', $request->email)->first();
+        $partner = Partner::where('email', $request->email)->first();
 
-        if (!$seller) {
+        if (!$partner) {
             return redirect()->back()->withToastError('This email is no longer with our records!!');
         }
 
-        $url = route('seller.auth.resetPassword', [$request->_token, 'email' => $request->email]);
+        $url = route('partner.auth.resetPassword', [$request->_token, 'email' => $request->email]);
 
         Mail::to($request->email)->send(new ResetPasswordLink($url));
 

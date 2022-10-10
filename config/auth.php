@@ -44,9 +44,9 @@ return [
             'driver'   => 'session',
             'provider' => 'admins',
         ],
-        'seller' => [
+        'partner' => [
             'driver'   => 'session',
-            'provider' => 'sellers',
+            'provider' => 'partners',
         ],
         'deliveryman' => [
             'driver'   => 'session',
@@ -80,9 +80,9 @@ return [
             'driver' => 'eloquent',
             'model'  => App\Models\Admin::class,
         ],
-        'sellers' => [
+        'partners' => [
             'driver' => 'eloquent',
-            'model'  => App\Models\Seller::class,
+            'model'  => App\Models\Partner::class,
         ],
         'deliverymen' => [
             'driver' => 'eloquent',
@@ -118,8 +118,8 @@ return [
             'expire'   => 60,
             'throttle' => 60,
         ],
-        'sellers' => [
-            'provider' => 'sellers',
+        'partners' => [
+            'provider' => 'partners',
             'table'    => 'password_resets',
             'expire'   => 60,
             'throttle' => 60,

@@ -9,17 +9,18 @@ use App\Http\Controllers\Backend\CompanyInfoController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\DeliverymanController;
 use App\Http\Controllers\Backend\PageController;
-use App\Http\Controllers\Backend\SellerManagementController;
+use App\Http\Controllers\Backend\PartnerManagementController;
 use App\Http\Controllers\Backend\ServiceController;
 use App\Http\Controllers\Backend\WorkingProcessController;
 use App\Http\Controllers\Deliveryman\DeliverymanAurhController;
 use App\Http\Controllers\Deliveryman\DeliverymanDashboardController;
 use App\Http\Controllers\Deliveryman\DeliverymanForgotPasswordController;
 use App\Http\Controllers\Deliveryman\DeliverymanResetPasswordController;
-use App\Http\Controllers\Seller\SellerAuthController;
-use App\Http\Controllers\Seller\SellerDashboardController;
-use App\Http\Controllers\Seller\SellerForgotPasswordController;
-use App\Http\Controllers\Seller\SellerResetPasswordController;
+use App\Http\Controllers\GeneralHelperController;
+use App\Http\Controllers\Partner\PartnerAuthController;
+use App\Http\Controllers\Partner\PartnerDashboardController;
+use App\Http\Controllers\Partner\PartnerForgotPasswordController;
+use App\Http\Controllers\Partner\PartnerResetPasswordController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
@@ -49,32 +50,32 @@ Route::get('/', function () {
 ///////////////////////////////////////////////////
 
 /**
- * seller
+ * Partner
  * route
  * starts
  */
-Route::prefix('/seller')->name('seller.auth.')->middleware('guest:seller')->group(function () {
-    Route::get('/login', [SellerAuthController::class, 'login'])->name('login');
-    Route::post('/store-login', [SellerAuthController::class, 'storeLogin'])->name('storeLogin');
-    Route::get('/create-seller', [SellerAuthController::class, 'createSeller'])->name('createSeller');
-    Route::post('/store-seller', [SellerAuthController::class, 'storeSeller'])->name('storeSeller');
+Route::prefix('/partner')->name('partner.auth.')->middleware('guest:partner')->group(function () {
+    Route::get('/login', [PartnerAuthController::class, 'login'])->name('login');
+    Route::post('/store-login', [PartnerAuthController::class, 'storeLogin'])->name('storeLogin');
+    Route::get('/create-partner', [PartnerAuthController::class, 'createPartner'])->name('createPartner');
+    Route::post('/store-partner', [PartnerAuthController::class, 'storePartner'])->name('storePartner');
 
-    Route::get('/forgot-password', [SellerForgotPasswordController::class, 'forgotPassword'])->name('forgotPassword');
-    Route::post('/forgot-password', [SellerForgotPasswordController::class, 'storeForgotPassword'])->name('storeForgotPassword');
+    Route::get('/forgot-password', [PartnerForgotPasswordController::class, 'forgotPassword'])->name('forgotPassword');
+    Route::post('/forgot-password', [PartnerForgotPasswordController::class, 'storeForgotPassword'])->name('storeForgotPassword');
 
-    Route::get('/reset-password/{token}', [SellerResetPasswordController::class, 'resetPassword'])->name('resetPassword');
-    Route::post('/reset-password', [SellerResetPasswordController::class, 'storeForgotPassword'])->name('storeResetPassword');
+    Route::get('/reset-password/{token}', [PartnerResetPasswordController::class, 'resetPassword'])->name('resetPassword');
+    Route::post('/reset-password', [PartnerResetPasswordController::class, 'storeForgotPassword'])->name('storeResetPassword');
 });
 
-Route::prefix('/seller')->name('seller.')->middleware('auth:seller')->group(function () {
-    Route::post('/logout', [SellerAuthController::class, 'logout'])->name('auth.logout');
+Route::prefix('/partner')->name('partner.')->middleware('auth:partner')->group(function () {
+    Route::post('/logout', [PartnerAuthController::class, 'logout'])->name('auth.logout');
 
-    Route::get('/dashboard', [SellerDashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('/dashboard', [PartnerDashboardController::class, 'dashboard'])->name('dashboard');
 
 });
 
 /**
- * seller
+ * Partner
  * route
  * ends
  */
@@ -158,11 +159,11 @@ Route::prefix('/admin')->name('admin.')->middleware('auth:admin')->group(functio
         Route::post('/inactive/{city}', 'inactive')->name('inactive');
     });
 
-    Route::controller(SellerManagementController::class)->prefix('/seller')->as('seller.')->group(function () {
+    Route::controller(PartnerManagementController::class)->prefix('/partner')->as('partner.')->group(function () {
         Route::get('/list', 'list')->name('list');
-        Route::post('/active/{seller}', 'active')->name('active');
-        Route::post('/inactive/{seller}', 'inactive')->name('inactive');
-        Route::delete('/delete/{seller}', 'delete')->name('delete');
+        Route::post('/active/{Partner}', 'active')->name('active');
+        Route::post('/inactive/{Partner}', 'inactive')->name('inactive');
+        Route::delete('/delete/{Partner}', 'delete')->name('delete');
     });
 
     Route::controller(DeliverymanController::class)->prefix('/deliveryman')->name('deliveryman.')->group(function () {
@@ -213,3 +214,7 @@ Route::prefix('/admin')->name('admin.')->middleware('auth:admin')->group(functio
  * route
  * ends
  */
+
+Route::controller(GeneralHelperController::class)->prefix('/g')->group(function () {
+    Route::get('/get-area/{id}', 'getArea');
+});

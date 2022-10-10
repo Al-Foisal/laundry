@@ -34,24 +34,24 @@
     <div class="wrapper">
 
         <!-- Navbar -->
-        @include('seller.layouts.partials._navbar')
+        @include('partner.layouts.partials._navbar')
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
-        @include('seller.layouts.partials._sidebar')
+        @include('partner.layouts.partials._sidebar')
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
-            @yield('seller')
+            @yield('partner')
         </div>
         <!-- /.content-wrapper -->
 
         <!-- Control Sidebar -->
-        @include('seller.layouts.partials._control-sidebar')
+        @include('partner.layouts.partials._control-sidebar')
         <!-- /.control-sidebar -->
 
         <!-- Main Footer -->
-        @include('seller.layouts.partials._footer')
+        @include('partner.layouts.partials._footer')
     </div>
     <!-- ./wrapper -->
 

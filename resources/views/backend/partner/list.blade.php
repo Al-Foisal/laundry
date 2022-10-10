@@ -1,18 +1,18 @@
 @extends('backend.layouts.master')
-@section('title', 'Seller List')
+@section('title', 'Partner List')
 
 @section('backend')
-    <!-- Content Header (Seller header) -->
+    <!-- Content Header (partner header) -->
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Seller</h1>
+                    <h1>Partner</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Seller</li>
+                        <li class="breadcrumb-item active">Partner</li>
                     </ol>
                 </div>
             </div>
@@ -41,7 +41,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($sellers as $seller)
+                                    @foreach ($partners as $partner)
                                         <tr>
 
                                             <td>
@@ -51,14 +51,14 @@
                                                         Action
                                                     </button>
                                                     <div class="dropdown-menu">
-                                                        @if ($seller->status == 0)
-                                                            <form action="{{ route('admin.seller.active', $seller) }}"
+                                                        @if ($partner->status == 0)
+                                                            <form action="{{ route('admin.partner.active', $partner) }}"
                                                                 method="post">
                                                                 @csrf
                                                                 <button class="dropdown-item" type="submit">Active</button>
                                                             </form>
                                                         @else
-                                                            <form action="{{ route('admin.seller.inactive', $seller) }}"
+                                                            <form action="{{ route('admin.partner.inactive', $partner) }}"
                                                                 method="post">
                                                                 @csrf
                                                                 <button class="dropdown-item"
@@ -66,7 +66,7 @@
                                                             </form>
                                                         @endif
 
-                                                        <form action="{{ route('admin.seller.delete', $seller) }}"
+                                                        <form action="{{ route('admin.partner.delete', $partner) }}"
                                                             method="post">
                                                             @csrf
                                                             @method('delete')
@@ -77,14 +77,14 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <img src="{{ asset($seller->image) }}" style="height:50px;width:50px;">
+                                                <img src="{{ asset($partner->image) }}" style="height:50px;width:50px;">
                                             </td>
-                                            <td>{{ $seller->name }}</td>
-                                            <td>{{ $seller->phone }}</td>
-                                            <td>{{ $seller->email }}</td>
-                                            <td>{{ $seller->address }}</td>
-                                            <td>{{ $seller->status == 1 ? 'Active' : 'Inactive' }}</td>
-                                            <td>{{ $seller->created_at }}</td>
+                                            <td>{{ $partner->name }}</td>
+                                            <td>{{ $partner->phone }}</td>
+                                            <td>{{ $partner->email }}</td>
+                                            <td>{{ $partner->address }}</td>
+                                            <td>{{ $partner->status == 1 ? 'Active' : 'Inactive' }}</td>
+                                            <td>{{ $partner->created_at }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>

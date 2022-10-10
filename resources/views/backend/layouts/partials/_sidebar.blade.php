@@ -93,15 +93,15 @@
                     <a href="#" class="nav-link">
                         <i class="nav-icon far fa-circle text-warning"></i>
                         <p class="text">
-                            Service Provider
+                            Laundry Partner
                             <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview nav-header">
                         <li class="nav-item">
-                            <a href="{{ route('admin.seller.list') }}" class="nav-link">
+                            <a href="{{ route('admin.partner.list') }}" class="nav-link">
                                 <i class="nav-icon far fa-circle text-danger"></i>
-                                <p>Seller Shop List</p>
+                                <p>Partner Shop List</p>
                             </a>
                         </li>
                     </ul>

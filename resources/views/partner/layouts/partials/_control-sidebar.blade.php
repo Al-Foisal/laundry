@@ -2,7 +2,7 @@
     <!-- Control sidebar content goes here -->
     <div class="p-3">
         <h5>Title</h5>
-        <form action="{{ route('seller.auth.logout') }}" method="post">
+        <form action="{{ route('partner.auth.logout') }}" method="post">
             @csrf
             <button type="submit" class="btn btn-link">Logout</button>
         </form>

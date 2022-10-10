@@ -22,14 +22,14 @@
     <div class="login-box">
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
-                <a href="{{ route('seller.auth.login') }}" class="h1">
+                <a href="{{ route('partner.auth.login') }}" class="h1">
                     Laundry Man BD
                 </a>
             </div>
             <div class="card-body">
                 <p class="login-box-msg">You are only one step a way from your new password, recover your password now.
                 </p>
-                <form action="{{ route('seller.auth.storeResetPassword') }}" method="post">
+                <form action="{{ route('partner.auth.storeResetPassword') }}" method="post">
                     @csrf
                     <input type="hidden" name="token" value="{{ $request->token }}">
 
@@ -68,7 +68,7 @@
                 </form>
 
                 <p class="mt-3 mb-1">
-                    <a href="{{ route('seller.auth.login') }}">Login</a>
+                    <a href="{{ route('partner.auth.login') }}">Login</a>
                 </p>
             </div>
             <!-- /.login-card-body -->
