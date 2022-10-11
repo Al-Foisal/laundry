@@ -3,20 +3,20 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\Service;
+use App\Models\WhyBest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
-class ServiceController extends Controller {
+class WhyBestController extends Controller {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $services = Service::all();
+        $why_bests = WhyBest::all();
 
-        return view('backend.service.index', compact('services'));
+        return view('backend.why_best.index', compact('why_bests'));
     }
 
     /**
@@ -25,7 +25,7 @@ class ServiceController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        return view('backend.service.create');
+        return view('backend.why_best.create');
     }
 
     /**
@@ -43,7 +43,7 @@ class ServiceController extends Controller {
             if ($image_file) {
 
                 $img_gen   = hexdec(uniqid());
-                $image_url = 'images/service/';
+                $image_url = 'images/why_best/';
                 $image_ext = strtolower($image_file->getClientOriginalExtension());
 
                 $img_name    = $img_gen . '.' . $image_ext;
@@ -54,13 +54,13 @@ class ServiceController extends Controller {
 
         }
 
-        Service::create([
+        WhyBest::create([
             'image'   => $final_name1,
             'name'    => $request->name,
             'details' => $request->details,
         ]);
 
-        return to_route('admin.services.index')->withToastSuccess('Service added successfully.');
+        return to_route('admin.why_bests.index')->withToastSuccess('New best criteria added successfully.');
     }
 
     /**
@@ -79,8 +79,8 @@ class ServiceController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Service $service) {
-        return view('backend.service.edit', compact('service'));
+    public function edit(WhyBest $why_best) {
+        return view('backend.why_best.edit', compact('why_best'));
     }
 
     /**
@@ -90,7 +90,7 @@ class ServiceController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Service $service) {
+    public function update(Request $request, WhyBest $why_best) {
 
         if ($request->hasFile('image')) {
 
@@ -98,33 +98,33 @@ class ServiceController extends Controller {
 
             if ($image_file) {
 
-                $image_path = public_path($service->image);
+                $image_path = public_path($why_best->image);
 
                 if (File::exists($image_path)) {
                     File::delete($image_path);
                 }
 
                 $img_gen   = hexdec(uniqid());
-                $image_url = 'images/service/';
+                $image_url = 'images/why_best/';
                 $image_ext = strtolower($image_file->getClientOriginalExtension());
 
                 $img_name    = $img_gen . '.' . $image_ext;
                 $final_name1 = $image_url . $img_gen . '.' . $image_ext;
 
                 $image_file->move($image_url, $img_name);
-                $service->update([
+                $why_best->update([
                     'image' => $final_name1,
                 ]);
             }
 
         }
 
-        $service->update([
+        $why_best->update([
             'name'    => $request->name,
             'details' => $request->details,
         ]);
 
-        return to_route('admin.services.index')->withToastSuccess('Service updated successfully');
+        return to_route('admin.why_bests.index')->withToastSuccess('Best criteria updated successfully');
     }
 
     /**
@@ -133,16 +133,16 @@ class ServiceController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Service $service) {
-        $image_path = public_path($service->image);
+    public function destroy(WhyBest $why_best) {
+        $image_path = public_path($why_best->image);
 
         if (File::exists($image_path)) {
             File::delete($image_path);
         }
 
-        $service->delete();
+        $why_best->delete();
 
-        return to_route('admin.services.index')->withToastSuccess('Service deleted successfully');
+        return to_route('admin.why_bests.index')->withToastSuccess('Best criteria deleted successfully');
     }
 
 }

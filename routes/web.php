@@ -12,6 +12,7 @@ use App\Http\Controllers\Backend\PackageController;
 use App\Http\Controllers\Backend\PageController;
 use App\Http\Controllers\Backend\PartnerManagementController;
 use App\Http\Controllers\Backend\ServiceController;
+use App\Http\Controllers\Backend\WhyBestController;
 use App\Http\Controllers\Backend\WorkingProcessController;
 use App\Http\Controllers\Deliveryman\DeliverymanAurhController;
 use App\Http\Controllers\Deliveryman\DeliverymanDashboardController;
@@ -189,21 +190,22 @@ Route::prefix('/admin')->name('admin.')->middleware('auth:admin')->group(functio
         Route::post('/inactive/{area}', 'inactive')->name('inactive');
     });
 
-    Route::controller(PackageController::class)->prefix('/package')->name('package.')->group(function(){
-        Route::get('/','index')->name('index');
-        Route::get('/create','create')->name('create');
-        Route::post('/store','store')->name('store');
-        Route::get('/edit/{package}','edit')->name('edit');
-        Route::put('/update/{package}','update')->name('update');
-        Route::post('/active/{package}','active')->name('active');
-        Route::post('/inactive/{package}','inactive')->name('inactive');
-        Route::post('/keep-front/{package}','keepFront')->name('keepFront');
-        Route::post('/remove-front/{package}','removeFront')->name('removeFront');
+    Route::controller(PackageController::class)->prefix('/package')->name('package.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/store', 'store')->name('store');
+        Route::get('/edit/{package}', 'edit')->name('edit');
+        Route::put('/update/{package}', 'update')->name('update');
+        Route::post('/active/{package}', 'active')->name('active');
+        Route::post('/inactive/{package}', 'inactive')->name('inactive');
+        Route::post('/keep-front/{package}', 'keepFront')->name('keepFront');
+        Route::post('/remove-front/{package}', 'removeFront')->name('removeFront');
     });
 
     Route::resources([
         'services'          => ServiceController::class,
         'working_processes' => WorkingProcessController::class,
+        'why_bests'         => WhyBestController::class,
     ]);
 
     //company info

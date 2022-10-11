@@ -7,8 +7,7 @@ use App\Models\WorkingProcess;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
-class WorkingProcessController extends Controller
-{
+class WorkingProcessController extends Controller {
     /**
      * Display a listing of the resource.
      *
@@ -99,6 +98,12 @@ class WorkingProcessController extends Controller
 
             if ($image_file) {
 
+                $image_path = public_path($working_process->image);
+
+                if (File::exists($image_path)) {
+                    File::delete($image_path);
+                }
+
                 $img_gen   = hexdec(uniqid());
                 $image_url = 'images/working_process/';
                 $image_ext = strtolower($image_file->getClientOriginalExtension());
@@ -139,4 +144,5 @@ class WorkingProcessController extends Controller
 
         return to_route('admin.working_processes.index')->withToastSuccess('Working process deleted successfully');
     }
+
 }

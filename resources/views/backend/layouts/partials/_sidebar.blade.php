@@ -166,6 +166,12 @@
                                 <p>Working Process</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.why_bests.index') }}" class="nav-link">
+                                <i class="nav-icon far fa-circle text-danger"></i>
+                                <p>Why Best</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
