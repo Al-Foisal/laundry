@@ -8,6 +8,7 @@ use App\Http\Controllers\Backend\CityController;
 use App\Http\Controllers\Backend\CompanyInfoController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\DeliverymanController;
+use App\Http\Controllers\Backend\PackageController;
 use App\Http\Controllers\Backend\PageController;
 use App\Http\Controllers\Backend\PartnerManagementController;
 use App\Http\Controllers\Backend\ServiceController;
@@ -186,6 +187,18 @@ Route::prefix('/admin')->name('admin.')->middleware('auth:admin')->group(functio
         Route::put('/update/{area}', 'update')->name('update');
         Route::post('/active/{area}', 'active')->name('active');
         Route::post('/inactive/{area}', 'inactive')->name('inactive');
+    });
+
+    Route::controller(PackageController::class)->prefix('/package')->name('package.')->group(function(){
+        Route::get('/','index')->name('index');
+        Route::get('/create','create')->name('create');
+        Route::post('/store','store')->name('store');
+        Route::get('/edit/{package}','edit')->name('edit');
+        Route::put('/update/{package}','update')->name('update');
+        Route::post('/active/{package}','active')->name('active');
+        Route::post('/inactive/{package}','inactive')->name('inactive');
+        Route::post('/keep-front/{package}','keepFront')->name('keepFront');
+        Route::post('/remove-front/{package}','removeFront')->name('removeFront');
     });
 
     Route::resources([
