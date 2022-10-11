@@ -32,6 +32,13 @@
                     </a>
                 </li>
 
+                <li class="nav-item">
+                    <a href="{{ route('partner.profile') }}" class="nav-link">
+                        <i class="nav-icon far fa-circle text-warning"></i>
+                        <p>Profile</p>
+                    </a>
+                </li>
+
                 {{-- company info --}}
                 <li class="nav-item">
                     <a href="#" class="nav-link">

@@ -73,6 +73,8 @@ Route::prefix('/partner')->name('partner.')->middleware('auth:partner')->group(f
     Route::post('/logout', [PartnerAuthController::class, 'logout'])->name('auth.logout');
 
     Route::get('/dashboard', [PartnerDashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('/profile', [PartnerDashboardController::class, 'profile'])->name('profile');
+    Route::put('/profile/{partner}', [PartnerDashboardController::class, 'profileUpdate'])->name('profileUpdate');
 
 });
 
