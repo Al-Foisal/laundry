@@ -26,6 +26,15 @@ use App\Http\Controllers\Partner\PartnerResetPasswordController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
+/**
+ * frontend
+ * route
+ * starts
+ */
+Route::get('/{any}', function () {
+    return view('app');
+})->where('any', '^(?!cc|partner|deliveryman|admin).*$');
+
 Route::get('/cc', function () {
     $exitCode = Artisan::call('config:clear');
     $exitCode = Artisan::call('route:clear');
@@ -34,15 +43,6 @@ Route::get('/cc', function () {
 
     return '<h1>All Config cleared</h1>';
 });
-/**
- * frontend
- * route
- * starts
- */
-Route::get('/', function () {
-    return view('welcome');
-});
-
 /**
  * frontend
  * route

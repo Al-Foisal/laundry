@@ -37,7 +37,7 @@
 
                                     <h4><i class="icon fas fa-ban"></i> Alert!</h4>
                                     Dear laundry partner, your account is <span class="badge bg-light">INACTIVE</span> now. If you are new or fetching
-                                    this unexpected alert please contact with us as soon as possible. <br>
+                                    this unexpected alert please contact with us as soon as possible other wise you not get any order. <br>
                                     Mobile: {{ $company->phone_one }}
                                 </div>
                             </div>
