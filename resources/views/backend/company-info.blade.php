@@ -45,7 +45,7 @@
                                     <div class="col-md-4">
 
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">Phone One</label>
+                                            <label for="exampleInputEmail1">Phone One (Partner or others)</label>
                                             <input type="text" class="form-control" id="exampleInputEmail1"
                                                 placeholder="Enter phone one" name="phone_one"
                                                 value="{{ $info->phone_one ?? '' }}">
@@ -53,7 +53,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">Phone Two</label>
+                                            <label for="exampleInputEmail1">Phone Two (Customer care)</label>
                                             <input type="text" class="form-control" id="exampleInputEmail1"
                                                 placeholder="Enter phone two" name="phone_two"
                                                 value="{{ $info->phone_two ?? '' }}">
@@ -61,7 +61,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">Phone Three</label>
+                                            <label for="exampleInputEmail1">Phone Three (whatsapp)</label>
                                             <input type="text" class="form-control" id="exampleInputEmail1"
                                                 placeholder="Enter phone three" name="phone_three"
                                                 value="{{ $info->phone_three ?? '' }}">

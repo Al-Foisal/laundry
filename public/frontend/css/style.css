@@ -1067,7 +1067,7 @@ h6 a:hover{
   display: inline-block;
   width: 130px;
   height: 130px;
-  line-height: 160px;
+  line-height: 135px;
   border-radius: 50%;
   background: #fff;
   margin-bottom: 58px;
@@ -1593,7 +1593,7 @@ h6 a:hover{
   position: relative;
   padding: 88px 10px 46px 10px;
   border: 1px solid #f6f6f6;
-  border-radius: 20px;
+  /* border-radius: 20px; */
   transition: all 500ms ease;
 }
 .single-pricing-content:hover{
@@ -1663,11 +1663,11 @@ h6 a:hover{
   display: block;
   margin-bottom: 13px;
   padding: 0px 0px 13px 26px;
-  border-bottom: 1px solid #f7f7f7;
+  /* border-bottom: 1px solid #f7f7f7; */
 }
 .single-pricing-content .list li:before{
   position: absolute;
-  content: "\f00c";
+  /* content: "\f00c"; */
   font-size: 15px;
   font-family: 'FontAwesome';
   color: #6c96ff;
@@ -1697,7 +1697,7 @@ h6 a:hover{
 .apps-content h2,
 .apps-content h4,
 .apps-content p{
-  color: #fff;
+  color: #006837;
 }
 .apps-content p{
   line-height: 25px;
@@ -1722,7 +1722,7 @@ h6 a:hover{
   transition: all 500ms ease;
 }
 .apps-content .apps-box .single-apps-box:hover{
-  background: #6c96ff;
+  background: none;
 }
 .apps-content .apps-box .single-apps-box .icon-box{
   position: absolute;
@@ -1899,7 +1899,7 @@ h6 a:hover{
   position: relative;
   margin-top: 28px;
   margin-bottom: 10px;
-  border-bottom: 1px solid #333230;
+  /* border-bottom: 1px solid #333230; */
   padding: 0px 0px 13px 26px;
 }
 .logo-widget .location-box .icon-box{
@@ -1918,12 +1918,12 @@ h6 a:hover{
   position: relative;
   display: inline-block;
   font-size: 11px;
-  color: #888888;
+  color: #ffffff;
   height: 25px;
   width: 25px;
   line-height: 24px;
   text-align: center;
-  border: 1px solid #888888;
+  border: 1px solid #ffffff;
   border-radius: 50%;
   margin-right: 32px;
 }
@@ -2032,7 +2032,7 @@ h6 a:hover{
 .footer-top{
   position: relative;
   padding: 52px 0px 28px 0px;
-  border-bottom: 1px solid #4c4c4c;
+  border-bottom: 1px solid #ffffff;
 }
 .footer-bottom{
   padding: 19px 0px 18px 0px;
