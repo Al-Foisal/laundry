@@ -18,13 +18,13 @@
                                                 font-size: 16px;
                                                 border-radius: 3px;
                                             "
+                                            v-model="city_id"
                                         >
                                             <option>Select City</option>
                                             <option
                                                 v-for="city in cities"
                                                 :key="city.id"
                                                 :value="city.id"
-                                                @click="cityValue(city.id)"
                                             >
                                                 {{ city.name }}
                                             </option>
@@ -350,6 +350,8 @@ export default {
                     snapAlign: 'start',
                 },
             },
+            city_id: null,
+            area_id: null,
             cities: [],
             areas: [],
             services: [],
@@ -365,9 +367,9 @@ export default {
             this.cities = result.data;
         },
         cityValue(id) {
-            alert('id' + id);
-            // const result = axios.get('/front/city-area/' + id);
-            // console.log('area' + this.areas);
+            const result = axios.get('/front/city-area/' + id);
+            this.areas = result.data;
+            console.log(this.areas);
         },
         async serviceFeature() {
             const result = await axios.get('/front/services');
@@ -398,6 +400,11 @@ export default {
         this.workingProcessFeature();
         this.whyBestsFeature();
         this.companyInfo();
+    },
+    watch: {
+        city_id(value) {
+            this.cityValue(value);
+        },
     },
 };
 </script>

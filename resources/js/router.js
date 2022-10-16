@@ -1,5 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import TheHome from './pages/TheHome.vue';
+import TheLogin from './pages/TheLogin.vue';
+import TheRegister from './pages/TheRegister.vue';
+import DahboardLayout from './pages/user/Default.vue';
+import Dashboard from './pages/user/Dashboard.vue';
+import store from './store/index.js';
+
 const routes = [
     {
         path: '/',
@@ -19,6 +25,32 @@ const routes = [
             ],
         },
     },
+    {
+        path: '/login',
+        component: TheLogin,
+        name: 'login',
+        meta: {
+            title: 'Login with laundry man bd',
+            middleware: 'guest',
+        },
+    },
+    {
+        path: '/register',
+        component: TheRegister,
+        name: 'register',
+        meta: {
+            title: 'Register with laundry man bd',
+        },
+    },
+    {
+        name: 'dashboard',
+        path: '/dashboard',
+        component: Dashboard,
+        meta: {
+            title: 'Dashboard',
+            requiresAuth: true,
+        },
+    },
 ];
 
 const router = createRouter({
@@ -27,6 +59,16 @@ const router = createRouter({
 });
 // This callback runs before every route change, including on page load.
 router.beforeEach((to, from, next) => {
+    if (to.matched.some((record) => record.meta.requiresAuth)) {
+        if (!store.getters.isLogin) {
+            next({ name: 'login' });
+        } else {
+            next();
+        }
+    } else {
+        next(); //make sure to always call to next()
+    }
+
     // This goes through the matched routes from last to first, finding the closest route with a title.
     // e.g., if we have `/some/deep/nested/route` and `/some`, `/deep`, and `/nested` have titles,
     // `/nested`'s will be chosen.

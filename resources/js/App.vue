@@ -59,7 +59,7 @@
                             </div>
                         </div>
                         <div class="top-btn">
-                            <a href="#">Login/Signup</a>
+                            <router-link :to="{name: 'login'}">Login/Signup</router-link>
                         </div>
                     </div>
                 </div>

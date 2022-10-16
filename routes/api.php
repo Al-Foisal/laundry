@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Api\FrontendController;
 use App\Http\Controllers\Api\HeaderFooterController;
+use App\Http\Controllers\Api\UserAuthController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,4 +35,12 @@ Route::controller(FrontendController::class)->prefix('/front')->group(function (
     Route::get('/front-pricing', 'frontPricing');
     Route::get('/working-process', 'workingProcess');
     Route::get('/why-bests', 'whyBests');
+});
+
+Route::post('/login', [UserAuthController::class, 'login']);
+Route::middleware('auth:sanctum')->get('/logout', function (Request $request) {
+    $user = $request->user();
+    $user->tokens()->delete();
+    Auth::guard('web')->logout();
+    return ['status' => 'ok', 'message' => 'Logout Successful!'];
 });
