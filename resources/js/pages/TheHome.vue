@@ -89,15 +89,22 @@
                         <span>Services</span>
                     </h2>
                 </div>
+                    <!-- :autoplay="4000"
+                    :wrap-around="true" -->
                 <Carousel
-                    :autoplay="4000"
-                    :wrap-around="true"
                     :settings="settings"
                     :breakpoints="breakpoints"
                 >
                     <Slide v-for="service in services" :key="service.id">
                         <div class="carousel__item">
-                            <a href="">
+                            <router-link
+                                :to="{
+                                    name: 'service_price',
+                                    params: {
+                                        slug: service.slug,
+                                    },
+                                }"
+                            >
                                 <div
                                     class="single-help-content second-column"
                                     style="margin: 1rem"
@@ -119,7 +126,7 @@
                                         {{ service.details }}
                                     </div>
                                 </div>
-                            </a>
+                            </router-link>
                         </div>
                     </Slide>
                 </Carousel>

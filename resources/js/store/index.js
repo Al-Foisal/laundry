@@ -1,8 +1,12 @@
 import { createStore } from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
+import cart from './cart.js';
 
 const store = createStore({
     plugins: [createPersistedState()],
+    modules: {
+        cart,
+    },
     state() {
         return {
             isLogin: false,

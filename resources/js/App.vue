@@ -59,7 +59,9 @@
                             </div>
                         </div>
                         <div class="top-btn">
-                            <router-link :to="{name: 'login'}">Login/Signup</router-link>
+                            <router-link :to="{ name: 'login' }"
+                                >Login/Signup</router-link
+                            >
                         </div>
                     </div>
                 </div>
@@ -88,68 +90,22 @@
                                     <li class="current">
                                         <a href="index.html">Home</a>
                                     </li>
-                                    <li>
-                                        <a href="about.html">About Us</a>
-                                    </li>
                                     <li class="dropdown">
-                                        <a href="#">Pages</a>
-                                        <ul class="submenu">
-                                            <li>
-                                                <a href="offers.html">Offers</a>
-                                            </li>
-                                            <li>
-                                                <a href="faq.html">Faq</a>
-                                            </li>
-                                            <li>
-                                                <a href="error.html"
-                                                    >404 Page</a
-                                                >
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a href="#">Services</a>
-                                        <ul class="submenu">
-                                            <li>
-                                                <a href="service.html"
-                                                    >Service</a
-                                                >
-                                            </li>
-                                            <li>
-                                                <a href="">Service Single</a>
-                                            </li>
-                                        </ul>
+                                        <router-link
+                                            :to="{
+                                                name: 'service_price',
+                                                params: {
+                                                    slug: serviceHomeLink,
+                                                },
+                                            }"
+                                            >Services</router-link
+                                        >
                                     </li>
                                     <li>
                                         <a href="price.html">Pricing</a>
                                     </li>
                                     <li>
                                         <a href="">Career</a>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a href="#">Blog</a>
-                                        <ul class="submenu">
-                                            <li>
-                                                <a href="blog-grid.html"
-                                                    >Blog Grid</a
-                                                >
-                                            </li>
-                                            <li>
-                                                <a href="blog-left.html"
-                                                    >Blog Left Column</a
-                                                >
-                                            </li>
-                                            <li>
-                                                <a href="blog-right.html"
-                                                    >Blog Right Column</a
-                                                >
-                                            </li>
-                                            <li>
-                                                <a href="blog-details.html"
-                                                    >Blog Single</a
-                                                >
-                                            </li>
-                                        </ul>
                                     </li>
                                     <li>
                                         <a href="contact.html">Contact</a>
@@ -228,7 +184,9 @@
                         </nav>
                         <div class="search-box-area">
                             <div class="search-toggle">
-                                <i class="fa fa-search"></i>
+                                <router-link :to="{ name: 'cart' }">{{
+                                    cartCount
+                                }}</router-link>
                             </div>
                             <div class="search-box">
                                 <form
@@ -262,7 +220,7 @@
         <router-view></router-view>
 
         <!-- main-footer -->
-        <footer class="main-footer" style="background-color: #006837;">
+        <footer class="main-footer" style="background-color: #006837">
             <div class="footer-top">
                 <div class="container">
                     <div class="row">
@@ -370,8 +328,7 @@
                     <div class="container">
                         <div class="copyright">
                             © {{ new Date().getFullYear() }}
-                            Laundry Man BD Limited
-                            . All Rights Reserved.
+                            Laundry Man BD Limited . All Rights Reserved.
                         </div>
                     </div>
                 </div>
@@ -392,6 +349,7 @@ export default {
             company: [],
             services: [],
             pages: [],
+            serviceHomeLink: 'slug',
         };
     },
     methods: {
@@ -402,10 +360,16 @@ export default {
         async servicesLink() {
             const result = await axios.get('/hf/services');
             this.services = result.data;
+            this.serviceHomeLink = this.services[0]['slug'];
         },
         async pageLink() {
             const result = await axios.get('/hf/pages');
             this.pages = result.data;
+        },
+    },
+    computed: {
+        cartCount() {
+            return this.$store.getters['cart/cartCount'];
         },
     },
     mounted() {

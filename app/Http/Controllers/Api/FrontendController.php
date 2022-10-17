@@ -34,4 +34,12 @@ class FrontendController extends Controller {
     public function whyBests() {
         return WhyBest::all();
     }
+
+    public function servicePrice($slug) {
+        $data            = [];
+        $data['service'] = $service = Service::where('slug', $slug)->first();
+        $data['price']   = Package::where('service_id', $service->id)->where('status', 1)->get();
+
+        return $data;
+    }
 }

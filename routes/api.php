@@ -32,6 +32,7 @@ Route::controller(FrontendController::class)->prefix('/front')->group(function (
     Route::get('/cities', 'cities');
     Route::get('/city-area/{id}', 'cityArea');
     Route::get('/services', 'services');
+    Route::get('/service-price/{slug}', 'servicePrice');
     Route::get('/front-pricing', 'frontPricing');
     Route::get('/working-process', 'workingProcess');
     Route::get('/why-bests', 'whyBests');
