@@ -4,6 +4,7 @@ import TheLogin from './pages/TheLogin.vue';
 import TheRegister from './pages/TheRegister.vue';
 import ServicePrice from './pages/ServicePrice.vue';
 import TheCart from './pages/TheCart.vue';
+import TheCheckout from './pages/TheCheckout.vue';
 import DahboardLayout from './pages/user/Default.vue';
 import Dashboard from './pages/user/Dashboard.vue';
 import store from './store/index.js';
@@ -42,6 +43,15 @@ const routes = [
         name: 'cart',
         meta: {
             title: 'Cart - Laundry Man BD',
+        },
+    },
+    {
+        path: '/checkout',
+        component: TheCheckout,
+        name: 'checkout',
+        meta: {
+            title: 'Checkout - Laundry Man BD',
+            requiresAuth: true,
         },
     },
     {

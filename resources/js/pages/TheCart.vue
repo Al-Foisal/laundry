@@ -3,20 +3,7 @@
         <div class="px-4 px-lg-0">
             <!-- For demo purpose -->
             <div class="container text-white py-5 text-center">
-                <h1 class="display-4">Bootstrap 4 shopping cart</h1>
-                <p class="lead mb-0">
-                    Build a fully structred shopping cart page using Bootstrap
-                    4.
-                </p>
-                <p class="lead">
-                    Snippet by
-                    <a
-                        href="https://bootstrapious.com/snippets"
-                        class="text-white font-italic"
-                    >
-                        <u>Bootstrapious</u></a
-                    >
-                </p>
+                <h1 style="color: black">Your Shopping Cart</h1>
             </div>
             <!-- End -->
 
@@ -150,19 +137,22 @@
                                     If you have a coupon code, please enter it
                                     in the box below
                                 </p>
-                                <div
-                                    class="input-group mb-4 border rounded-pill p-2"
-                                >
+                                <div class="input-group mb-4 p-2">
                                     <input
                                         type="text"
                                         placeholder="Apply coupon"
                                         aria-describedby="button-addon3"
-                                        class="form-control border-0"
+                                        class="form-control"
+                                        style="height: 52px; font-size: 20px"
+                                        ref="coupon"
+                                        value=""
                                     />
-                                    <div class="input-group-append border-0">
+                                    <div
+                                        class="input-group-append border-0"
+                                        @click="applyCoupon"
+                                    >
                                         <button
                                             type="button"
-                                            class="rounded-pill"
                                             style="
                                                 padding: 13px 28px 12px 28px;
                                                 background: #006837;
@@ -215,7 +205,9 @@
                                     >
                                         <strong class="text-muted"
                                             >Order Subtotal </strong
-                                        ><strong>$390.00</strong>
+                                        ><strong
+                                            >${{ cartTotal.toFixed(2) }}</strong
+                                        >
                                     </li>
                                     <li
                                         class="d-flex justify-content-between py-3 border-bottom"
@@ -226,9 +218,11 @@
                                     </li>
                                     <li
                                         class="d-flex justify-content-between py-3 border-bottom"
+                                        v-if="coupon.discount"
                                     >
-                                        <strong class="text-muted">Tax</strong
-                                        ><strong>$0.00</strong>
+                                        <strong class="text-muted"
+                                            >Coupon Discount</strong
+                                        ><strong>${{ coupon.discount }}</strong>
                                     </li>
                                     <li
                                         class="d-flex justify-content-between py-3 border-bottom"
@@ -237,13 +231,14 @@
                                             >Total</strong
                                         >
                                         <h5 class="font-weight-bold">
-                                            $400.00
+                                            ${{ paidAmount.toFixed(2) }}
                                         </h5>
                                     </li>
                                 </ul>
                                 <div class="apps-content">
                                     <div class="apps-box" style="">
-                                        <a
+                                        <router-link
+                                            :to="{ name: 'checkout' }"
                                             class="single-apps-box"
                                             style="
                                                 padding: 13px 28px 12px 28px;
@@ -256,7 +251,7 @@
                                             <h4 style="color: white">
                                                 Proceed To Checkout
                                             </h4>
-                                        </a>
+                                        </router-link>
                                     </div>
                                 </div>
                             </div>
@@ -275,12 +270,65 @@ export default {
         const toast = useToast();
         return { toast };
     },
+    data() {
+        return {
+            total: 0,
+            coupon: [],
+        };
+    },
     methods: {
+        async applyCoupon() {
+            const couponValue = this.$refs.coupon.value;
+            if (!couponValue) {
+                return;
+            } else {
+                localStorage.removeItem('coupon');
+
+                const result = await axios.post('/cart/apply-coupon', {
+                    coupon_code: couponValue,
+                });
+
+                if (!result.data.status) {
+                    this.toast.error(result.data.message, {
+                        timeout: 5000,
+                    });
+                    return;
+                }
+
+                if (result.data.coupon.cart_amount < this.cartTotal) {
+                    const discount = parseInt(
+                        (parseInt(this.cartTotal) *
+                            parseInt(result.data.coupon.percentage)) /
+                            100
+                    );
+                    this.coupon = {
+                        code: result.data.coupon.code,
+                        percentage: result.data.coupon.percentage,
+                        cart_amount: result.data.coupon.cart_amount,
+                        discount: discount,
+                    };
+                    localStorage.setItem('coupon', JSON.stringify(this.coupon));
+                    this.toast.success('Coupon applied successfully', {
+                        timeout: 5000,
+                    });
+                    this.coupon = JSON.parse(localStorage.getItem('coupon'));
+                } else {
+                    this.toast.error(
+                        'Make plan more than ' +
+                            result.data.coupon.cart_amount +
+                            ' TK to apply this coupon.',
+                        { timeout: 5000 }
+                    );
+                }
+            }
+
+            this.$refs.coupon.value = '';
+        },
         removeFromCart(cart) {
             this.$store.commit('cart/REMOVE_FROM_CART', cart);
             this.toast.success(
                 cart.name + ' TK ' + cart.price + ' remove from cart plan!',
-                { timeout: 2000 }
+                { timeout: 5000 }
             );
         },
     },
@@ -288,6 +336,23 @@ export default {
         cartContent() {
             return this.$store.getters['cart/cart'];
         },
+        cartTotal() {
+            var total = 0;
+            for (var item of this.cartContent) {
+                total += item.price * item.quantity;
+            }
+            return total;
+        },
+        paidAmount() {
+            if (this.coupon.discount) {
+                return this.cartTotal - this.coupon.discount;
+            } else {
+                return this.cartTotal;
+            }
+        },
+    },
+    mounted() {
+        this.coupon = JSON.parse(localStorage.getItem('coupon'));
     },
 };
 </script>

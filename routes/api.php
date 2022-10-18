@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\FrontendController;
 use App\Http\Controllers\Api\HeaderFooterController;
+use App\Http\Controllers\Api\OrderManagementController;
 use App\Http\Controllers\Api\UserAuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,10 +39,15 @@ Route::controller(FrontendController::class)->prefix('/front')->group(function (
     Route::get('/why-bests', 'whyBests');
 });
 
+Route::controller(OrderManagementController::class)->group(function () {
+    Route::post('/cart/apply-coupon', 'applyCoupon');
+});
+
 Route::post('/login', [UserAuthController::class, 'login']);
 Route::middleware('auth:sanctum')->get('/logout', function (Request $request) {
     $user = $request->user();
     $user->tokens()->delete();
     Auth::guard('web')->logout();
+
     return ['status' => 'ok', 'message' => 'Logout Successful!'];
 });
