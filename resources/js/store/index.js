@@ -3,7 +3,7 @@ import createPersistedState from 'vuex-persistedstate';
 import cart from './cart.js';
 
 const store = createStore({
-    plugins: [createPersistedState()],
+    // plugins: [createPersistedState()],
     modules: {
         cart,
     },

@@ -17,41 +17,34 @@
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>
-                                        <tr>
-                                            <th
-                                                scope="col"
-                                                class="border-0 bg-light"
-                                            >
+                                        <tr
+                                            style="
+                                                background: #006837;
+                                                color: white;
+                                            "
+                                        >
+                                            <th scope="col" class="border-0">
                                                 <div
                                                     class="p-2 px-3 text-uppercase"
                                                 >
                                                     Product
                                                 </div>
                                             </th>
-                                            <th
-                                                scope="col"
-                                                class="border-0 bg-light"
-                                            >
+                                            <th scope="col" class="border-0">
                                                 <div
                                                     class="py-2 text-uppercase"
                                                 >
                                                     Price
                                                 </div>
                                             </th>
-                                            <th
-                                                scope="col"
-                                                class="border-0 bg-light"
-                                            >
+                                            <th scope="col" class="border-0">
                                                 <div
                                                     class="py-2 text-uppercase"
                                                 >
                                                     Quantity
                                                 </div>
                                             </th>
-                                            <th
-                                                scope="col"
-                                                class="border-0 bg-light"
-                                            >
+                                            <th scope="col" class="border-0">
                                                 <div
                                                     class="py-2 text-uppercase"
                                                 >
@@ -127,70 +120,57 @@
 
                     <div class="row py-5 p-4 bg-white rounded shadow-sm">
                         <div class="col-lg-6">
-                            <div
-                                class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold"
-                            >
-                                Coupon code
-                            </div>
-                            <div class="p-4">
-                                <p class="font-italic mb-2">
-                                    If you have a coupon code, please enter it
-                                    in the box below
-                                </p>
-                                <div class="input-group mb-4 p-2">
-                                    <input
-                                        type="text"
-                                        placeholder="Apply coupon"
-                                        aria-describedby="button-addon3"
-                                        class="form-control"
-                                        style="height: 52px; font-size: 20px"
-                                        ref="coupon"
-                                        value=""
-                                    />
-                                    <div
-                                        class="input-group-append border-0"
-                                        @click="applyCoupon"
-                                    >
-                                        <button
-                                            type="button"
-                                            style="
-                                                padding: 13px 28px 12px 28px;
-                                                background: #006837;
-                                                color: white;
-                                                width: 100%;
-                                                text-align: center;
-                                            "
-                                        >
-                                            <i class="fa fa-gift mr-2"></i>Apply
-                                            coupon
-                                        </button>
-                                    </div>
+                            <div v-if="coupon.discount == null">
+                                <div
+                                    class="rounded-pill px-4 py-3 text-uppercase font-weight-bold"
+                                    style="background: #006837; color: white"
+                                >
+                                    Coupon code
                                 </div>
-                            </div>
-                            <div class="px-4 text-uppercase font-weight-bold">
-                                <div class="apps-content">
-                                    <div class="apps-box" style="">
-                                        <a
-                                            class="single-apps-box"
+                                <div class="p-4">
+                                    <p class="font-italic mb-2">
+                                        If you have a coupon code, please enter
+                                        it in the box below
+                                    </p>
+                                    <div class="input-group mb-4 p-2">
+                                        <input
+                                            type="text"
+                                            placeholder="Apply coupon"
+                                            aria-describedby="button-addon3"
+                                            class="form-control"
                                             style="
-                                                padding: 13px 28px 12px 28px;
-                                                background: #006837;
-                                                margin-top: 3rem;
-                                                width: 100%;
-                                                text-align: center;
+                                                height: 52px;
+                                                font-size: 20px;
                                             "
+                                            ref="coupon"
+                                            value=""
+                                        />
+                                        <div
+                                            class="input-group-append border-0"
+                                            @click="applyCoupon"
                                         >
-                                            <h4 style="color: white">
-                                                View More Plan
-                                            </h4>
-                                        </a>
+                                            <button
+                                                type="button"
+                                                style="
+                                                    padding: 13px 28px 12px 28px;
+                                                    background: #006837;
+                                                    color: white;
+                                                    width: 100%;
+                                                    text-align: center;
+                                                "
+                                            >
+                                                <i class="fa fa-gift mr-2"></i
+                                                >Apply coupon
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div
-                                class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold"
+                                class="rounded-pill px-4 py-3 text-uppercase font-weight-bold"
+                                style="background: #006837; color: white"
                             >
                                 Order summary
                             </div>
@@ -211,13 +191,6 @@
                                     </li>
                                     <li
                                         class="d-flex justify-content-between py-3 border-bottom"
-                                    >
-                                        <strong class="text-muted"
-                                            >Shipping and handling</strong
-                                        ><strong>$10.00</strong>
-                                    </li>
-                                    <li
-                                        class="d-flex justify-content-between py-3 border-bottom"
                                         v-if="coupon.discount"
                                     >
                                         <strong class="text-muted"
@@ -235,23 +208,49 @@
                                         </h5>
                                     </li>
                                 </ul>
-                                <div class="apps-content">
-                                    <div class="apps-box" style="">
-                                        <router-link
-                                            :to="{ name: 'checkout' }"
-                                            class="single-apps-box"
-                                            style="
-                                                padding: 13px 28px 12px 28px;
-                                                background: #006837;
-                                                margin-top: 3rem;
-                                                width: 100%;
-                                                text-align: center;
-                                            "
-                                        >
-                                            <h4 style="color: white">
-                                                Proceed To Checkout
-                                            </h4>
-                                        </router-link>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="apps-content">
+                                            <div class="apps-box" style="">
+                                                <a
+                                                    class="single-apps-box"
+                                                    style="
+                                                        padding: 13px 28px 12px
+                                                            28px;
+                                                        background: #006837;
+                                                        margin-top: 3rem;
+                                                        width: 100%;
+                                                        text-align: center;
+                                                    "
+                                                >
+                                                    <h4 style="color: white">
+                                                        View More Plan
+                                                    </h4>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="apps-content">
+                                            <div class="apps-box" style="">
+                                                <router-link
+                                                    :to="{ name: 'checkout' }"
+                                                    class="single-apps-box"
+                                                    style="
+                                                        padding: 13px 28px 12px
+                                                            28px;
+                                                        background: #006837;
+                                                        margin-top: 3rem;
+                                                        width: 100%;
+                                                        text-align: center;
+                                                    "
+                                                >
+                                                    <h4 style="color: white">
+                                                        Proceed To Checkout
+                                                    </h4>
+                                                </router-link>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -16,7 +16,7 @@ class FrontendController extends Controller {
     }
 
     public function cityArea($id) {
-        return Area::where('id', $id)->where('status', 1)->get();
+        return Area::where('city_id', $id)->where('status', 1)->get();
     }
 
     public function workingProcess() {

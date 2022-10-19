@@ -11,6 +11,7 @@
                             >
                                 <div class="col-sm-6">
                                     <div class="form-group" style="width: 100%">
+                                        <label for="">Select City</label>
                                         <select
                                             class="form-control"
                                             style="
@@ -20,7 +21,6 @@
                                             "
                                             v-model="city_id"
                                         >
-                                            <option>Select City</option>
                                             <option
                                                 v-for="city in cities"
                                                 :key="city.id"
@@ -33,6 +33,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group" style="width: 100%">
+                                        <label for="">Select Area</label>
                                         <select
                                             class="form-control"
                                             style="
@@ -357,8 +358,8 @@ export default {
                     snapAlign: 'start',
                 },
             },
-            city_id: null,
-            area_id: null,
+            city_id: '',
+            area_id: '',
             cities: [],
             areas: [],
             services: [],
@@ -373,10 +374,9 @@ export default {
             const result = await axios.get('/front/cities');
             this.cities = result.data;
         },
-        cityValue(id) {
-            const result = axios.get('/front/city-area/' + id);
+        async cityValue(id) {
+            const result = await axios.get('/front/city-area/' + id);
             this.areas = result.data;
-            console.log(this.areas);
         },
         async serviceFeature() {
             const result = await axios.get('/front/services');

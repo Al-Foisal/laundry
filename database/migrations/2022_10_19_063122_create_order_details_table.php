@@ -13,14 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('areas', function (Blueprint $table) {
+        Schema::create('order_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('city_id')->constrained();
+            $table->foreignId('order_id')->constrained('orders')->onDelete('cascade');
             $table->string('name');
-            $table->string('slug');
-            $table->tinyInteger('status')->default(1);
-            $table->unsignedInteger('shipping_charge');
-            $table->timestamps();
+            $table->string('service');
+            $table->unsignedInteger('quantity');
+            $table->unsignedInteger('price');
         });
     }
 
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('areas');
+        Schema::dropIfExists('order_details');
     }
 };
