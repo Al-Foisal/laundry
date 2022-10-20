@@ -35,7 +35,7 @@
                                 >
                             </div>
                             <span class="text-muted"
-                                >${{ cart.price * cart.quantity }}</span
+                                >৳{{ cart.price * cart.quantity }}</span
                             >
                         </li>
                         <li
@@ -47,7 +47,7 @@
                                 <small>{{ coupon.code }}</small>
                             </div>
                             <span class="text-success"
-                                >-${{ coupon.discount }}</span
+                                >-৳{{ coupon.discount }}</span
                             >
                         </li>
                         <li
@@ -59,14 +59,14 @@
                                 <small>Area: {{ areaDetails.name }}</small>
                             </div>
                             <span class="text-success"
-                                >${{ areaDetails.shipping_charge }}</span
+                                >৳{{ areaDetails.shipping_charge }}</span
                             >
                         </li>
                         <li
                             class="list-group-item d-flex justify-content-between"
                         >
-                            <span>Total (USD)</span>
-                            <strong>${{ AmountToBePaid }}</strong>
+                            <span>Total (BDT)</span>
+                            <strong>৳{{ AmountToBePaid }}</strong>
                         </li>
                     </ul>
                 </div>

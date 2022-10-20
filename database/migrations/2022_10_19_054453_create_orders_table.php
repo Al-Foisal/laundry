@@ -24,19 +24,19 @@ return new class extends Migration
             $table->string('coupon_percentage')->nullable();
 
             $table->unsignedInteger('total');
-            $table->unsignedInteger('discount')->nullable();
-            $table->unsignedInteger('shipping_charge')->nullable();
+            $table->unsignedInteger('discount')->default(0);
+            $table->unsignedInteger('shipping_charge')->default(0);
             $table->unsignedInteger('paid_amount');
 
             $table->unsignedBigInteger('partner_id')->nullable();
-            $table->unsignedInteger('partner_amount')->nullable();
-            $table->tinyInteger('partner_payment_status')->nullable();
+            $table->unsignedInteger('partner_amount')->default(0);
+            $table->tinyInteger('partner_payment_status')->default(0);
 
             $table->unsignedBigInteger('deliveryman_id')->nullable();
-            $table->unsignedInteger('deliveryman_amount')->nullable();
-            $table->tinyInteger('deliveryman_payment_status')->nullable();
-            $table->unsignedInteger('deliveryman_due')->nullable();
-            $table->tinyInteger('deliveryman_due_status')->nullable();
+            $table->unsignedInteger('deliveryman_amount')->default(0);
+            $table->tinyInteger('deliveryman_payment_status')->default(0);
+            $table->unsignedInteger('deliveryman_due')->default(0);
+            $table->tinyInteger('deliveryman_due_status')->default(0);
 
 
             $table->unsignedInteger('status');

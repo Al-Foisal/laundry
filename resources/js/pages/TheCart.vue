@@ -90,7 +90,7 @@
                                             </th>
                                             <td class="border-0 align-middle">
                                                 <strong
-                                                    >${{
+                                                    >৳{{
                                                         cart.price.toFixed(2)
                                                     }}</strong
                                                 >
@@ -186,7 +186,7 @@
                                         <strong class="text-muted"
                                             >Order Subtotal </strong
                                         ><strong
-                                            >${{ cartTotal.toFixed(2) }}</strong
+                                            >৳{{ cartTotal.toFixed(2) }}</strong
                                         >
                                     </li>
                                     <li
@@ -195,7 +195,7 @@
                                     >
                                         <strong class="text-muted"
                                             >Coupon Discount</strong
-                                        ><strong>${{ coupon.discount }}</strong>
+                                        ><strong>৳{{ coupon.discount }}</strong>
                                     </li>
                                     <li
                                         class="d-flex justify-content-between py-3 border-bottom"
@@ -204,7 +204,7 @@
                                             >Total</strong
                                         >
                                         <h5 class="font-weight-bold">
-                                            ${{ paidAmount.toFixed(2) }}
+                                            ৳{{ paidAmount.toFixed(2) }}
                                         </h5>
                                     </li>
                                 </ul>

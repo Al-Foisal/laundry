@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\CompanyInfo;
+use App\Models\OrderStatus;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider {
@@ -23,5 +24,11 @@ class AppServiceProvider extends ServiceProvider {
     public function boot() {
         $company = CompanyInfo::find(1);
         view()->share('company', $company);
+
+        $partner_order_status = OrderStatus::all();
+        view()->share('partner_order_status', $partner_order_status);
+
+        $deliveryman_order_status = OrderStatus::all();
+        view()->share('deliveryman_order_status', $deliveryman_order_status);
     }
 }

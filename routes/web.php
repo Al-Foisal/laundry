@@ -17,6 +17,7 @@ use App\Http\Controllers\Backend\WorkingProcessController;
 use App\Http\Controllers\Deliveryman\DeliverymanAurhController;
 use App\Http\Controllers\Deliveryman\DeliverymanDashboardController;
 use App\Http\Controllers\Deliveryman\DeliverymanForgotPasswordController;
+use App\Http\Controllers\Deliveryman\DeliverymanOrderController;
 use App\Http\Controllers\Deliveryman\DeliverymanResetPasswordController;
 use App\Http\Controllers\GeneralHelperController;
 use App\Http\Controllers\Partner\PartnerAuthController;
@@ -107,6 +108,11 @@ Route::prefix('/deliveryman')->name('deliveryman.')->middleware('auth:deliveryma
     Route::post('/logout', [DeliverymanAurhController::class, 'logout'])->name('auth.logout');
 
     Route::get('/dashboard', [DeliverymanDashboardController::class, 'dashboard'])->name('dashboard');
+
+    Route::controller(DeliverymanOrderController::class)->group(function () {
+        Route::get('/order-accept/{id}', 'orderAccept')->name('orderAccept');
+        Route::get('/status-order/{status}', 'statusOrder')->name('statusOrder');
+    });
 });
 
 /**

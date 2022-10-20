@@ -27,6 +27,7 @@ class OrderManagementController extends Controller {
         $order = Order::create([
             'user_id'             => auth()->user()->id,
             'user_payment_method' => $request->user_payment_method,
+            'user_payment_status' => 0,
             'coupon_code'         => $request->coupon_code,
             'coupon_percentage'   => $request->coupon_percentage,
             'total'               => $request->total,

@@ -3,11 +3,11 @@
         <section class="main-slider">
             <div class="container-fluid">
                 <div class="row slider-wrapper">
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <form>
                             <div
                                 class="row"
-                                style="padding: 13rem 10rem 0 10rem"
+                                style="padding: 13rem 4rem 0 10rem"
                             >
                                 <div class="col-sm-6">
                                     <div class="form-group" style="width: 100%">
@@ -53,7 +53,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div style="padding: 1rem 10rem 10rem 10rem">
+                            <div style="padding: 1rem 4rem 10rem 10rem">
                                 <button
                                     style="
                                         width: 100%;
@@ -71,8 +71,8 @@
                             </div>
                         </form>
                     </div>
-                    <div class="col-md-6 image">
-                        <img src="images/slider/3.jpg" />
+                    <div class="col-md-7 image">
+                        <img src="frontend/images/slider/3.jpg" class="rounded"/>
                     </div>
                 </div>
             </div>

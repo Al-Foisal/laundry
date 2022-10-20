@@ -13,7 +13,8 @@
                     alt="AI">
             </div>
             <div class="info">
-                <a href="{{ route('deliveryman.dashboard') }}" class="d-block">{{ auth()->guard('deliveryman')->user()->name }}</a>
+                <a href="{{ route('deliveryman.dashboard') }}"
+                    class="d-block">{{ auth()->guard('deliveryman')->user()->name }}</a>
             </div>
         </div>
 
@@ -31,6 +32,15 @@
                         </p>
                     </a>
                 </li>
+
+                @foreach ($deliveryman_order_status as $ds)
+                    <li class="nav-item">
+                        <a href="{{ route('deliveryman.statusOrder', $ds->slug) }}" class="nav-link">
+                            <i class="nav-icon far fa-circle text-warning"></i>
+                            <p>{{ $ds->name }}</p>
+                        </a>
+                    </li>
+                @endforeach
 
                 {{-- company info --}}
                 {{-- <li class="nav-item">
