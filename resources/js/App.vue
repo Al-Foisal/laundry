@@ -58,9 +58,14 @@
                                 {{ company.phone_two }}
                             </div>
                         </div>
-                        <div class="top-btn">
+                        <div class="top-btn" v-if="!user.id">
                             <router-link :to="{ name: 'login' }"
                                 >Login/Signup</router-link
+                            >
+                        </div>
+                        <div class="top-btn" v-else>
+                            <router-link :to="{ name: 'dashboard' }"
+                                >DashBoard</router-link
                             >
                         </div>
                     </div>
@@ -88,7 +93,9 @@
                             <div class="navbar-collapse collapse clearfix">
                                 <ul class="navigation clearfix">
                                     <li class="current">
-                                        <a href="index.html">Home</a>
+                                        <router-link :to="{ name: home }"
+                                            >Home</router-link
+                                        >
                                     </li>
                                     <li class="dropdown">
                                         <router-link
@@ -102,13 +109,13 @@
                                         >
                                     </li>
                                     <li>
-                                        <a href="price.html">Pricing</a>
+                                        <a href="">Pricing</a>
                                     </li>
                                     <li>
                                         <a href="">Career</a>
                                     </li>
                                     <li>
-                                        <a href="contact.html">Contact</a>
+                                        <a href="">Contact</a>
                                     </li>
                                 </ul>
                                 <!-- mobile menu -->
@@ -188,7 +195,7 @@
                                     cartCount
                                 }}</router-link>
                             </div>
-                            <div class="search-box">
+                            <!-- <div class="search-box">
                                 <form
                                     method="post"
                                     action="http://azim.commonsupport.com/Watertown/index.html"
@@ -205,7 +212,7 @@
                                         </button>
                                     </div>
                                 </form>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -350,6 +357,7 @@ export default {
             services: [],
             pages: [],
             serviceHomeLink: 'slug',
+            user: [],
         };
     },
     methods: {
@@ -376,6 +384,7 @@ export default {
         this.companyInfo();
         this.servicesLink();
         this.pageLink();
+        this.user = this.$store.getters['user'];
     },
 };
 </script>

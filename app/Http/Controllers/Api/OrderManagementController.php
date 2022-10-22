@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Coupon;
+use App\Models\Deliveryman;
 use App\Models\Order;
 use App\Models\OrderDetails;
 use App\Models\OrderIdentity;
+use App\Models\Partner;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderManagementController extends Controller {
     public function applyCoupon(Request $request) {
@@ -60,6 +63,22 @@ class OrderManagementController extends Controller {
 
         return response()->json(['status' => true]);
 
+    }
+
+    public function orderList() {
+        $data           = [];
+        $data['orders'] = Order::where('user_id', Auth::id())->with('deliveryman', 'status')->orderBy('id', 'desc')->get();
+
+        return $data;
+    }
+
+    public function invoice($id) {
+        $data                = [];
+        $data['order']       = $order       = Order::where('user_id', Auth::id())->where('id', $id)->with('orderIdentity', 'orderDetails', 'partner')->first();
+        $data['deliveryman'] = Deliveryman::where('id', $order->deliveryman_id)->first()->name;
+        $data['partner']     = Partner::where('id', $order->partner_id)->first()->name;
+
+        return $data;
     }
 
 }

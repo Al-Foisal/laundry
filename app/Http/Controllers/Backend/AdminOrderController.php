@@ -19,6 +19,7 @@ class AdminOrderController extends Controller {
         ])->with(['orderIdentity', 'orderDetails', 'partner', 'deliveryman',
         ])->get();
         $data['partners'] = Partner::where('status', 1)->get();
+        $data['deliveryman'] = Deliveryman::where('status', 1)->get();
         $data['next_status'] = OrderStatus::where('deliveryman', 1)->get();
 
         return view('backend.order.status_order', $data);
@@ -48,5 +49,18 @@ class AdminOrderController extends Controller {
         $order->save();
 
         return back()->withToastSuccess('Partner assign successfully.');
+    }
+
+    public function assignDeliveryman(Request $request)
+    {
+        $order = Order::findOrFail($request->order_id);
+        $d_man = Deliveryman::find($request->deliveryman_id);
+
+        $order->deliveryman_id     = $d_man->id;
+        $order->deliveryman_amount = ($order->total * $d_man->commission) / 100;
+        $order->deliveryman_due    = $order->paid_amount;
+        $order->save();
+
+        return back()->withToastSuccess('The order assign to you successfully.');
     }
 }

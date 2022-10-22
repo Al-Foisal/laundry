@@ -231,6 +231,7 @@ Route::prefix('/admin')->name('admin.')->middleware('auth:admin')->group(functio
         Route::get('/order-invoice/{order_id}', 'orderInvoice')->name('orderInvoice');
         Route::post('/update-order-status', 'updateOrderStatus')->name('updateOrderStatus');
         Route::post('/assign-partner', 'assignPartner')->name('assignPartner');
+        Route::post('/assign-deliveryman', 'assignDeliveryman')->name('assignDeliveryman');
 
     });
 

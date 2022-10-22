@@ -7,6 +7,7 @@ import TheCart from './pages/TheCart.vue';
 import TheCheckout from './pages/TheCheckout.vue';
 import DahboardLayout from './pages/user/Default.vue';
 import Dashboard from './pages/user/Dashboard.vue';
+import TheInvoice from './pages/user/TheInvoice.vue';
 import store from './store/index.js';
 
 const routes = [
@@ -80,6 +81,33 @@ const routes = [
             requiresAuth: true,
         },
     },
+    {
+        name: 'invoice',
+        path: '/invoice/:id',
+        component: TheInvoice,
+        props: true,
+        meta: {
+            title: 'Invoice',
+            requiresAuth: true,
+        },
+    },
+    // {
+    //     path: "/dd",
+    //     component: DahboardLayout,
+    //     meta: {
+    //         requiresAuth: "auth"
+    //     },
+    //     children: [
+    //         {
+    //             name: "dashboard",
+    //             path: '/',
+    //             component: Dashboard,
+    //             meta: {
+    //                 title: `Dashboard`
+    //             }
+    //         }
+    //     ]
+    // }
 ];
 
 const router = createRouter({

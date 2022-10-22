@@ -42,6 +42,8 @@ Route::controller(FrontendController::class)->prefix('/front')->group(function (
 Route::controller(OrderManagementController::class)->group(function () {
     Route::post('/cart/apply-coupon', 'applyCoupon');
     Route::post('/order/save', 'orderSave');
+    Route::get('/order-list', 'orderList');
+    Route::get('/order/invoice/:id', 'invoice');
 });
 
 Route::post('/login', [UserAuthController::class, 'login']);

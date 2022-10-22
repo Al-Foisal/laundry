@@ -111,8 +111,8 @@
 
                                             <td>
                                                 @if ($order->partner_id)
-                                                    <div class="btn btn-info"  data-toggle="modal"
-                                                    data-target="#assignPartner">
+                                                    <div class="btn btn-info" data-toggle="modal"
+                                                        data-target="#assignPartner">
                                                         {{ $order->partner->name }}({{ $order->partner->commission }}%)<br>
                                                         {{ $order->partner->phone }}
                                                     </div>
@@ -164,11 +164,56 @@
                                             </td>
                                             <td>
                                                 @if ($order->deliveryman_id)
-                                                    {{ $order->deliveryman->name }}({{ $order->deliveryman->commission }}%)<br>
-                                                    {{ $order->deliveryman->phone }}
+                                                    <div class="btn btn-info" data-toggle="modal"
+                                                        data-target="#assignDeliveryman">
+                                                        {{ $order->deliveryman->name }}({{ $order->deliveryman->commission }}%)<br>
+                                                        {{ $order->deliveryman->phone }}
+                                                    </div>
                                                 @else
-                                                    Not set yeat
+                                                    <div class="btn btn-primary" data-toggle="modal"
+                                                        data-target="#assignDeliveryman">
+                                                        Assign
+                                                    </div>
                                                 @endif
+
+                                                <!-- Assign Deliveryman Modal -->
+                                                <div class="modal fade" id="assignDeliveryman" tabindex="-1" role="dialog"
+                                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Assign Your
+                                                                    Nearest Deliveryman</h5>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <form action="{{ route('admin.assignDeliveryman') }}"
+                                                                    method="post">
+                                                                    @csrf
+                                                                    <input type="hidden" name="order_id"
+                                                                        value="{{ $order->id }}">
+                                                                    <div class="form-group">
+                                                                        <label for="select_deliveryman">Select Deliveryman</label>
+                                                                        <select class="form-control" id="select_deliveryman"
+                                                                            name="deliveryman_id" required>
+                                                                            <option>Select</option>
+                                                                            @foreach ($deliveryman as $item)
+                                                                                <option value="{{ $item->id }}">
+                                                                                    {{ $item->name . ' - ' . $item->phone }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                                    <button type="submit"
+                                                                        class="btn btn-primary">Submit</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </td>
                                             <td>{{ $order->created_at }}</td>
                                         </tr>
