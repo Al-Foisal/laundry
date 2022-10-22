@@ -20,4 +20,7 @@ class Order extends Model {
     public function partner() {
         return $this->belongsTo(Partner::class);
     }
+    public function deliveryman() {
+        return $this->belongsTo(Deliveryman::class);
+    }
 }

@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider {
         $company = CompanyInfo::find(1);
         view()->share('company', $company);
 
-        $partner_order_status = OrderStatus::all();
+        $partner_order_status = OrderStatus::where('partner', 1)->get();
         view()->share('partner_order_status', $partner_order_status);
 
         $deliveryman_order_status = OrderStatus::all();

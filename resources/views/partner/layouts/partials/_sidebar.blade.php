@@ -32,6 +32,25 @@
                     </a>
                 </li>
 
+                @foreach ($partner_order_status as $ps)
+                    @php
+                        $count = DB::table('orders')
+                            ->where([
+                                'partner_id' => auth()
+                                    ->guard('partner')
+                                    ->user()->id,
+                                'status' => $ps->id,
+                            ])
+                            ->count();
+                    @endphp
+                    <li class="nav-item">
+                        <a href="{{ route('partner.statusOrder',$ps->slug) }}" class="nav-link">
+                            <i class="nav-icon far fa-circle text-warning"></i>
+                            <p>{{ $ps->name }}({{ $count }})</p>
+                        </a>
+                    </li>
+                @endforeach
+
                 <li class="nav-item">
                     <a href="{{ route('partner.profile') }}" class="nav-link">
                         <i class="nav-icon far fa-circle text-warning"></i>

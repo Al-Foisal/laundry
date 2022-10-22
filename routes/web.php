@@ -23,6 +23,7 @@ use App\Http\Controllers\GeneralHelperController;
 use App\Http\Controllers\Partner\PartnerAuthController;
 use App\Http\Controllers\Partner\PartnerDashboardController;
 use App\Http\Controllers\Partner\PartnerForgotPasswordController;
+use App\Http\Controllers\Partner\PartnerOrderController;
 use App\Http\Controllers\Partner\PartnerResetPasswordController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -76,6 +77,12 @@ Route::prefix('/partner')->name('partner.')->middleware('auth:partner')->group(f
     Route::get('/dashboard', [PartnerDashboardController::class, 'dashboard'])->name('dashboard');
     Route::get('/profile', [PartnerDashboardController::class, 'profile'])->name('profile');
     Route::put('/profile/{partner}', [PartnerDashboardController::class, 'profileUpdate'])->name('profileUpdate');
+
+    Route::controller(PartnerOrderController::class)->group(function () {
+        Route::get('/status-order/{status}', 'statusOrder')->name('statusOrder');
+        Route::get('/order-invoice/{order_id}', 'orderInvoice')->name('orderInvoice');
+        Route::post('/update-order-status', 'updateOrderStatus')->name('updateOrderStatus');
+    });
 
 });
 
