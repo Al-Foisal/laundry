@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\City;
 use App\Models\Deliveryman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -16,7 +17,9 @@ class DeliverymanController extends Controller {
     }
 
     public function create() {
-        return view('backend.deliveryman.create');
+        $cities = City::where('status', 1)->get();
+
+        return view('backend.deliveryman.create', compact('cities'));
     }
 
     public function store(Request $request) {
@@ -63,7 +66,8 @@ class DeliverymanController extends Controller {
     }
 
     public function edit(Deliveryman $deliveryman) {
-        return view('backend.deliveryman.edit', compact('deliveryman'));
+        $cities = City::where('status', 1)->get();
+        return view('backend.deliveryman.edit', compact('deliveryman','cities'));
     }
 
     public function update(Request $request, Deliveryman $deliveryman) {

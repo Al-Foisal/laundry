@@ -1,17 +1,17 @@
-@extends('backend.layouts.master')
-@section('title', 'Create Deliveryman')
-@section('backend')
+@extends('deliveryman.layouts.master')
+@section('title', 'Deliveryman profile')
+@section('deliveryman')
     <!-- Content Header (Deliveryman header) -->
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Create Deliveryman</h1>
+                <div class="col-sm-9">
+                    <h1>Deliveryman profile (<b>Commission: {{ $deliveryman->commission }}% Per Order</b>)</h1>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-3">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Create Deliveryman</li>
+                        <li class="breadcrumb-item active">Deliveryman profile</li>
                     </ol>
                 </div>
             </div>
@@ -26,22 +26,24 @@
                     <div class="card card-primary">
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('admin.deliveryman.store') }}" method="POST" enctype="multipart/form-data">
+                        <form name="formData">
                             @csrf
+                            @method('put')
                             <div class="card-body">
+
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="name">Name*</label>
                                             <input type="text" class="form-control" id="name"
-                                                placeholder="Enter name" name="name" required>
+                                                value="{{ $deliveryman->name }}" readonly name="name" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="phone">Phone*</label>
                                             <input type="text" class="form-control" id="phone"
-                                                placeholder="Enter phone" name="phone" required>
+                                                value="{{ $deliveryman->phone }}" readonly name="phone" required>
                                         </div>
                                     </div>
                                 </div>
@@ -51,33 +53,14 @@
                                         <div class="form-group">
                                             <label for="email">Email*</label>
                                             <input type="email" class="form-control" id="email"
-                                                placeholder="Enter email" name="email" required>
+                                                value="{{ $deliveryman->email }}" readonly name="email" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="password">Password*</label>
+                                            <label for="password">For Changing Password</label>
                                             <input type="password" class="form-control" id="password"
-                                                placeholder="Enter password" name="password" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="input-group mb-3">
-                                            <select class="form-control" placeholder="City" name="city_id" required>
-                                                <option value="">Select city</option>
-                                                @foreach ($cities as $city)
-                                                    <option value="{{ $city->id }}">{{ $city->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="input-group mb-3">
-                                            <select class="form-control" placeholder="Area" name="area_id" required>
-                                                <option value="">Select area</option>
-                                            </select>
+                                                placeholder="Enter password " readonly name="password">
                                         </div>
                                     </div>
                                 </div>
@@ -85,36 +68,58 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="address">Address*</label>
-                                            <textarea class="form-control" id="address" rows="2" placeholder="Enter address" name="address" required></textarea>
+                                            <textarea class="form-control" id="address" rows="2" placeholder="Enter address" readonly name="address"
+                                                required>{{ $deliveryman->address }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="image">Image*</label>
                                             <input type="file" class="form-control" id="image"
-                                                placeholder="Enter image" name="image">
+                                                placeholder="Enter image" readonly name="image">
+                                            <img src="{{ asset($deliveryman->image) }}" style="height:100px;width:100px;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="input-group mb-3">
+                                            <select class="form-control" placeholder="City" readonly name="city_id"
+                                                required>
+                                                <option value="">Select city</option>
+                                                @foreach ($cities as $city)
+                                                    <option value="{{ $city->id }}"
+                                                        @if ($deliveryman->city_id == $city->id) selected @endif>
+                                                        {{ $city->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group mb-3">
+                                            <select class="form-control" placeholder="Area" readonly name="area_id"
+                                                required>
+                                                @foreach ($areas as $area)
+                                                    <option value="{{ $area->id }}">{{ $area->name }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                             <!-- /.card-body -->
-
-                            <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
                         </form>
                     </div>
+                    <!-- /.card -->
                 </div>
-                <!-- /.card -->
             </div>
         </div>
         <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
-@endsection
-
-@section('jsScript')
+    <script>
+        document.forms['formData'].elements['area_id'].value = "{{ $deliveryman->area_id }}";
+    </script>
     {{-- submenu dependency --}}
     <script type="text/javascript">
         $(document).ready(function() {

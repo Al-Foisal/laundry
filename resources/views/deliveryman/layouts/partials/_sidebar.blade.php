@@ -34,13 +34,37 @@
                 </li>
 
                 @foreach ($deliveryman_order_status as $ds)
+                    @php
+                        $count = DB::table('orders')
+                            ->where([
+                                'deliveryman_id' => auth()
+                                    ->guard('deliveryman')
+                                    ->user()->id,
+                                'status' => $ds->id,
+                            ])
+                            ->count();
+                    @endphp
                     <li class="nav-item">
                         <a href="{{ route('deliveryman.statusOrder', $ds->slug) }}" class="nav-link">
                             <i class="nav-icon far fa-circle text-warning"></i>
-                            <p>{{ $ds->name }}</p>
+                            <p>{{ $ds->name }}({{ $count }})</p>
                         </a>
                     </li>
                 @endforeach
+
+                <li class="nav-item">
+                    <a href="{{ route('deliveryman.payToCompany') }}" class="nav-link">
+                        <i class="nav-icon far fa-circle text-warning"></i>
+                        <p>Pay Company Due</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('deliveryman.profile') }}" class="nav-link">
+                        <i class="nav-icon far fa-circle text-warning"></i>
+                        <p>Profile</p>
+                    </a>
+                </li>
 
                 {{-- company info --}}
                 {{-- <li class="nav-item">

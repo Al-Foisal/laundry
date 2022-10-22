@@ -112,6 +112,14 @@ Route::prefix('/deliveryman')->name('deliveryman.')->middleware('auth:deliveryma
     Route::controller(DeliverymanOrderController::class)->group(function () {
         Route::get('/order-accept/{id}', 'orderAccept')->name('orderAccept');
         Route::get('/status-order/{status}', 'statusOrder')->name('statusOrder');
+        Route::get('/order-invoice/{order_id}', 'orderInvoice')->name('orderInvoice');
+        Route::post('/update-order-status', 'updateOrderStatus')->name('updateOrderStatus');
+        Route::post('/assign-partner', 'assignPartner')->name('assignPartner');
+
+        Route::get('/pay-to-company', 'payToCompany')->name('payToCompany');
+        Route::post('/pay-company-due', 'payCompanyDue')->name('payCompanyDue');
+
+        Route::get('/profile', 'profile')->name('profile');
     });
 });
 
