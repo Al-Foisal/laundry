@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Partner;
 use App\Http\Controllers\Controller;
 use App\Models\Area;
 use App\Models\City;
+use App\Models\OrderStatus;
 use App\Models\Partner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -13,7 +14,7 @@ use Illuminate\Support\Facades\Validator;
 class PartnerDashboardController extends Controller {
     public function dashboard() {
         $data = [];
-
+        $data['next_status'] = OrderStatus::where('partner', 1)->get();
         return view('partner.dashboard', $data);
     }
 

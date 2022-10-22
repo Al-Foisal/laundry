@@ -132,6 +132,34 @@
                     </ul>
                 </li>
 
+                {{-- Order --}}
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon far fa-circle text-warning"></i>
+                        <p class="text">
+                            Order
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview nav-header">
+                        @foreach ($deliveryman_order_status as $ds)
+                            @php
+                                $count = DB::table('orders')
+                                    ->where([
+                                        'status' => $ds->id,
+                                    ])
+                                    ->count();
+                            @endphp
+                            <li class="nav-item">
+                                <a href="{{ route('admin.statusOrder', $ds->slug) }}" class="nav-link">
+                                    <i class="nav-icon far fa-circle text-danger"></i>
+                                    <p>{{ $ds->name }}({{ $count }})</p>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </li>
+
                 {{-- location info --}}
                 <li class="nav-item">
                     <a href="#" class="nav-link">

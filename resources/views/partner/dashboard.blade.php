@@ -49,4 +49,39 @@
             </div>
         </div>
     </section>
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                @foreach ($next_status as $status)
+                    @php
+                        $count = DB::table('orders')
+                            ->where([
+                                'partner_id' => auth()
+                                    ->guard('partner')
+                                    ->user()->id,
+                                'status' => $status->id,
+                            ])
+                            ->count();
+                    @endphp
+                    <div class="col-lg-3 col-6">
+                        <!-- small card -->
+                        <div class="small-box bg-info">
+                            <div class="inner">
+                                <h3>{{ $count }}</h3>
+
+                                <p>{{ $status->name }}</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <a href="{{ route('partner.statusOrder', $status->slug) }}" class="small-box-footer">
+                                More info <i class="fas fa-arrow-circle-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
 @endsection

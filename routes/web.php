@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\AdminAuthController;
 use App\Http\Controllers\Backend\AdminForgotPasswordController;
+use App\Http\Controllers\Backend\AdminOrderController;
 use App\Http\Controllers\Backend\AdminResetPasswordController;
 use App\Http\Controllers\Backend\AreaController;
 use App\Http\Controllers\Backend\CityController;
@@ -223,6 +224,14 @@ Route::prefix('/admin')->name('admin.')->middleware('auth:admin')->group(functio
         Route::post('/inactive/{package}', 'inactive')->name('inactive');
         Route::post('/keep-front/{package}', 'keepFront')->name('keepFront');
         Route::post('/remove-front/{package}', 'removeFront')->name('removeFront');
+    });
+
+    Route::controller(AdminOrderController::class)->group(function () {
+        Route::get('/status-order/{status}', 'statusOrder')->name('statusOrder');
+        Route::get('/order-invoice/{order_id}', 'orderInvoice')->name('orderInvoice');
+        Route::post('/update-order-status', 'updateOrderStatus')->name('updateOrderStatus');
+        Route::post('/assign-partner', 'assignPartner')->name('assignPartner');
+
     });
 
     Route::resources([

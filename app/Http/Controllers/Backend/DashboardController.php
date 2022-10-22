@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\OrderStatus;
 
-class DashboardController extends Controller
-{
-    public function dashboard()
-    {
-        $data = [];
-        return view('backend.dashboard',$data);
+class DashboardController extends Controller {
+    public function dashboard() {
+        $data                = [];
+        $data['next_status'] = OrderStatus::get();
+
+        return view('backend.dashboard', $data);
     }
 }
