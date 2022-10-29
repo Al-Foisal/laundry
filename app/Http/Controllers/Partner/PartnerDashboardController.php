@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Partner;
 use App\Http\Controllers\Controller;
 use App\Models\Area;
 use App\Models\City;
+use App\Models\OrderNotification;
 use App\Models\OrderStatus;
 use App\Models\Partner;
 use Illuminate\Http\Request;
@@ -13,17 +14,18 @@ use Illuminate\Support\Facades\Validator;
 
 class PartnerDashboardController extends Controller {
     public function dashboard() {
-        $data = [];
+        $data                = [];
         $data['next_status'] = OrderStatus::where('partner', 1)->get();
+
         return view('partner.dashboard', $data);
     }
 
     public function profile() {
         $partner = Partner::find(auth()->guard('partner')->user()->id);
-        $areas = Area::where('city_id',$partner->city_id)->get();
-        $cities = City::all();
+        $areas   = Area::where('city_id', $partner->city_id)->get();
+        $cities  = City::all();
 
-        return view('partner.profile', compact('partner','areas','cities'));
+        return view('partner.profile', compact('partner', 'areas', 'cities'));
     }
 
     public function profileUpdate(Request $request, Partner $partner) {
@@ -84,4 +86,20 @@ class PartnerDashboardController extends Controller {
 
         return back();
     }
+
+    public function orderPlace() {
+        $orders = OrderNotification::where('partner_id', auth()->guard('partner')->user()->id)->orderBy('id', 'DESC')->get();
+
+        foreach ($orders as $order) {
+
+            if ($order->partner_id) {
+                $order->is_partner_seen = 1;
+                $order->save();
+            }
+
+        }
+
+        return view('partner.notification', compact('orders'));
+    }
+
 }

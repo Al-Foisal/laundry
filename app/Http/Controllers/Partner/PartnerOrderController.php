@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Partner;
 use App\Http\Controllers\Controller;
 use App\Models\Deliveryman;
 use App\Models\Order;
+use App\Models\OrderNotification;
 use App\Models\OrderStatus;
 use App\Models\Partner;
 use Illuminate\Http\Request;
@@ -39,6 +40,11 @@ class PartnerOrderController extends Controller
         $order         = Order::findOrFail($request->order_id);
         $order->status = $request->order_status_id;
         $order->save();
+
+        $pn                  = OrderNotification::where('order_id', $order->id)->first();
+        $pn->order_status_id = $request->order_status_id;
+        $pn->is_deliveryman_seen = 0;
+        $pn->save();
 
         return back()->withToastSuccess('Order status updated successfully.');
     }

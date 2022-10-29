@@ -35,15 +35,20 @@ Route::controller(FrontendController::class)->prefix('/front')->group(function (
     Route::get('/services', 'services');
     Route::get('/service-price/{slug}', 'servicePrice');
     Route::get('/front-pricing', 'frontPricing');
+    Route::get('/all-pricing', 'allPricing');
     Route::get('/working-process', 'workingProcess');
     Route::get('/why-bests', 'whyBests');
+    Route::get('/faq', 'faq');
+    Route::get('/job', 'job');
+    Route::get('/job-details/{id}', 'jobDetails');
+    Route::post('/submit-application', 'submitApplication');
 });
 
 Route::controller(OrderManagementController::class)->group(function () {
     Route::post('/cart/apply-coupon', 'applyCoupon');
     Route::post('/order/save', 'orderSave');
     Route::get('/order-list', 'orderList');
-    Route::get('/order/invoice/:id', 'invoice');
+    Route::get('/order-invoice/{id}', 'invoice');
 });
 
 Route::post('/login', [UserAuthController::class, 'login']);

@@ -58,7 +58,7 @@
                                 {{ company.phone_two }}
                             </div>
                         </div>
-                        <div class="top-btn" v-if="!user.id">
+                        <div class="top-btn" v-if="!user">
                             <router-link :to="{ name: 'login' }"
                                 >Login/Signup</router-link
                             >
@@ -83,6 +83,7 @@
                                     class="navbar-toggle"
                                     data-toggle="collapse"
                                     data-target=".navbar-collapse"
+                                    @click="toggleMenubar"
                                 >
                                     <span class="icon-bar"></span>
                                     <span class="icon-bar"></span>
@@ -90,10 +91,15 @@
                                     <span class="icon-bar"></span>
                                 </button>
                             </div>
-                            <div class="navbar-collapse collapse clearfix">
+                            <div
+                                :class="[
+                                    'navbar-collapse collapse clearfix',
+                                    { in: isMenubarOpen },
+                                ]"
+                            >
                                 <ul class="navigation clearfix">
                                     <li class="current">
-                                        <router-link :to="{ name: home }"
+                                        <router-link :to="{ name: 'home' }"
                                             >Home</router-link
                                         >
                                     </li>
@@ -109,92 +115,74 @@
                                         >
                                     </li>
                                     <li>
-                                        <a href="">Pricing</a>
+                                        <router-link :to="{ name: 'pricing' }"
+                                            >Pricing</router-link
+                                        >
                                     </li>
                                     <li>
-                                        <a href="">Career</a>
+                                        <router-link :to="{ name: 'faq' }"
+                                            >FAQ</router-link
+                                        >
                                     </li>
                                     <li>
-                                        <a href="">Contact</a>
+                                        <router-link :to="{ name: 'career' }"
+                                            >Career</router-link
+                                        >
+                                    </li>
+                                    <li>
+                                        <router-link :to="{ name: 'contact' }"
+                                            >Contact</router-link
+                                        >
                                     </li>
                                 </ul>
                                 <!-- mobile menu -->
                                 <ul class="mobile-menu clearfix">
                                     <li class="current">
-                                        <a href="index.html">Home</a>
-                                    </li>
-                                    <li>
-                                        <a href="about.html">About us</a>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a href="#">Pages</a>
-                                        <ul>
-                                            <li>
-                                                <a href="offers.html">Offers</a>
-                                            </li>
-                                            <li>
-                                                <a href="faq.html">Faq</a>
-                                            </li>
-                                            <li>
-                                                <a href="error.html"
-                                                    >404 Page</a
-                                                >
-                                            </li>
-                                        </ul>
+                                        <router-link :to="{ name: 'home' }"
+                                            >Home</router-link
+                                        >
                                     </li>
                                     <li class="dropdown">
-                                        <a href="#">Services</a>
-                                        <ul>
-                                            <li>
-                                                <a href="service.html"
-                                                    >Service</a
-                                                >
-                                            </li>
-                                            <li>
-                                                <a href="">Service Single</a>
-                                            </li>
-                                        </ul>
+                                        <router-link
+                                            :to="{
+                                                name: 'service_price',
+                                                params: {
+                                                    slug: serviceHomeLink,
+                                                },
+                                            }"
+                                            >Services</router-link
+                                        >
                                     </li>
                                     <li>
-                                        <a href="price.html">Pricing</a>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a href="#">Blog</a>
-                                        <ul>
-                                            <li>
-                                                <a href="blog-grid.html"
-                                                    >Blog Grid</a
-                                                >
-                                            </li>
-                                            <li>
-                                                <a href="blog-left.html"
-                                                    >Blog Left Column</a
-                                                >
-                                            </li>
-                                            <li>
-                                                <a href="blog-right.html"
-                                                    >Blog Right Column</a
-                                                >
-                                            </li>
-                                            <li>
-                                                <a href="blog-details.html"
-                                                    >Blog Single</a
-                                                >
-                                            </li>
-                                        </ul>
+                                        <router-link :to="{ name: 'pricing' }"
+                                            >Pricing</router-link
+                                        >
                                     </li>
                                     <li>
-                                        <a href="contact.html">Contact</a>
+                                        <router-link :to="{ name: 'faq' }"
+                                            >FAQ</router-link
+                                        >
+                                    </li>
+                                    <li>
+                                        <router-link :to="{ name: 'career' }"
+                                            >Career</router-link
+                                        >
+                                    </li>
+                                    <li>
+                                        <router-link :to="{ name: 'contact' }"
+                                            >Contact</router-link
+                                        >
                                     </li>
                                 </ul>
                             </div>
                         </nav>
                         <div class="search-box-area">
-                            <div class="search-toggle">
-                                <router-link :to="{ name: 'cart' }">{{
-                                    cartCount
-                                }}</router-link>
-                            </div>
+                            <router-link :to="{ name: 'cart' }">
+                                <div class="search-toggle">
+                                    <i class="fa fa-cart-plus mr-1"></i
+                                    >{{ cartCount }}
+                                </div>
+                            </router-link>
                             <!-- <div class="search-box">
                                 <form
                                     method="post"
@@ -358,6 +346,7 @@ export default {
             pages: [],
             serviceHomeLink: 'slug',
             user: [],
+            isMenubarOpen: false,
         };
     },
     methods: {
@@ -373,6 +362,9 @@ export default {
         async pageLink() {
             const result = await axios.get('/hf/pages');
             this.pages = result.data;
+        },
+        toggleMenubar() {
+            this.isMenubarOpen = !this.isMenubarOpen;
         },
     },
     computed: {

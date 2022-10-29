@@ -8,6 +8,7 @@ use App\Models\Deliveryman;
 use App\Models\Order;
 use App\Models\OrderDetails;
 use App\Models\OrderIdentity;
+use App\Models\OrderNotification;
 use App\Models\Partner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -61,6 +62,12 @@ class OrderManagementController extends Controller {
             ]);
         }
 
+        OrderNotification::create([
+            'order_id' => $order->id,
+            'city_id'  => $request->city_id,
+            'area_id'  => $request->area_id,
+        ]);
+
         return response()->json(['status' => true]);
 
     }
@@ -73,8 +80,11 @@ class OrderManagementController extends Controller {
     }
 
     public function invoice($id) {
-        $data                = [];
-        $data['order']       = $order       = Order::where('user_id', Auth::id())->where('id', $id)->with('orderIdentity', 'orderDetails', 'partner')->first();
+        $data = [];
+
+        $order = Order::where('id', $id)->with('orderIdentity', 'orderDetails', 'partner')->first();
+
+        $data['order']       = $order;
         $data['deliveryman'] = Deliveryman::where('id', $order->deliveryman_id)->first()->name;
         $data['partner']     = Partner::where('id', $order->partner_id)->first()->name;
 

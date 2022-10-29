@@ -121,6 +121,50 @@
                                     </div>
                                 </div>
 
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="exampleInputFile">Top Large Banner</label>
+                                            <div class="input-group">
+                                                <div class="custom-file">
+                                                    <input type="file" class="form-control" name="top_large_banner"
+                                                        id="exampleInputFile">
+                                                </div>
+                                            </div>
+                                            @if (!empty($info->top_large_banner))
+                                                <img src="{{ asset($info->top_large_banner) }}" height="100" width="200" alt="">
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="exampleInputFile">Play Logo</label>
+                                            <div class="input-group">
+                                                <div class="custom-file">
+                                                    <input type="file" class="form-control" name="play_logo"
+                                                        id="exampleInputFile">
+                                                </div>
+                                            </div>
+                                            @if (!empty($info->play_logo))
+                                                <img src="{{ asset($info->play_logo) }}" height="100" width="200" alt="">
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="exampleInputFile">Bottom App Image</label>
+                                            <div class="input-group">
+                                                <div class="custom-file">
+                                                    <input type="file" class="form-control" name="bottom_app_image"
+                                                        id="exampleInputFile">
+                                                </div>
+                                            </div>
+                                            @if (!empty($info->bottom_app_image))
+                                                <img src="{{ asset($info->bottom_app_image) }}" height="100" width="200" alt="">
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">App Link</label>
                                     <textarea name="app_link" class="form-control" rows="2"

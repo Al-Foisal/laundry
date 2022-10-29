@@ -72,7 +72,7 @@
                         </form>
                     </div>
                     <div class="col-md-7 image">
-                        <img src="frontend/images/slider/3.jpg" class="rounded"/>
+                        <img :src="company.top_large_banner" class="rounded" />
                     </div>
                 </div>
             </div>
@@ -90,47 +90,43 @@
                         <span>Services</span>
                     </h2>
                 </div>
-                    <!-- :autoplay="4000"
+                <!-- :autoplay="4000"
                     :wrap-around="true" -->
-                <Carousel
-                    :settings="settings"
-                    :breakpoints="breakpoints"
-                >
-                    <Slide v-for="service in services" :key="service.id">
-                        <div class="carousel__item">
-                            <router-link
-                                :to="{
-                                    name: 'service_price',
-                                    params: {
-                                        slug: service.slug,
-                                    },
-                                }"
-                            >
-                                <div
-                                    class="single-help-content second-column"
-                                    style="margin: 1rem"
-                                >
-                                    <div>
-                                        <img
-                                            :src="service.image"
-                                            style="
-                                                width: 40%;
-                                                height: 115px;
-                                                margin: auto;
-                                            "
-                                        />
-                                    </div>
-                                    <div class="top-content">
-                                        <h3>{{ service.name }}</h3>
-                                    </div>
-                                    <div class="text">
-                                        {{ service.details }}
-                                    </div>
+                <div class="row">
+                    <div
+                        class="col-sm-4"
+                        v-for="service in services"
+                        :key="service.id"
+                    >
+                        <router-link
+                            :to="{
+                                name: 'service_price',
+                                params: {
+                                    slug: service.slug,
+                                },
+                            }"
+                        >
+                            <div class="single-help-content second-column">
+                                <div>
+                                    <img
+                                        :src="service.image"
+                                        style="
+                                            width: 40%;
+                                            height: 115px;
+                                            margin: auto;
+                                        "
+                                    />
                                 </div>
-                            </router-link>
-                        </div>
-                    </Slide>
-                </Carousel>
+                                <div class="top-content">
+                                    <h3>{{ service.name }}</h3>
+                                </div>
+                                <div class="text">
+                                    {{ service.details }}
+                                </div>
+                            </div>
+                        </router-link>
+                    </div>
+                </div>
             </div>
         </section>
         <!-- help-section end -->
@@ -303,10 +299,7 @@
                                     class="single-apps-box"
                                 >
                                     <div class="icon-box">
-                                        <img
-                                            src="images/home/apps2.png"
-                                            alt=""
-                                        />
+                                        <img :src="company.play_logo" alt="" />
                                     </div>
                                     <div class="text">Get it on</div>
                                     <h4>Google Play</h4>
@@ -317,7 +310,7 @@
                     <div class="col-md-6 col-sm-12 col-xs-12 video-column">
                         <div class="video-gallery">
                             <img
-                                src="images/65749.png"
+                                :src="company.bottom_app_image"
                                 style="height: 42rem; width: 70%"
                                 alt="Awesome Video Gallery"
                             />

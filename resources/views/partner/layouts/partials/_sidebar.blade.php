@@ -32,6 +32,23 @@
                     </a>
                 </li>
 
+                @php
+                    $seen = App\Models\OrderNotification::where(
+                        'partner_id',
+                        auth()
+                            ->guard('partner')
+                            ->user()->id,
+                    )
+                        ->where('is_partner_seen', 0)
+                        ->count();
+                @endphp
+                <li class="nav-item">
+                    <a href="{{ route('partner.orderPlace') }}" class="nav-link">
+                        <i class="nav-icon far fa-circle text-warning"></i>
+                        <p>Notification ({{ $seen }})</p>
+                    </a>
+                </li>
+
                 @foreach ($partner_order_status as $ps)
                     @php
                         $count = DB::table('orders')

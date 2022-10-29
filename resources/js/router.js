@@ -5,6 +5,11 @@ import TheRegister from './pages/TheRegister.vue';
 import ServicePrice from './pages/ServicePrice.vue';
 import TheCart from './pages/TheCart.vue';
 import TheCheckout from './pages/TheCheckout.vue';
+import TheFaq from './pages/TheFaq.vue';
+import TheCareer from './pages/TheCareer.vue';
+import CareerDetails from './pages/CareerDetails.vue';
+import TheContact from './pages/TheContact.vue';
+import ThePricing from './pages/ThePricing.vue';
 import DahboardLayout from './pages/user/Default.vue';
 import Dashboard from './pages/user/Dashboard.vue';
 import TheInvoice from './pages/user/TheInvoice.vue';
@@ -36,6 +41,49 @@ const routes = [
         props: true,
         meta: {
             title: 'Single service price - Laundry Man BD',
+        },
+    },
+
+    {
+        path: '/pricing',
+        component: ThePricing,
+        name: 'pricing',
+        meta: {
+            title: 'All Pricing - Laundry Man BD',
+        },
+    },
+    {
+        path: '/faq',
+        component: TheFaq,
+        name: 'faq',
+        meta: {
+            title: 'FAQ - Laundry Man BD',
+        },
+    },
+    {
+        path: '/career',
+        component: TheCareer,
+        name: 'career',
+        meta: {
+            title: 'Career - Laundry Man BD',
+        },
+    },
+    {
+        path: '/career/:id',
+        component: CareerDetails,
+        name: 'career_details',
+        props: true,
+        meta: {
+            title: 'Career Details - Laundry Man BD',
+        },
+    },
+    {
+        path: '/cantact-us',
+        component: TheContact,
+        name: 'contact',
+        props: true,
+        meta: {
+            title: 'Contact us - Laundry Man BD',
         },
     },
     {

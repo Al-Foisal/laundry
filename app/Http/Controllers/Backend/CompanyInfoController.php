@@ -26,7 +26,7 @@ class CompanyInfoController extends Controller {
             return back()->with('toast_error', $validator->messages()->all())->withInput();
         }
 
-        CompanyInfo::updateOrcreate(
+        CompanyInfo::updateOrCreate(
             ['id' => 1],
             [
                 'about'       => $request->about,
@@ -59,7 +59,7 @@ class CompanyInfoController extends Controller {
                 $final_name1 = $image_url . $img_gen . '.' . $image_ext;
 
                 $image_file->move($image_url, $img_name);
-                CompanyInfo::updateOrcreate(
+                CompanyInfo::updateOrCreate(
                     ['id' => 1],
                     [
                         'logo' => $final_name1,
@@ -83,7 +83,7 @@ class CompanyInfoController extends Controller {
                 $final_name1 = $image_url . $img_gen . '.' . $image_ext;
 
                 $image_file->move($image_url, $img_name);
-                CompanyInfo::updateOrcreate(
+                CompanyInfo::updateOrCreate(
                     ['id' => 1],
                     [
                         'favicon' => $final_name1,
@@ -107,11 +107,83 @@ class CompanyInfoController extends Controller {
                 $final_name1 = $image_url . $img_gen . '.' . $image_ext;
 
                 $image_file->move($image_url, $img_name);
-                CompanyInfo::updateOrcreate(
+                CompanyInfo::updateOrCreate(
                     ['id' => 1],
                     [
                         'app'      => $final_name1,
                         'app_link' => $request->app_link,
+                    ]
+                );
+            }
+
+        }
+
+        if ($request->hasFile('top_large_banner')) {
+
+            $image_file = $request->file('top_large_banner');
+
+            if ($image_file) {
+
+                $img_gen   = hexdec(uniqid());
+                $image_url = 'images/logo/';
+                $image_ext = strtolower($image_file->getClientOriginalExtension());
+
+                $img_name    = $img_gen . '.' . $image_ext;
+                $final_name1 = $image_url . $img_gen . '.' . $image_ext;
+
+                $image_file->move($image_url, $img_name);
+                CompanyInfo::updateOrCreate(
+                    ['id' => 1],
+                    [
+                        'top_large_banner' => $final_name1,
+                    ]
+                );
+            }
+
+        }
+
+        if ($request->hasFile('play_logo')) {
+
+            $image_file = $request->file('play_logo');
+
+            if ($image_file) {
+
+                $img_gen   = hexdec(uniqid());
+                $image_url = 'images/logo/';
+                $image_ext = strtolower($image_file->getClientOriginalExtension());
+
+                $img_name    = $img_gen . '.' . $image_ext;
+                $final_name1 = $image_url . $img_gen . '.' . $image_ext;
+
+                $image_file->move($image_url, $img_name);
+                CompanyInfo::updateOrCreate(
+                    ['id' => 1],
+                    [
+                        'play_logo' => $final_name1,
+                    ]
+                );
+            }
+
+        }
+
+        if ($request->hasFile('bottom_app_image')) {
+
+            $image_file = $request->file('bottom_app_image');
+
+            if ($image_file) {
+
+                $img_gen   = hexdec(uniqid());
+                $image_url = 'images/logo/';
+                $image_ext = strtolower($image_file->getClientOriginalExtension());
+
+                $img_name    = $img_gen . '.' . $image_ext;
+                $final_name1 = $image_url . $img_gen . '.' . $image_ext;
+
+                $image_file->move($image_url, $img_name);
+                CompanyInfo::updateOrcreate(
+                    ['id' => 1],
+                    [
+                        'bottom_app_image' => $final_name1,
                     ]
                 );
             }

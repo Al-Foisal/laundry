@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Area;
 use App\Models\City;
 use App\Models\Deliveryman;
 use Illuminate\Http\Request;
@@ -18,17 +19,22 @@ class DeliverymanController extends Controller {
 
     public function create() {
         $cities = City::where('status', 1)->get();
+        $areas  = Area::where('status', 1)->get();
 
-        return view('backend.deliveryman.create', compact('cities'));
+        return view('backend.deliveryman.create', compact('cities', 'areas'));
     }
 
     public function store(Request $request) {
         $validator = Validator::make($request->all(), [
-            'name'    => 'required',
-            'phone'   => 'required',
-            'email'   => 'required|email|unique:deliverymen',
-            'address' => 'required',
-            'image'   => 'nullable|image|mimes:jpeg,png,jpg,gif',
+            'name'       => 'required',
+            'phone'      => 'required',
+            'city_id'    => 'required',
+            'area_id'    => 'required',
+            'commission' => 'required',
+            'password'   => 'required|min:8',
+            'email'      => 'required|email|unique:deliverymen',
+            'address'    => 'required',
+            'image'      => 'nullable|image|mimes:jpeg,png,jpg,gif',
         ]);
 
         if ($validator->fails()) {
@@ -52,32 +58,40 @@ class DeliverymanController extends Controller {
             }
 
         }
+        $deliveryman = new Deliveryman();
 
-        Deliveryman::create([
-            'name'     => $request->name,
-            'phone'    => $request->phone,
-            'email'    => $request->email,
-            'password' => bcrypt($request->password),
-            'address'  => $request->address,
-            'image'    => $final_name1 ?? '',
-        ]);
+        $deliveryman->name       = $request->name;
+        $deliveryman->phone      = $request->phone;
+        $deliveryman->email      = $request->email;
+        $deliveryman->password   = bcrypt($request->password);
+        $deliveryman->image      = $final_name1 ?? '';
+        $deliveryman->address    = $request->address;
+        $deliveryman->city_id    = $request->city_id;
+        $deliveryman->area_id    = $request->area_id;
+        $deliveryman->commission = $request->commission;
+        $deliveryman->save();
 
         return to_route('admin.deliveryman.index')->withToastSuccess('Deliveryman added successfully');
     }
 
     public function edit(Deliveryman $deliveryman) {
         $cities = City::where('status', 1)->get();
-        return view('backend.deliveryman.edit', compact('deliveryman','cities'));
+        $areas  = Area::where('status', 1)->get();
+
+        return view('backend.deliveryman.edit', compact('deliveryman', 'cities','areas'));
     }
 
     public function update(Request $request, Deliveryman $deliveryman) {
         $validator = Validator::make($request->all(), [
-            'name'     => 'required',
-            'phone'    => 'required',
-            'password' => 'nullable|min:8',
-            'email'    => 'required|email|unique:deliverymen,email,' . $deliveryman->id,
-            'address'  => 'required',
-            'image'    => 'nullable|image|mimes:jpeg,png,jpg,gif',
+            'name'       => 'required',
+            'phone'      => 'required',
+            'city_id'    => 'required',
+            'area_id'    => 'required',
+            'commission' => 'required',
+            'password'   => 'nullable|min:8',
+            'email'      => 'required|email|unique:deliverymen,email,' . $deliveryman->id,
+            'address'    => 'required',
+            'image'      => 'nullable|image|mimes:jpeg,png,jpg,gif',
         ]);
 
         if ($validator->fails()) {
@@ -118,10 +132,13 @@ class DeliverymanController extends Controller {
 
         }
 
-        $deliveryman->name    = $request->name;
-        $deliveryman->phone   = $request->phone;
-        $deliveryman->email   = $request->email;
-        $deliveryman->address = $request->address;
+        $deliveryman->name       = $request->name;
+        $deliveryman->phone      = $request->phone;
+        $deliveryman->email      = $request->email;
+        $deliveryman->address    = $request->address;
+        $deliveryman->city_id    = $request->city_id;
+        $deliveryman->area_id    = $request->area_id;
+        $deliveryman->commission = $request->commission;
         $deliveryman->save();
 
         return to_route('admin.deliveryman.index')->withToastSuccess('Deliveryman updated successfully');

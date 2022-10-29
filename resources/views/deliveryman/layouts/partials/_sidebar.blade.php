@@ -32,6 +32,25 @@
                         </p>
                     </a>
                 </li>
+                @php
+                    $seen = App\Models\OrderNotification::where(
+                        'deliveryman_id',
+                        auth()
+                            ->guard('deliveryman')
+                            ->user()->id,
+                    )
+                        ->where('is_deliveryman_seen', 0)
+                        ->count();
+                    $unseen = App\Models\OrderNotification::Where('deliveryman_id', null)
+                        ->where('is_deliveryman_seen', 0)
+                        ->count();
+                @endphp
+                <li class="nav-item">
+                    <a href="{{ route('deliveryman.orderPlace') }}" class="nav-link">
+                        <i class="nav-icon far fa-circle text-warning"></i>
+                        <p>Notification ({{ $seen+$unseen }})</p>
+                    </a>
+                </li>
 
                 @foreach ($deliveryman_order_status as $ds)
                     @php
@@ -65,6 +84,8 @@
                         <p>Profile</p>
                     </a>
                 </li>
+
+
 
                 {{-- company info --}}
                 {{-- <li class="nav-item">

@@ -7,6 +7,7 @@ use App\Models\Area;
 use App\Models\City;
 use App\Models\Deliveryman;
 use App\Models\Order;
+use App\Models\OrderNotification;
 use App\Models\OrderStatus;
 use App\Models\Partner;
 use Illuminate\Http\Request;
@@ -25,6 +26,11 @@ class DeliverymanOrderController extends Controller {
         $order->deliveryman_amount = ($order->total * $d_man->commission) / 100;
         $order->deliveryman_due    = $order->paid_amount;
         $order->save();
+
+        $dn                      = OrderNotification::where('order_id', $order->id)->first();
+        $dn->deliveryman_id      = $d_man->id;
+        $dn->is_deliveryman_seen = 1;
+        $dn->save();
 
         return to_route('deliveryman.dashboard')->withToastSuccess('The order assign to you successfully.');
 
@@ -60,6 +66,11 @@ class DeliverymanOrderController extends Controller {
         $order->status = $request->order_status_id;
         $order->save();
 
+        $pn                  = OrderNotification::where('order_id', $order->id)->first();
+        $pn->order_status_id = $request->order_status_id;
+        $pn->is_partner_seen = 0;
+        $pn->save();
+
         return back()->withToastSuccess('Order status updated successfully.');
     }
 
@@ -69,6 +80,10 @@ class DeliverymanOrderController extends Controller {
         $order->partner_id     = $request->partner_id;
         $order->partner_amount = $order->total - (($order->total * $partner->commission) / 100);
         $order->save();
+
+        $pn             = OrderNotification::where('order_id', $order->id)->first();
+        $pn->partner_id = $partner->id;
+        $pn->save();
 
         return back()->withToastSuccess('Partner assign successfully.');
     }
@@ -89,12 +104,13 @@ class DeliverymanOrderController extends Controller {
 
     public function payCompanyDue(Request $request) {
         $validator = Validator::make($request->all(), [
-            'order_id'    => 'required',
+            'order_id' => 'required',
         ]);
 
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->messages()->all())->withInput();
         }
+
         foreach ($request->order_id as $item) {
             $order                         = Order::find($item);
             $order->user_payment_status    = 1;
@@ -106,13 +122,12 @@ class DeliverymanOrderController extends Controller {
         return back()->withToastSuccess('Company due paid successfully');
     }
 
-    public function profile()
-    {
+    public function profile() {
         $deliveryman = Deliveryman::find(auth()->guard('deliveryman')->user()->id);
-        $areas = Area::where('city_id',$deliveryman->city_id)->get();
-        $cities = City::all();
+        $areas       = Area::where('city_id', $deliveryman->city_id)->get();
+        $cities      = City::all();
 
-        return view('deliveryman.profile', compact('deliveryman','areas','cities'));
+        return view('deliveryman.profile', compact('deliveryman', 'areas', 'cities'));
     }
 
 }

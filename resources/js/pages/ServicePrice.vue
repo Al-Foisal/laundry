@@ -20,49 +20,46 @@
         >
             <div class="container">
                 <div class="sec-title">
-                    <!-- <h2>
+                    <h2>
                         Our
                         <span>Services</span>
-                    </h2> -->
+                    </h2>
                 </div>
                 <!-- :autoplay="4000"
                     :wrap-around="true" -->
-                <Carousel :settings="settings" :breakpoints="breakpoints">
-                    <Slide v-for="service in services" :key="service.id">
-                        <div class="carousel__item">
-                            <router-link
-                                :to="{
-                                    name: 'service_price',
-                                    params: {
-                                        slug: service.slug,
-                                    },
-                                }"
+                <div class="row">
+                    <div class="col-sm-4" v-for="service in services" :key="service.id">
+                        <router-link
+                            :to="{
+                                name: 'service_price',
+                                params: {
+                                    slug: service.slug,
+                                },
+                            }"
+                        >
+                            <div
+                                class="single-help-content second-column"
                             >
-                                <div
-                                    class="single-help-content second-column"
-                                    style="margin: 1rem"
-                                >
-                                    <div>
-                                        <img
-                                            :src="'/' + service.image"
-                                            style="
-                                                width: 40%;
-                                                height: 115px;
-                                                margin: auto;
-                                            "
-                                        />
-                                    </div>
-                                    <div class="top-content">
-                                        <h3>{{ service.name }}</h3>
-                                    </div>
-                                    <div class="text">
-                                        {{ service.details }}
-                                    </div>
+                                <div>
+                                    <img
+                                        :src="'/'+service.image"
+                                        style="
+                                            width: 40%;
+                                            height: 115px;
+                                            margin: auto;
+                                        "
+                                    />
                                 </div>
-                            </router-link>
-                        </div>
-                    </Slide>
-                </Carousel>
+                                <div class="top-content">
+                                    <h3>{{ service.name }}</h3>
+                                </div>
+                                <div class="text">
+                                    {{ service.details }}
+                                </div>
+                            </div>
+                        </router-link>
+                    </div>
+                </div>
             </div>
         </section>
         <!-- help-section end -->
@@ -97,13 +94,14 @@
                                 &nbsp;
                                 <span>{{ item.name }}</span>
                             </div>
-                            <div class="pricing-btn">
+                            <button class="btn btn-success btn-block" @click="addToCart(item)">Get Plan</button>
+                            <!-- <div class="pricing-btn">
                                 <a
                                     href="javascript:void(0)"
                                     @click="addToCart(item)"
                                     >Get Plan</a
                                 >
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <!-- <div class="apps-content">

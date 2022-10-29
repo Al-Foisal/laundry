@@ -64,7 +64,8 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <div class="input-group mb-3">
+                                        <div class="form-group">
+                                            <label for="email">City*</label>
                                             <select class="form-control" placeholder="City" name="city_id" required>
                                                 <option value="">Select city</option>
                                                 @foreach ($cities as $city)
@@ -74,18 +75,24 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="input-group mb-3">
+                                        <div class="form-group">
+                                            <label for="email">Area*</label>
                                             <select class="form-control" placeholder="Area" name="area_id" required>
                                                 <option value="">Select area</option>
+                                                @foreach ($areas as $area)
+                                                    <option value="{{ $area->id }}">{{ $area->name }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
+                                    
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="address">Address*</label>
-                                            <textarea class="form-control" id="address" rows="2" placeholder="Enter address" name="address" required></textarea>
+                                            <label for="commission">Commission*</label>
+                                            <input type="number" class="form-control" id="commission"
+                                                placeholder="Enter commission" name="commission" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -95,6 +102,10 @@
                                                 placeholder="Enter image" name="image">
                                         </div>
                                     </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Address*</label>
+                                    <textarea class="form-control" id="address" rows="2" placeholder="Enter address" name="address" required></textarea>
                                 </div>
                             </div>
 
@@ -112,9 +123,12 @@
         <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
-@endsection
-
-@section('jsScript')
+    <!-- jQuery -->
+    <script src="{{ asset('backend/js/jquery.min.js') }}"></script>
+    <!-- Bootstrap 4 -->
+    <script src="{{ asset('backend/js/bootstrap.bundle.min.js') }}"></script>
+    <!-- AdminLTE App -->
+    <script src="{{ asset('backend/js/adminlte.min.js') }}"></script>
     {{-- submenu dependency --}}
     <script type="text/javascript">
         $(document).ready(function() {
@@ -129,7 +143,7 @@
                             var d = $('select[name="area_id"]').empty();
                             $.each(data, function(key, value) {
                                 $('select[name="area_id"]').append(
-                                    '<option value="" selected>==Select==</option><option value="' +
+                                    '<option value="' +
                                     value.id + '">' + value
                                     .name + '</option>');
                             });
@@ -141,4 +155,8 @@
             });
         });
     </script>
+@endsection
+
+@section('jsScript')
+    
 @endsection

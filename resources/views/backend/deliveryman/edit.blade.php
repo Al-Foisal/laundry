@@ -67,8 +67,33 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="address">Address*</label>
-                                            <textarea class="form-control" id="address" rows="2" placeholder="Enter address" name="address" required>{{ $deliveryman->address }}</textarea>
+                                            <label for="email">City*</label>
+                                            <select class="form-control" placeholder="City" name="city_id" required>
+                                                <option value="">Select city</option>
+                                                @foreach ($cities as $city)
+                                                    <option value="{{ $city->id }}" @if($deliveryman->city_id == $city->id) selected @endif>{{ $city->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="email">Area*</label>
+                                            <select class="form-control" placeholder="Area" name="area_id" required>
+                                                <option value="">Select area</option>
+                                                @foreach ($areas as $area)
+                                                    <option value="{{ $area->id }}" @if($deliveryman->area_id == $area->id) selected @endif>{{ $area->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="commission">Commission*</label>
+                                            <input type="number" class="form-control" id="commission"
+                                                value="{{ $deliveryman->commission }}" name="commission" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -79,6 +104,10 @@
                                                 <img src="{{ asset($deliveryman->image) }}" style="height:100px;width:100px;">
                                         </div>
                                     </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Address*</label>
+                                    <textarea class="form-control" id="address" rows="2" placeholder="Enter address" name="address" required>{{ $deliveryman->address }}</textarea>
                                 </div>
                             </div>
                             <!-- /.card-body -->
@@ -95,4 +124,29 @@
         <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('select[name="city_id"]').on('change', function() {
+                var city_id = $(this).val();
+                if (city_id) {
+                    $.ajax({
+                        url: "{{ url('/g/get-area/') }}/" + city_id,
+                        type: "GET",
+                        dataType: "json",
+                        success: function(data) {
+                            var d = $('select[name="area_id"]').empty();
+                            $.each(data, function(key, value) {
+                                $('select[name="area_id"]').append(
+                                    '<option value="' +
+                                    value.id + '">' + value
+                                    .name + '</option>');
+                            });
+                        },
+                    });
+                } else {
+                    alert('danger');
+                }
+            });
+        });
+    </script>
 @endsection

@@ -34,12 +34,4 @@ class DeliverymanAurhController extends Controller {
 
     }
 
-    public function logout(Request $request) {
-        Auth::guard('deliveryman')->logout();
-
-        return redirect()
-            ->route('deliveryman.auth.login')
-            ->withToastSuccess('Logout Successful!!');
-    }
-
 }

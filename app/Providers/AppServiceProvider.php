@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\CompanyInfo;
+use App\Models\OrderNotification;
 use App\Models\OrderStatus;
 use Illuminate\Support\ServiceProvider;
 
@@ -30,5 +31,7 @@ class AppServiceProvider extends ServiceProvider {
 
         $deliveryman_order_status = OrderStatus::all();
         view()->share('deliveryman_order_status', $deliveryman_order_status);
+
+        
     }
 }

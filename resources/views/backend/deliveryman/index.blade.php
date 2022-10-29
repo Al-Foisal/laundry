@@ -37,6 +37,9 @@
                                         <th>Image</th>
                                         <th>Name</th>
                                         <th>Phone</th>
+                                        <th>City</th>
+                                        <th>Area</th>
+                                        <th>Commission</th>
                                         <th>Statue</th>
                                         <th>Created_at</th>
                                     </tr>
@@ -46,24 +49,24 @@
                                         <tr>
                                             <td class="d-flex justify-content-around">
                                                 <a href="{{ route('admin.deliveryman.edit', $deliveryman) }}"
-                                                    class="btn btn-info btn-xs"> <i class="fas fa-edit"></i> Edit</a>
+                                                    class="btn btn-info btn-xs" title="Edit"> <i class="fas fa-edit"></i></a>
                                                 @if ($deliveryman->status === 1)
                                                     <form action="{{ route('admin.deliveryman.inactive', $deliveryman) }}"
                                                         method="post">
                                                         @csrf
-                                                        <button type="submit"
+                                                        <button title="Inactive" type="submit"
                                                             onclick="return(confirm('Are you sure want to INACTIVE this item?'))"
                                                             class="btn btn-danger btn-xs"> <i
-                                                                class="far fa-thumbs-down"></i> Inactive
+                                                                class="far fa-thumbs-down"></i>
                                                         </button>
                                                     </form>
                                                 @else
                                                     <form action="{{ route('admin.deliveryman.active', $deliveryman) }}"
                                                         method="post">
                                                         @csrf
-                                                        <button type="submit"
+                                                        <button title="Active" type="submit"
                                                             onclick="return(confirm('Are you sure want to Active this item?'))"
-                                                            class="btn btn-info btn-xs"> <i class="far fa-thumbs-up"></i> Active
+                                                            class="btn btn-info btn-xs"> <i class="far fa-thumbs-up"></i>
                                                         </button>
                                                     </form>
                                                 @endif
@@ -73,6 +76,9 @@
                                             </td>
                                             <td>{{ $deliveryman->name }}</td>
                                             <td>{{ $deliveryman->phone }}</td>
+                                            <td>{{ $deliveryman->city->name }}</td>
+                                            <td>{{ $deliveryman->area->name }}</td>
+                                            <td>{{ $deliveryman->commission }}%</td>
                                             <td>{{ $deliveryman->status==1?'Active':'Inactive' }}</td>
                                             <td>{{ $deliveryman->created_at }}</td>
                                         </tr>

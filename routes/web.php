@@ -7,8 +7,11 @@ use App\Http\Controllers\Backend\AdminResetPasswordController;
 use App\Http\Controllers\Backend\AreaController;
 use App\Http\Controllers\Backend\CityController;
 use App\Http\Controllers\Backend\CompanyInfoController;
+use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\DeliverymanController;
+use App\Http\Controllers\Backend\FAQController;
+use App\Http\Controllers\Backend\JobController;
 use App\Http\Controllers\Backend\PackageController;
 use App\Http\Controllers\Backend\PageController;
 use App\Http\Controllers\Backend\PartnerManagementController;
@@ -78,6 +81,7 @@ Route::prefix('/partner')->name('partner.')->middleware('auth:partner')->group(f
     Route::get('/dashboard', [PartnerDashboardController::class, 'dashboard'])->name('dashboard');
     Route::get('/profile', [PartnerDashboardController::class, 'profile'])->name('profile');
     Route::put('/profile/{partner}', [PartnerDashboardController::class, 'profileUpdate'])->name('profileUpdate');
+    Route::get('/order-place', [PartnerDashboardController::class, 'orderPlace'])->name('orderPlace');
 
     Route::controller(PartnerOrderController::class)->group(function () {
         Route::get('/status-order/{status}', 'statusOrder')->name('statusOrder');
@@ -113,9 +117,13 @@ Route::prefix('/deliveryman')->name('deliveryman.auth.')->middleware('guest:deli
 });
 
 Route::prefix('/deliveryman')->name('deliveryman.')->middleware('auth:deliveryman')->group(function () {
-    Route::post('/logout', [DeliverymanAurhController::class, 'logout'])->name('auth.logout');
+    Route::controller(DeliverymanDashboardController::class)->group(function () {
 
-    Route::get('/dashboard', [DeliverymanDashboardController::class, 'dashboard'])->name('dashboard');
+        Route::post('/logout', 'logout')->name('auth.logout');
+
+        Route::get('/dashboard', 'dashboard')->name('dashboard');
+        Route::get('/order-place', 'orderPlace')->name('orderPlace');
+    });
 
     Route::controller(DeliverymanOrderController::class)->group(function () {
         Route::get('/order-accept/{id}', 'orderAccept')->name('orderAccept');
@@ -236,10 +244,22 @@ Route::prefix('/admin')->name('admin.')->middleware('auth:admin')->group(functio
     });
 
     Route::resources([
+        'coupons'           => CouponController::class,
+        'faqs'              => FAQController::class,
         'services'          => ServiceController::class,
         'working_processes' => WorkingProcessController::class,
         'why_bests'         => WhyBestController::class,
     ]);
+
+    Route::controller(JobController::class)->prefix('/job')->as('job.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/store', 'store')->name('store');
+        Route::get('/show/{id}', 'show')->name('show');
+        Route::get('/edit/{id}', 'edit')->name('edit');
+        Route::put('/update/{id}', 'update')->name('update');
+        Route::delete('/delete/{id}', 'delete')->name('delete');
+    });
 
     //company info
     Route::controller(CompanyInfoController::class)->group(function () {
