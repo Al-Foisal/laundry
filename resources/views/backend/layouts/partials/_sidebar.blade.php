@@ -104,6 +104,12 @@
                                 <p>Partner List</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.partner.create') }}" class="nav-link">
+                                <i class="nav-icon far fa-circle text-danger"></i>
+                                <p>Create Partner</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 

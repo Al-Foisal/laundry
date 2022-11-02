@@ -84,7 +84,7 @@
                                                 <img src="{{ asset($partner->image) }}" style="height:50px;width:50px;">
                                             </td>
                                             <td>{{ $partner->status == 1 ? 'Active' : 'Inactive' }}</td>
-                                            <td>{{ $partner->commission }}%</td>
+                                            <td>{{ $partner->commission }}</td>
                                             <td>{{ $partner->name }}</td>
                                             <td>{{ $partner->phone }}</td>
                                             <td>{{ $partner->email }}</td>

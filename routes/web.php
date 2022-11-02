@@ -195,6 +195,8 @@ Route::prefix('/admin')->name('admin.')->middleware('auth:admin')->group(functio
 
     Route::controller(PartnerManagementController::class)->prefix('/partner')->as('partner.')->group(function () {
         Route::get('/list', 'list')->name('list');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/store', 'store')->name('store');
         Route::get('/edit_commission/{partner}', 'editCommission')->name('edit_commission');
         Route::patch('/update_commission/{partner}', 'updateCommission')->name('update_commission');
         Route::post('/active/{partner}', 'active')->name('active');

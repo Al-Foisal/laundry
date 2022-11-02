@@ -34,7 +34,8 @@ class DeliverymanController extends Controller {
             'password'   => 'required|min:8',
             'email'      => 'required|email|unique:deliverymen',
             'address'    => 'required',
-            'image'      => 'nullable|image|mimes:jpeg,png,jpg,gif',
+            'image'      => 'required|image|mimes:jpeg,png,jpg,gif',
+            'nid'        => 'required|image|mimes:jpeg,png,jpg,gif',
         ]);
 
         if ($validator->fails()) {
@@ -58,13 +59,53 @@ class DeliverymanController extends Controller {
             }
 
         }
+
+        if ($request->hasFile('nid')) {
+
+            $image_file = $request->file('nid');
+
+            if ($image_file) {
+
+                $img_gen   = hexdec(uniqid());
+                $image_url = 'images/deliveryman/';
+                $image_ext = strtolower($image_file->getClientOriginalExtension());
+
+                $img_name = $img_gen . '.' . $image_ext;
+                $nid      = $image_url . $img_gen . '.' . $image_ext;
+
+                $image_file->move($image_url, $img_name);
+            }
+
+        }
+
+        if ($request->hasFile('e_nid')) {
+
+            $image_file = $request->file('e_nid');
+
+            if ($image_file) {
+
+                $img_gen   = hexdec(uniqid());
+                $image_url = 'images/deliveryman/';
+                $image_ext = strtolower($image_file->getClientOriginalExtension());
+
+                $img_name = $img_gen . '.' . $image_ext;
+                $e_nid    = $image_url . $img_gen . '.' . $image_ext;
+
+                $image_file->move($image_url, $img_name);
+            }
+
+        }
+
         $deliveryman = new Deliveryman();
 
         $deliveryman->name       = $request->name;
         $deliveryman->phone      = $request->phone;
+        $deliveryman->e_phone    = $request->e_phone;
         $deliveryman->email      = $request->email;
         $deliveryman->password   = bcrypt($request->password);
-        $deliveryman->image      = $final_name1 ?? '';
+        $deliveryman->image      = $final_name1 ?? 'Profile';
+        $deliveryman->nid        = $nid ?? 'nid';
+        $deliveryman->e_nid      = $e_nid ?? 'e_nid';
         $deliveryman->address    = $request->address;
         $deliveryman->city_id    = $request->city_id;
         $deliveryman->area_id    = $request->area_id;
@@ -78,7 +119,7 @@ class DeliverymanController extends Controller {
         $cities = City::where('status', 1)->get();
         $areas  = Area::where('status', 1)->get();
 
-        return view('backend.deliveryman.edit', compact('deliveryman', 'cities','areas'));
+        return view('backend.deliveryman.edit', compact('deliveryman', 'cities', 'areas'));
     }
 
     public function update(Request $request, Deliveryman $deliveryman) {
@@ -125,6 +166,60 @@ class DeliverymanController extends Controller {
 
         }
 
+        if ($request->hasFile('nid')) {
+
+            $image_file = $request->file('nid');
+
+            if ($image_file) {
+
+                $image_path = public_path($deliveryman->image);
+
+                if (File::exists($image_path)) {
+                    File::delete($image_path);
+                }
+
+                $img_gen   = hexdec(uniqid());
+                $image_url = 'images/deliveryman/';
+                $image_ext = strtolower($image_file->getClientOriginalExtension());
+
+                $img_name = $img_gen . '.' . $image_ext;
+                $nid      = $image_url . $img_gen . '.' . $image_ext;
+
+                $image_file->move($image_url, $img_name);
+                $deliveryman->nid = $nid;
+                $deliveryman->save();
+
+            }
+
+        }
+
+        if ($request->hasFile('e_nid')) {
+
+            $image_file = $request->file('e_nid');
+
+            if ($image_file) {
+
+                $image_path = public_path($deliveryman->image);
+
+                if (File::exists($image_path)) {
+                    File::delete($image_path);
+                }
+
+                $img_gen   = hexdec(uniqid());
+                $image_url = 'images/deliveryman/';
+                $image_ext = strtolower($image_file->getClientOriginalExtension());
+
+                $img_name = $img_gen . '.' . $image_ext;
+                $e_nid    = $image_url . $img_gen . '.' . $image_ext;
+
+                $image_file->move($image_url, $img_name);
+                $deliveryman->e_nid = $e_nid;
+                $deliveryman->save();
+
+            }
+
+        }
+
         if ($request->password) {
 
             $deliveryman->password = bcrypt($request->password);
@@ -134,6 +229,7 @@ class DeliverymanController extends Controller {
 
         $deliveryman->name       = $request->name;
         $deliveryman->phone      = $request->phone;
+        $deliveryman->e_phone    = $request->e_phone;
         $deliveryman->email      = $request->email;
         $deliveryman->address    = $request->address;
         $deliveryman->city_id    = $request->city_id;

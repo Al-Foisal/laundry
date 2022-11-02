@@ -56,6 +56,7 @@ class PartnerAuthController extends Controller {
             'password' => 'required',
             'address'  => 'required',
             'image'    => 'required|image|mimes:jpeg,png,jpg,gif',
+            'nid'      => 'required|image|mimes:jpeg,png,jpg,gif',
         ]);
 
         if ($validator->fails()) {
@@ -80,20 +81,61 @@ class PartnerAuthController extends Controller {
 
         }
 
+        if ($request->hasFile('nid')) {
+
+            $image_file = $request->file('nid');
+
+            if ($image_file) {
+
+                $img_gen   = hexdec(uniqid());
+                $image_url = 'images/partner/';
+                $image_ext = strtolower($image_file->getClientOriginalExtension());
+
+                $img_name = $img_gen . '.' . $image_ext;
+                $nid      = $image_url . $img_gen . '.' . $image_ext;
+
+                $image_file->move($image_url, $img_name);
+            }
+
+        }
+
+        if ($request->hasFile('e_nid')) {
+
+            $image_file = $request->file('e_nid');
+
+            if ($image_file) {
+
+                $img_gen   = hexdec(uniqid());
+                $image_url = 'images/partner/';
+                $image_ext = strtolower($image_file->getClientOriginalExtension());
+
+                $img_name = $img_gen . '.' . $image_ext;
+                $e_nid    = $image_url . $img_gen . '.' . $image_ext;
+
+                $image_file->move($image_url, $img_name);
+            }
+
+        }
+
         $partner           = new Partner();
         $partner->name     = $request->name;
         $partner->phone    = $request->phone;
+        $partner->e_phone  = $request->e_phone;
         $partner->email    = $request->email;
         $partner->password = bcrypt($request->password);
+        $partner->j_from   = $request->j_from;
+        $partner->c_to     = $request->c_to;
         $partner->city_id  = $request->city_id;
         $partner->area_id  = $request->area_id;
         $partner->address  = $request->address;
-        $partner->image    = $final_name1 ?? '';
+        $partner->image    = $final_name1 ?? 'Profile';
+        $partner->nid      = $nid ?? 'NID';
+        $partner->e_nid    = $e_nid ?? 'E_NID';
         $partner->status   = 0;
         $partner->save();
 
         return to_route('partner.auth.login')
-        ->withToastSuccess('Registration successfull! An admin will contact you within 24 hours.');
+            ->withToastSuccess('Registration successfull! An admin will contact you within 24 hours.');
     }
 
     public function editPartner(Partner $partner) {
@@ -101,12 +143,16 @@ class PartnerAuthController extends Controller {
     }
 
     public function updatePartner(Request $request, Partner $partner) {
+        dd($request->all());
         $validator = Validator::make($request->all(), [
-            'name'    => 'required',
-            'phone'   => 'required',
-            'email'   => 'required|email|unique:partners,email,' . $partner->id,
-            'address' => 'required',
-            'image'   => 'nullable|image|mimes:jpeg,png,jpg,gif',
+            'name'     => 'required',
+            'phone'    => 'required',
+            'e_phone'  => 'required',
+            'email'    => 'required|email|unique:partners,email,' . $partner->id,
+            'password' => 'nullable|min:8',
+            'address'  => 'required',
+            'image'    => 'nullable|image|mimes:jpeg,png,jpg,gif',
+            'nid'      => 'nullable|image|mimes:jpeg,png,jpg,gif',
         ]);
 
         if ($validator->fails()) {
@@ -140,8 +186,68 @@ class PartnerAuthController extends Controller {
 
         }
 
+        if ($request->hasFile('nid')) {
+
+            $image_file = $request->file('nid');
+
+            if ($image_file) {
+
+                $image_path = public_path($partner->image);
+
+                if (File::exists($image_path)) {
+                    File::delete($image_path);
+                }
+
+                $img_gen   = hexdec(uniqid());
+                $image_url = 'images/partner/';
+                $image_ext = strtolower($image_file->getClientOriginalExtension());
+
+                $img_name = $img_gen . '.' . $image_ext;
+                $nid      = $image_url . $img_gen . '.' . $image_ext;
+
+                $image_file->move($image_url, $img_name);
+                $partner->nid = $nid;
+                $partner->save();
+
+            }
+
+        }
+
+        if ($request->hasFile('e_nid')) {
+
+            $image_file = $request->file('e_nid');
+
+            if ($image_file) {
+
+                $image_path = public_path($partner->image);
+
+                if (File::exists($image_path)) {
+                    File::delete($image_path);
+                }
+
+                $img_gen   = hexdec(uniqid());
+                $image_url = 'images/partner/';
+                $image_ext = strtolower($image_file->getClientOriginalExtension());
+
+                $img_name = $img_gen . '.' . $image_ext;
+                $e_nid    = $image_url . $img_gen . '.' . $image_ext;
+
+                $image_file->move($image_url, $img_name);
+                $partner->e_nid = $e_nid;
+                $partner->save();
+
+            }
+
+        }
+
+        if ($request->password) {
+            $partner->password = bcrypt($request->password);
+        }
+
         $partner->name    = $request->name;
         $partner->phone   = $request->phone;
+        $partner->e_phone = $request->e_phone;
+        $partner->c_to    = $request->c_to;
         $partner->email   = $request->email;
         $partner->address = $request->address;
         $partner->update();

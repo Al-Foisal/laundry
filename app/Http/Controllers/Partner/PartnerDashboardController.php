@@ -32,10 +32,12 @@ class PartnerDashboardController extends Controller {
         $validator = Validator::make($request->all(), [
             'name'     => 'required',
             'phone'    => 'required',
-            'password' => 'nullable|min:8',
+            'e_phone'  => 'required',
             'email'    => 'required|email|unique:partners,email,' . $partner->id,
+            'password' => 'nullable|min:8',
             'address'  => 'required',
             'image'    => 'nullable|image|mimes:jpeg,png,jpg,gif',
+            'nid'      => 'nullable|image|mimes:jpeg,png,jpg,gif',
         ]);
 
         if ($validator->fails()) {
@@ -69,22 +71,73 @@ class PartnerDashboardController extends Controller {
 
         }
 
+        if ($request->hasFile('nid')) {
+
+            $image_file = $request->file('nid');
+
+            if ($image_file) {
+
+                $image_path = public_path($partner->image);
+
+                if (File::exists($image_path)) {
+                    File::delete($image_path);
+                }
+
+                $img_gen   = hexdec(uniqid());
+                $image_url = 'images/partner/';
+                $image_ext = strtolower($image_file->getClientOriginalExtension());
+
+                $img_name = $img_gen . '.' . $image_ext;
+                $nid      = $image_url . $img_gen . '.' . $image_ext;
+
+                $image_file->move($image_url, $img_name);
+                $partner->nid = $nid;
+                $partner->save();
+
+            }
+
+        }
+
+        if ($request->hasFile('e_nid')) {
+
+            $image_file = $request->file('e_nid');
+
+            if ($image_file) {
+
+                $image_path = public_path($partner->image);
+
+                if (File::exists($image_path)) {
+                    File::delete($image_path);
+                }
+
+                $img_gen   = hexdec(uniqid());
+                $image_url = 'images/partner/';
+                $image_ext = strtolower($image_file->getClientOriginalExtension());
+
+                $img_name = $img_gen . '.' . $image_ext;
+                $e_nid    = $image_url . $img_gen . '.' . $image_ext;
+
+                $image_file->move($image_url, $img_name);
+                $partner->e_nid = $e_nid;
+                $partner->save();
+
+            }
+
+        }
+
         if ($request->password) {
-
             $partner->password = bcrypt($request->password);
-            $partner->save();
-
         }
 
         $partner->name    = $request->name;
         $partner->phone   = $request->phone;
+        $partner->e_phone = $request->e_phone;
+        $partner->c_to    = $request->c_to;
         $partner->email   = $request->email;
         $partner->address = $request->address;
-        $partner->city_id = $request->city_id;
-        $partner->area_id = $request->area_id;
-        $partner->save();
+        $partner->update();
 
-        return back();
+        return back()->withToastSuccess('Your profile updated successfully!!');
     }
 
     public function orderPlace() {

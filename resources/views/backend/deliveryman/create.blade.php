@@ -30,18 +30,25 @@
                             @csrf
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="name">Name*</label>
                                             <input type="text" class="form-control" id="name"
                                                 placeholder="Enter name" name="name" required>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="phone">Phone*</label>
                                             <input type="text" class="form-control" id="phone"
                                                 placeholder="Enter phone" name="phone" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="phone">Emergency Phone*</label>
+                                            <input type="text" class="form-control" id="phone"
+                                                placeholder="Enter emergency phone" name="e_phone" required>
                                         </div>
                                     </div>
                                 </div>
@@ -100,6 +107,23 @@
                                             <label for="image">Image*</label>
                                             <input type="file" class="form-control" id="image"
                                                 placeholder="Enter image" name="image">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="image">NID*</label>
+                                            <input type="file" class="form-control" id="image"
+                                                placeholder="Enter image" name="nid">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="image">NID one of emergency</label>
+                                            <input type="file" class="form-control" id="image"
+                                                placeholder="Enter image" name="e_nid">
                                         </div>
                                     </div>
                                 </div>

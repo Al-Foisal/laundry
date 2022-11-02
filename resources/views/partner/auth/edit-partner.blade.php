@@ -16,14 +16,22 @@
                 <form action="{{ route('partner.auth.updatePartner', $partner) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <label for="">Full name*</label>
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control" value="{{ $partner->name }}" name="name">
+                                <input type="text" class="form-control" value="{{ $partner->name }}" name="name" required>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <label for="">Personal phone*</label>
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control" value="{{ $partner->phone }}" name="phone">
+                                <input type="text" class="form-control" value="{{ $partner->phone }}" name="phone" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="">Emergency phone*</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" value="{{ $partner->e_phone }}" name="e_phone" required>
                             </div>
                         </div>
                     </div>
