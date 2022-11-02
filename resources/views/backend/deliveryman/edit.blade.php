@@ -32,18 +32,26 @@
                             <div class="card-body">
 
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="name">Name*</label>
                                             <input type="text" class="form-control" id="name"
                                                 value="{{ $deliveryman->name }}" name="name" required>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="phone">Phone*</label>
                                             <input type="text" class="form-control" id="phone"
                                             value="{{ $deliveryman->phone }}" name="phone" required>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="phone">Emergency Phone*</label>
+                                            <input type="text" class="form-control" id="phone"
+                                                placeholder="Enter emergency phone" name="e_phone" value="{{ $deliveryman->e_phone }}" required>
                                         </div>
                                     </div>
                                 </div>
@@ -102,6 +110,25 @@
                                             <input type="file" class="form-control" id="image"
                                                 placeholder="Enter image" name="image">
                                                 <img src="{{ asset($deliveryman->image) }}" style="height:100px;width:100px;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="nid">NID*</label>
+                                            <input type="file" class="form-control" id="nid"
+                                                placeholder="Enter nid" name="nid" >
+                                                <img src="{{ asset($deliveryman->nid) }}" style="height:100px;width:100px;">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="e_nid">NID for one of Emergency</label>
+                                            <input type="file" class="form-control" id="e_nid"
+                                                placeholder="Enter e_nid" name="e_nid">
+                                                <img src="{{ asset($deliveryman->e_nid) }}" style="height:100px;width:100px;">
                                         </div>
                                     </div>
                                 </div>
