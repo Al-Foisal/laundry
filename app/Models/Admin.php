@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Admin extends Authenticatable {
-    use  HasFactory;
+    use HasFactory;
+    protected $dates = ['j_from', 'c_to'];
 
     /**
      * The attributes that are mass assignable.

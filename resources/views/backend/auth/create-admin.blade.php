@@ -16,18 +16,21 @@
             <div class="card-body" style="width: 80%;margin:auto;">
                 <p class="login-box-msg">Register a new membership</p>
 
-                <form action="{{ route('admin.auth.storeAdmin') }}" method="post"  enctype="multipart/form-data">
+                <form action="{{ route('admin.auth.storeAdmin') }}" method="post" enctype="multipart/form-data">
                     @csrf
+                    <label for="email">Full name*</label>
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" placeholder="Full name" name="name">
                     </div>
                     <div class="row">
                         <div class="col-md-6">
+                            <label for="">Email</label>
                             <div class="input-group mb-3">
                                 <input type="email" class="form-control" placeholder="Email" name="email">
                             </div>
                         </div>
                         <div class="col-md-6">
+                            <label for="">Password</label>
                             <div class="input-group mb-3">
                                 <input type="password" class="form-control" placeholder="Password" name="password">
                             </div>
@@ -35,21 +38,47 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">
+                            <label for="">Phone</label>
                             <div class="input-group mb-3">
                                 <input type="text" class="form-control" placeholder="Phone Number" name="phone">
                             </div>
                         </div>
                         <div class="col-md-6">
+                            <label for="">Image</label>
                             <div class="input-group mb-3">
                                 <input type="file" class="form-control" name="image">
                             </div>
                         </div>
                     </div>
+                    @php
+                        $dt = strtotime(date('Y-m-d'));
+                        $to = date('Y-m-d', strtotime('+10 year', $dt));
+                        
+                        $e_from = date('Y-m-d', strtotime('+1 day', $dt));
+                    @endphp
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="email">Joining date*</label>
+                            <div class="input-group mb-3">
+                                <input type="date" class="form-control" value="{{ date('Y-m-d') }}"
+                                    placeholder="Joining date" name="j_from" min="{{ date('Y-m-d') }}"
+                                    max="{{ $to }}" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="email">End contract*</label>
+                            <div class="input-group mb-3">
+                                <input type="date" class="form-control" placeholder="End Contract" name="c_to"
+                                    min="{{ $e_from }}" max="{{ $to }}" required>
+                            </div>
+                        </div>
+                    </div>
+                    <label for="">Address</label>
                     <div class="input-group mb-3">
                         <textarea type="text" class="form-control" placeholder="Address" name="address"></textarea>
                     </div>
 
-                    <div class="card card-success">
+                    {{-- <div class="card card-success">
                         <div class="card-header">
                             <h3 class="card-title">Respective Admin Role / Access</h3>
                         </div>
@@ -150,7 +179,7 @@
                             </div>
                         </div>
 
-                    </div>
+                    </div> --}}
 
 
                     <div class="row">

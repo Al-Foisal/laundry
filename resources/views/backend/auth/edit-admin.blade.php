@@ -42,10 +42,33 @@
                             @endif
                         </div>
                     </div>
+                    @php
+                        $dt = strtotime(date('Y-m-d'));
+                        $to = date('Y-m-d', strtotime('+10 year', $dt));
+                        
+                        $e_from = date('Y-m-d', strtotime('+1 day', $dt));
+                    @endphp
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="email">Joining date*</label>
+                            <div class="input-group mb-3">
+                                <input type="date" class="form-control" value="{{ date('Y-m-d') }}"
+                                    value="{{ $admin->j_from->format('Y-m-d') }}" min="{{ date('Y-m-d') }}"
+                                    max="{{ $to }}" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="email">End contract*</label>
+                            <div class="input-group mb-3">
+                                <input type="date" class="form-control" value="{{ $admin->c_to->format('Y-m-d') }}"
+                                    name="c_to" min="{{ $e_from }}" max="{{ $to }}" required>
+                            </div>
+                        </div>
+                    </div>
                     <div class="input-group mb-3">
                         <textarea type="text" rows="2" class="form-control" name="address">{{ $admin->address }}</textarea>
                     </div>
-                    <div class="card card-success">
+                    {{-- <div class="card card-success">
                         <div class="card-header">
                             <h3 class="card-title">Respective Admin Role / Access</h3>
                         </div>
@@ -147,7 +170,7 @@
                             </div>
                         </div>
 
-                    </div>
+                    </div> --}}
                     <hr>
                     <div class="row">
                         <div class="col-8">

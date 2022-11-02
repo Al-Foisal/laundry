@@ -26,7 +26,15 @@ class AdminAuthController extends Controller {
         }
 
         if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
-            return redirect()->route('admin.dashboard');
+
+            if (auth()->guard('admin')->user()->c_to >= today()) {
+                return redirect()->route('admin.dashboard');
+            } else {
+                auth()->guard('admin')->logout();
+
+                return to_route('admin.auth.login')->withToastError('Your account has been expired!');
+            }
+
         }
 
         return redirect()->route('admin.auth.login')->withToastError('Invalid Credentitials!!');
@@ -55,6 +63,8 @@ class AdminAuthController extends Controller {
             'phone'    => 'required|numeric',
             'email'    => 'required|email|unique:admins',
             'password' => 'required',
+            'j_from'   => 'required',
+            'c_to'     => 'required',
             'address'  => 'required',
             'image'    => 'nullable|image|mimes:jpeg,png,jpg,gif',
         ]);
@@ -86,6 +96,8 @@ class AdminAuthController extends Controller {
         $admin->phone    = $request->phone;
         $admin->email    = $request->email;
         $admin->password = bcrypt($request->password);
+        $admin->j_from   = $request->j_from;
+        $admin->c_to     = $request->c_to;
         $admin->address  = $request->address;
         $admin->image    = $final_name1 ?? '';
         $admin->status   = 1;
@@ -103,6 +115,8 @@ class AdminAuthController extends Controller {
             'name'    => 'required',
             'phone'   => 'required',
             'email'   => 'required|email|unique:admins,email,' . $admin->id,
+            'j_from'  => 'required',
+            'c_to'    => 'required',
             'address' => 'required',
             'image'   => 'nullable|image|mimes:jpeg,png,jpg,gif',
         ]);
