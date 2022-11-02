@@ -23,7 +23,7 @@ class DeliverymanOrderController extends Controller {
         }
 
         $order->deliveryman_id     = $d_man->id;
-        $order->deliveryman_amount = ($order->total * $d_man->commission) / 100;
+        $order->deliveryman_amount = $d_man->commission;
         $order->deliveryman_due    = $order->paid_amount;
         $order->save();
 
@@ -47,7 +47,10 @@ class DeliverymanOrderController extends Controller {
             return $query->select(['id', 'name', 'phone', 'address']);
         },
         ])->get();
-        $data['partners'] = Partner::where('status', 1)->where('area_id', auth()->guard('deliveryman')->user()->area_id)->get();
+        $data['partners'] = Partner::where('status', 1)
+            ->where('area_id', auth()->guard('deliveryman')->user()->area_id)
+            ->where('c_to','>=',today())
+            ->get();
 
         $data['next_status'] = OrderStatus::where('deliveryman', 1)->get();
 
@@ -78,7 +81,7 @@ class DeliverymanOrderController extends Controller {
         $partner               = Partner::find($request->partner_id);
         $order                 = Order::find($request->order_id);
         $order->partner_id     = $request->partner_id;
-        $order->partner_amount = $order->total - (($order->total * $partner->commission) / 100);
+        $order->partner_amount = $order->total - $partner->commission;
         $order->save();
 
         $pn             = OrderNotification::where('order_id', $order->id)->first();

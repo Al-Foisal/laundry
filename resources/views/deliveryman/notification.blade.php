@@ -30,7 +30,7 @@
                                 <span class="info-box-icon bg-info"><i class="far fa-envelope"></i></span>
 
                                 <div class="info-box-content">
-                                    <span class="info-box-text">New order placed. <a
+                                    <span class="info-box-text">New order placed. <a class="btn btn-info btn-sm"
                                             href="{{ route('deliveryman.orderAccept', auth()->guard('deliveryman')->user()->id) }}">Click
                                             here</a> to accept.</span>
                                     <span class="info-box-number">{{ $order->created_at->diffForHumans() }}</span>
