@@ -55,21 +55,21 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Price*</label>
-                                            <input type="text" class="form-control" id="exampleInputEmail1"
+                                            <input type="text" class="form-control" 
                                                 placeholder="Enter price" name="price" id="price" required>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Discount</label>
-                                            <input type="text" class="form-control" id="exampleInputEmail1"
+                                            <input type="text" class="form-control" 
                                                 placeholder="Enter discount" name="discount" id="discount">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Discount price</label>
-                                            <input type="text" class="form-control" id="exampleInputEmail1"
+                                            <input type="text" class="form-control" 
                                                 placeholder="Enter discount price" id="discount_price" readonly>
                                         </div>
                                     </div>
@@ -152,11 +152,10 @@
             function sum() {
                 var price = $("#price").val();
                 var discount = $("#discount").val();
-                alert('ll')
 
                 var discount_price = ((price * discount) / 100);
                 if (discount > 0) {
-                    $("#discount_price").val(price - discount_price);
+                    $("#discount_price").val(parseInt(price - discount_price));
                 } else {
                     $("#discount_price").val(null);
                 }

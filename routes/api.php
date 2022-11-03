@@ -27,6 +27,7 @@ Route::controller(HeaderFooterController::class)->prefix('/hf')->group(function 
     Route::get('/company-info', 'companyInfo');
     Route::get('/services', 'services');
     Route::get('/pages', 'pages');
+    Route::post('/store-visitor-count','storeVisitorCount');
 });
 
 Route::controller(FrontendController::class)->prefix('/front')->group(function () {

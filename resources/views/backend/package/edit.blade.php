@@ -163,7 +163,7 @@
 
                 var discount_price = ((price * discount) / 100);
                 if (discount > 0) {
-                    $("#discount_price").val(price - discount_price);
+                    $("#discount_price").val(parseInt(price - discount_price));
                 } else {
                     $("#discount_price").val(null);
                 }

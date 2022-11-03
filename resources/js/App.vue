@@ -323,7 +323,7 @@
                     <div class="container">
                         <div class="copyright">
                             © {{ new Date().getFullYear() }}
-                            Laundry Man BD Limited . All Rights Reserved.
+                            Laundry Man BD Limited . All Rights Reserved. {{ company.visitor }}
                         </div>
                     </div>
                 </div>
@@ -366,6 +366,10 @@ export default {
         toggleMenubar() {
             this.isMenubarOpen = !this.isMenubarOpen;
         },
+        async storeVisitorCount(){
+            await axios.post('/hf/store-visitor-count');
+
+        }
     },
     computed: {
         cartCount() {
@@ -373,10 +377,12 @@ export default {
         },
     },
     mounted() {
+        this.storeVisitorCount();
         this.companyInfo();
         this.servicesLink();
         this.pageLink();
         this.user = this.$store.getters['user'];
+
     },
 };
 </script>
