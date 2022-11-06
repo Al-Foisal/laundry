@@ -36,8 +36,10 @@
                                 <div class="alert alert-danger alert-dismissible">
 
                                     <h4><i class="icon fas fa-ban"></i> Alert!</h4>
-                                    Dear laundry partner, your account is <span class="badge bg-light">INACTIVE</span> now. If you are new or fetching
-                                    this unexpected alert please contact with us as soon as possible other wise you not get any order. <br>
+                                    Dear laundry partner, your account is <span class="badge bg-light">INACTIVE</span> now.
+                                    If you are new or fetching
+                                    this unexpected alert please contact with us as soon as possible other wise you not get
+                                    any order. <br>
                                     Mobile: {{ $company->phone_one }}
                                 </div>
                             </div>
@@ -52,35 +54,213 @@
 
     <section class="content">
         <div class="container-fluid">
+            <h4>Order Received Today</h4>
             <div class="row">
-                @foreach ($next_status as $status)
-                    @php
-                        $count = DB::table('orders')
-                            ->where([
-                                'partner_id' => auth()
-                                    ->guard('partner')
-                                    ->user()->id,
-                                'status' => $status->id,
-                            ])
-                            ->count();
-                    @endphp
-                    <div class="col-lg-3 col-6">
-                        <!-- small card -->
-                        <div class="small-box bg-info">
-                            <div class="inner">
-                                <h3>{{ $count }}</h3>
+                <div class="col-md-6">
+                    <!-- small card -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>{{ $order_received->count() }}</h3>
 
-                                <p>{{ $status->name }}</p>
-                            </div>
-                            <div class="icon">
-                                <i class="fas fa-shopping-cart"></i>
-                            </div>
-                            <a href="{{ route('partner.statusOrder', $status->slug) }}" class="small-box-footer">
-                                More info <i class="fas fa-arrow-circle-right"></i>
-                            </a>
+                            <p>Order</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-shopping-cart"></i>
                         </div>
                     </div>
-                @endforeach
+                </div>
+                <div class="col-md-6">
+                    <!-- small card -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>
+                                @php
+                                    $count = 0;
+                                @endphp
+                                @foreach ($order_received as $item)
+                                    @foreach ($item->orderDetails as $details)
+                                        @php
+                                            
+                                            $count = $count + $details->quantity;
+                                        @endphp
+                                    @endforeach
+                                @endforeach
+                                {{ $count }}
+                            </h3>
+
+                            <p>Cloths</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr>
+    <section class="content">
+        <div class="container-fluid">
+            <h4>Delivery Pending</h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- small card -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>{{ $delivery_pending->count() }}</h3>
+
+                            <p>Order</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <!-- small card -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>
+                                @php
+                                    $count = 0;
+                                @endphp
+                                @foreach ($delivery_pending as $item)
+                                    @foreach ($item->orderDetails as $details)
+                                        @php
+                                            
+                                            $count = $count + $details->quantity;
+                                        @endphp
+                                    @endforeach
+                                @endforeach
+                                {{ $count }}
+                            </h3>
+
+                            <p>Cloths</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr>
+    <section class="content">
+        <div class="container-fluid">
+            <h4>Delivered Today</h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- small card -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>{{ $delivered_today->count() }}</h3>
+
+                            <p>Order</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <!-- small card -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>
+                                @php
+                                    $count = 0;
+                                @endphp
+                                @foreach ($delivered_today as $item)
+                                    @foreach ($item->orderDetails as $details)
+                                        @php
+                                            
+                                            $count = $count + $details->quantity;
+                                        @endphp
+                                    @endforeach
+                                @endforeach
+                                {{ $count }}
+                            </h3>
+
+                            <p>Cloths</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr>
+    <section class="content">
+        <div class="container-fluid">
+            <h4>Payment: Monthly and Half Month</h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- small card -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>{{ $monthly_payment_received }}</h3>
+
+                            <p>Payment received by company</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <!-- small card -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>
+                                {{ $monthly_payment_pending }}
+                            </h3>
+
+                            <p>Payment pending</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr>
+    <section class="content">
+        <div class="container-fluid">
+            <h4>Payment: {{ date('d') < $half_month ? 'First ' : 'Second ' }} Half Month</h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- small card -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>{{ $half_monthly_payment_received }}</h3>
+
+                            <p>Payment received by company</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <!-- small card -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>
+                                {{ $half_monthly_payment_pending }}
+                            </h3>
+
+                            <p>Payment pending</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

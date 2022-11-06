@@ -22,34 +22,151 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                @foreach ($next_status as $status)
-                    @php
-                        $count = DB::table('orders')
-                            ->where([
-                                'deliveryman_id' => auth()
-                                    ->guard('deliveryman')
-                                    ->user()->id,
-                                'status' => $status->id,
-                            ])
-                            ->count();
-                    @endphp
-                    <div class="col-lg-3 col-6">
-                        <!-- small card -->
-                        <div class="small-box bg-info">
-                            <div class="inner">
-                                <h3>{{ $count }}</h3>
 
-                                <p>{{ $status->name }}</p>
-                            </div>
-                            <div class="icon">
-                                <i class="fas fa-shopping-cart"></i>
-                            </div>
-                            <a href="{{ route('deliveryman.statusOrder', $status->slug) }}" class="small-box-footer">
-                                More info <i class="fas fa-arrow-circle-right"></i>
-                            </a>
+                <div class="col-md-4">
+                    <!-- small card -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>{{ $pickup_pending }}</h3>
+
+                            <p>Pick up pending</p>
                         </div>
+                        <div class="icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <a href="{{ route('deliveryman.statusOrder', 'pending') }}" class="small-box-footer">
+                            More info <i class="fas fa-arrow-circle-right"></i>
+                        </a>
                     </div>
-                @endforeach
+                </div>
+                <div class="col-md-4">
+                    <!-- small card -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>{{ $pickup_done }}</h3>
+
+                            <p>Pick up done</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <a href="{{ route('deliveryman.statusOrder', 'cloth-received') }}" class="small-box-footer">
+                            More info <i class="fas fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <!-- small card -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>{{ $handover_to_laundry_partner }}</h3>
+
+                            <p>Handover to Laundry Partner</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <a href="{{ route('deliveryman.statusOrder', 'cloths-are-in-laundry-partner') }}" class="small-box-footer">
+                            More info <i class="fas fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <!-- small card -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>{{ $pending_at_laundry_partner }}</h3>
+
+                            <p>Pending at Laundry Partner</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <a href="{{ route('deliveryman.statusOrder', 'ready-to-deliver') }}" class="small-box-footer">
+                            More info <i class="fas fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <!-- small card -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>{{ $received_from_laundry_partner }}</h3>
+
+                            <p>Received from Laundry Partner</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <a href="{{ route('deliveryman.statusOrder', 'delivered-from-lp') }}" class="small-box-footer">
+                            More info <i class="fas fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <!-- small card -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>{{ $delivered_to_customer }}</h3>
+
+                            <p>Delivered to customer</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <a href="{{ route('deliveryman.statusOrder', 'successfully-delivered') }}" class="small-box-footer">
+                            More info <i class="fas fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <!-- small card -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>{{ $delivery_pending }}</h3>
+
+                            <p>Delivery pending</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <a href="{{ route('deliveryman.statusOrder', 'delivered-from-lp') }}" class="small-box-footer">
+                            More info <i class="fas fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <!-- small card -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>{{ $cancel_from_customer }}</h3>
+
+                            <p>Cancel by customer</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <a href="{{ route('deliveryman.statusOrder', 'cancel') }}" class="small-box-footer">
+                            More info <i class="fas fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <!-- small card -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>{{ $return }}</h3>
+
+                            <p>Return (partial)</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <a href="{{ route('deliveryman.statusOrder', 'return') }}" class="small-box-footer">
+                            More info <i class="fas fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

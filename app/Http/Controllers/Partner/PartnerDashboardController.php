@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Partner;
 use App\Http\Controllers\Controller;
 use App\Models\Area;
 use App\Models\City;
+use App\Models\Order;
 use App\Models\OrderNotification;
 use App\Models\OrderStatus;
 use App\Models\Partner;
@@ -14,8 +15,71 @@ use Illuminate\Support\Facades\Validator;
 
 class PartnerDashboardController extends Controller {
     public function dashboard() {
-        $data                = [];
-        $data['next_status'] = OrderStatus::where('partner', 1)->get();
+        $data                   = [];
+        $data['next_status']    = OrderStatus::where('partner', 1)->get();
+        $data['order_received'] = Order::select('id')->where('partner_id', auth()->guard('partner')->user()->id)->where('status', 3)->whereDate('updated_at', '=', date("Y-m-d"))->with('orderDetails')->get();
+
+        $data['delivery_pending'] = Order::select('id')->where('partner_id', auth()->guard('partner')->user()->id)->where('status', 4)->with('orderDetails')->get();
+
+        $data['delivered_today'] = Order::select('id')->where('partner_id', auth()->guard('partner')->user()->id)->where('status', 5)->whereDate('updated_at', '=', date("Y-m-d"))->with('orderDetails')->get();
+
+        $data['monthly_payment_received'] = Order::where('partner_id', auth()->guard('partner')->user()->id)
+            ->whereMonth('updated_at', '=', date("m"))
+            ->whereYear('updated_at', '=', date("Y"))
+            ->where('status', 6)
+            ->where('partner_payment_status', 1)
+            ->sum('partner_amount');
+        $data['monthly_payment_pending'] = Order::where('partner_id', auth()->guard('partner')->user()->id)
+            ->whereMonth('updated_at', '=', date("m"))
+            ->whereYear('updated_at', '=', date("Y"))
+            ->where('status', 6)
+            ->where('partner_payment_status', 0)
+            ->sum('partner_amount');
+
+        $month              = date("m");
+        $year               = date("y");
+        $day                = cal_days_in_month(CAL_GREGORIAN, $month, $year) + 1;
+        $data['half_month'] = $half_month = (int) round($day / 2);
+
+        if (date("d") < $half_month) {
+            $data['half_monthly_payment_received'] = Order::where('partner_id', auth()->guard('partner')->user()->id)
+                ->whereDay('updated_at', '>=', 1)
+                ->whereDay('updated_at', '<=', $half_month)
+                ->whereMonth('updated_at', '=', date("m"))
+                ->whereYear('updated_at', '=', date("Y"))
+                ->where('status', 6)
+                ->where('partner_payment_status', 1)
+                ->sum('partner_amount');
+
+            $data['half_monthly_payment_pending'] = Order::where('partner_id', auth()->guard('partner')->user()->id)
+                ->whereDay('updated_at', '>=', 1)
+                ->whereDay('updated_at', '<=', $half_month)
+                ->whereMonth('updated_at', '=', date("m"))
+                ->whereYear('updated_at', '=', date("Y"))
+                ->where('status', 6)
+                ->where('partner_payment_status', 0)
+                ->sum('partner_amount');
+        } else {
+            $data['half_monthly_payment_received'] = Order::where('partner_id', auth()->guard('partner')->user()->id)
+                ->whereDay('updated_at', '>=', $half_month)
+                ->whereDay('updated_at', '<=', $day)
+                ->whereMonth('updated_at', '=', date("m"))
+                ->whereYear('updated_at', '=', date("Y"))
+                ->where('status', 6)
+                ->where('partner_payment_status', 1)
+                ->sum('partner_amount');
+
+            $data['half_monthly_payment_pending'] = Order::where('partner_id', auth()->guard('partner')->user()->id)
+                ->whereDay('updated_at', '>=', $half_month)
+                ->whereDay('updated_at', '<=', $day)
+                ->whereMonth('updated_at', '=', date("m"))
+                ->whereYear('updated_at', '=', date("Y"))
+                ->where('status', 6)
+                ->where('partner_payment_status', 0)
+                ->sum('partner_amount');
+        }
+
+        // dd($data);
 
         return view('partner.dashboard', $data);
     }

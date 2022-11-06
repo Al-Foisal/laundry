@@ -49,7 +49,7 @@ class DeliverymanOrderController extends Controller {
         ])->get();
         $data['partners'] = Partner::where('status', 1)
             ->where('area_id', auth()->guard('deliveryman')->user()->area_id)
-            ->where('c_to','>=',today())
+            ->where('c_to', '>=', today())
             ->get();
 
         $data['next_status'] = OrderStatus::where('deliveryman', 1)->get();
@@ -130,7 +130,10 @@ class DeliverymanOrderController extends Controller {
         $areas       = Area::where('city_id', $deliveryman->city_id)->get();
         $cities      = City::all();
 
-        return view('deliveryman.profile', compact('deliveryman', 'areas', 'cities'));
+        $due_from_company     = Order::where('deliveryman_id', auth()->guard('deliveryman')->user()->id)->where('status', 6)->where('deliveryman_payment_status', 0)->sum('deliveryman_amount');
+        $payment_from_company = Order::where('deliveryman_id', auth()->guard('deliveryman')->user()->id)->where('status', 6)->where('deliveryman_payment_status', 1)->sum('deliveryman_amount');
+
+        return view('deliveryman.profile', compact('deliveryman', 'areas', 'cities','due_from_company','payment_from_company'));
     }
 
 }

@@ -23,19 +23,19 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-6">
-                    <form action="">
+                    <form action="{{ route('admin.dashboard') }}">
                         <div class="row">
                             <div class="col-md-4">
                                 <label for="">From</label>
                                 <div class="form-group">
-                                    <input type="date" class="form-control" name="d_from" required>
+                                    <input type="date" class="form-control" name="date_from" required>
                                 </div>
 
                             </div>
                             <div class="col-md-4">
                                 <label for="">To</label>
                                 <div class="form-group">
-                                    <input type="date" class="form-control" name="d_to" required>
+                                    <input type="date" class="form-control" name="date_to" required>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -51,27 +51,29 @@
                     <div class="row">
                         <div class="col-md-4">
                             <label for="">Today Data</label>
-                            <a href="" class="btn btn-outline-info btn-block">Today</a>
+                            <a href="{{ route('admin.dashboard', ['selected' => 'today']) }}"
+                                class="btn btn-outline-info btn-block">Today</a>
 
                         </div>
                         <div class="col-md-4">
                             <label for="">This Month</label>
-                            <a href="" class="btn btn-outline-info btn-block">Month</a>
+                            <a href="{{ route('admin.dashboard', ['selected' => 'month']) }}"
+                                class="btn btn-outline-info btn-block">Month</a>
                         </div>
                         <div class="col-md-4">
                             <label for="">Current Year</label>
-                            <a href="" class="btn btn-outline-info btn-block">Year</a>
+                            <a href="{{ route('admin.dashboard', ['selected' => 'year']) }}"
+                                class="btn btn-outline-info btn-block">Year</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
     <hr>
-
     <section class="content">
         <div class="container-fluid">
+            <h4>Recent placed order</h4>
             <div class="row">
                 <div class="col-md-4">
                     <!-- small card -->
@@ -115,11 +117,9 @@
             </div>
         </div>
     </section>
-
     <hr>
-
     <section class="content">
-        
+
         <div class="container-fluid">
             <h4>Cloths received- total quantity for Iron, wash, dry clean</h4>
             <div class="row">
@@ -166,9 +166,8 @@
         </div>
     </section>
     <hr>
-
     <section class="content">
-        
+
         <div class="container-fluid">
             <h4>Pending delivery by laundry partner</h4>
             <div class="row">
@@ -216,7 +215,7 @@
     </section>
     <hr>
     <section class="content">
-        
+
         <div class="container-fluid">
             <h4>Ready to deliver by Laundry partner</h4>
             <div class="row">
@@ -264,7 +263,7 @@
     </section>
     <hr>
     <section class="content">
-        
+
         <div class="container-fluid">
             <h4>Delivered by Laundry Partner</h4>
             <div class="row">
@@ -312,9 +311,9 @@
     </section>
     <hr>
     <section class="content">
-        
+
         <div class="container-fluid">
-            <h4>Successfully delivered by laundry man</h4>
+            <h4>Successfully delivered by deliveryman man</h4>
             <div class="row">
                 <div class="col-md-4">
                     <!-- small card -->
