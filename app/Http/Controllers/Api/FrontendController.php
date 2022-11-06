@@ -46,7 +46,16 @@ class FrontendController extends Controller {
     public function servicePrice($slug) {
         $data            = [];
         $data['service'] = $service = Service::where('slug', $slug)->first();
-        $data['price']   = Package::where('service_id', $service->id)->where('status', 1)->get();
+        $data['price']   = Package::where('service_id', $service->id)
+            ->whereNull('discount')
+            ->where('status', 1)
+            ->get();
+        $data['discount_packages'] = Package::where('service_id', $service->id)
+            ->whereNotNull('discount')
+            ->whereDay('j_from', '>=', today())
+            ->whereDay('c_to', '<=', today())
+            ->where('status', 1)
+            ->get();
 
         return $data;
     }

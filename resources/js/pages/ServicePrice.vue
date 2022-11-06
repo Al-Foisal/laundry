@@ -28,7 +28,11 @@
                 <!-- :autoplay="4000"
                     :wrap-around="true" -->
                 <div class="row">
-                    <div class="col-sm-4" v-for="service in services" :key="service.id">
+                    <div
+                        class="col-sm-4"
+                        v-for="service in services"
+                        :key="service.id"
+                    >
                         <router-link
                             :to="{
                                 name: 'service_price',
@@ -37,12 +41,10 @@
                                 },
                             }"
                         >
-                            <div
-                                class="single-help-content second-column"
-                            >
+                            <div class="single-help-content second-column">
                                 <div>
                                     <img
-                                        :src="'/'+service.image"
+                                        :src="'/' + service.image"
                                         style="
                                             width: 40%;
                                             height: 115px;
@@ -73,7 +75,54 @@
                 </div>
                 <div class="row">
                     <div
-                        class="col-md-4 col-sm-6 col-xs-12 pricing-column"
+                        class="col-md-4 col-sm-6 col-xs-12 pricing-column mb-5"
+                        v-for="item in discountPackages"
+                        :key="item.id"
+                    >
+                        <div class="single-pricing-content">
+                            <div class="icon-box">
+                                <img
+                                    :src="'/' + item.image"
+                                    style="height: 100px"
+                                />
+                            </div>
+                            <div class="title">
+                                <span>{{ item.name }}</span>
+                            </div>
+                            <div class="title">
+                                <div>
+                                    <h3>TK&nbsp;</h3>
+                                    <h2>
+                                        <span style="color: #006837">{{
+                                            item.discount_price.toFixed(2)
+                                        }}</span>
+                                    </h2>
+                                    &nbsp;&nbsp;&nbsp;
+                                    <h2>
+                                        <span style="color: #006837">
+                                            <del>
+                                                TK
+                                                {{ item.price.toFixed(2) }}
+                                            </del>
+                                        </span>
+                                    </h2>
+                                </div>
+                            </div>
+                            <div class="title">
+                                <span style="text-align: justify">{{
+                                    item.details
+                                }}</span>
+                            </div>
+                            <button
+                                class="btn btn-success btn-block"
+                                @click="addToCart(item)"
+                            >
+                                Get Plan
+                            </button>
+                        </div>
+                    </div>
+                    <div
+                        class="col-md-4 col-sm-6 col-xs-12 pricing-column mb-5"
                         v-for="item in pricing"
                         :key="item.id"
                     >
@@ -85,39 +134,31 @@
                                 />
                             </div>
                             <div class="title">
-                                <h3>TK&nbsp;</h3>
-                                <h2>
-                                    <span style="color: #006837">{{
-                                        item.price
-                                    }}</span>
-                                </h2>
-                                &nbsp;
                                 <span>{{ item.name }}</span>
                             </div>
-                            <button class="btn btn-success btn-block" @click="addToCart(item)">Get Plan</button>
-                            <!-- <div class="pricing-btn">
-                                <a
-                                    href="javascript:void(0)"
-                                    @click="addToCart(item)"
-                                    >Get Plan</a
-                                >
-                            </div> -->
+                            <div class="title">
+                                <div>
+                                    <h3>TK&nbsp;</h3>
+                                    <h2>
+                                        <span style="color: #006837">{{
+                                            item.price.toFixed(2)
+                                        }}</span>
+                                    </h2>
+                                </div>
+                            </div>
+                            <div class="title">
+                                <span style="text-align: justify">{{
+                                    item.details
+                                }}</span>
+                            </div>
+                            <button
+                                class="btn btn-success btn-block"
+                                @click="addToCart(item)"
+                            >
+                                Get Plan
+                            </button>
                         </div>
                     </div>
-                    <!-- <div class="apps-content">
-                        <div class="apps-box" style="">
-                            <a
-                                class="single-apps-box"
-                                style="
-                                    padding: 13px 28px 12px 28px;
-                                    background: #006837;
-                                    margin-top: 3rem;
-                                "
-                            >
-                                <h4 style="color: white">View More Plan</h4>
-                            </a>
-                        </div>
-                    </div> -->
                 </div>
             </div>
         </section>
@@ -160,6 +201,7 @@ export default {
             },
             services: [],
             pricing: [],
+            discountPackages: [],
             singleService: null,
             quantity: 1,
             price: 0,
@@ -173,8 +215,9 @@ export default {
         async servicePrice(slug) {
             const result = await axios.get('/front/service-price/' + slug);
             this.pricing = result.data.price;
+            this.discountPackages = result.data.discount_packages;
             this.singleService = result.data.service.name;
-            console.log(this.singleService.name);
+            console.log(this.discountPackages);
         },
         addToCart(item) {
             this.price = parseInt(item.price);
