@@ -44,7 +44,6 @@ export default {
         async allFaq() {
             const result = await axios.get('/front/faq');
             this.faq = result.data;
-            console.log(this.faq)
         },
     },
     mounted() {

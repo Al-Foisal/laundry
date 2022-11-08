@@ -205,19 +205,20 @@
                             </div> -->
                         </div>
                     </div>
-                    <div class="apps-content">
-                        <div class="apps-box" style="">
-                            <a
-                                class="single-apps-box"
-                                style="
-                                    padding: 13px 28px 12px 28px;
-                                    background: #006837;
-                                    margin-top: 3rem;
-                                "
-                            >
-                                <h4 style="color: white">View More Plan</h4>
-                            </a>
-                        </div>
+                </div>
+                <div class="apps-content">
+                    <div class="apps-box" style="">
+                        <router-link
+                            :to="{ name: 'pricing' }"
+                            class="single-apps-box"
+                            style="
+                                padding: 13px 28px 12px 28px;
+                                background: #006837;
+                                margin-top: 3rem;
+                            "
+                        >
+                            <h4 style="color: white">View More Plan</h4>
+                        </router-link>
                     </div>
                 </div>
             </div>

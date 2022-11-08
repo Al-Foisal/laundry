@@ -63,6 +63,7 @@
 
                                 <th class="right">Unit Cost</th>
                                 <th class="center">Qty</th>
+                                <th class="center">Details</th>
                                 <th class="right">Total</th>
                             </tr>
                         </thead>
@@ -74,6 +75,7 @@
 
                                     <td class="right">৳{{ $product->unit_price }}</td>
                                     <td class="center">{{ $product->qty }}</td>
+                                    <td class="center">{{ $product->details }}</td>
                                     <td class="right">
                                         ৳{{ number_format($product->unit_price * $product->qty, 2) }}</td>
                                 </tr>

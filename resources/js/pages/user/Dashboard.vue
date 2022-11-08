@@ -19,8 +19,8 @@
                         <tr v-for="(order, index) in orders" :key="order.id">
                             <th scope="row">{{ ++index }}</th>
                             <td>{{ order.id }}</td>
-                            <td>{{ order.deliveryman.name ?? '' }}</td>
-                            <td>{{ order.deliveryman.phone ?? '' }}</td>
+                            <td>{{ order.deliveryman ? order.deliveryman.name : '' }}</td>
+                            <td>{{ order.deliveryman ? order.deliveryman.phone : '' }}</td>
                             <td>{{ order.paid_amount }}</td>
                             <td>{{ order.status.name }}</td>
                             <td>

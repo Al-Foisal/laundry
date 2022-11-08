@@ -12,11 +12,11 @@ class UserAuthController extends Controller
     {
         try {
             $request->validate([
-                'email' => 'email|required',
+                'phone' => 'numeric|required',
                 'password' => 'required',
             ]);
 
-            $credentials = request(['email', 'password']);
+            $credentials = request(['phone', 'password']);
             if (!Auth::attempt($credentials)) {
                 return response()->json([
                     'status_code' => 500,

@@ -24,7 +24,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="callout callout-info">
-                        <h5><i class="fas fa-info"></i> Note:</h5>
+                        <h5><i class="fas fa-info"></i> {{ config('app.name') }}</h5>
                         {{$company->about}}
                     </div>
 
@@ -84,6 +84,7 @@
                                             <th>Qty</th>
                                             <th>Product</th>
                                             <th>Service</th>
+                                            <th>Details</th>
                                             <th>Subtotal</th>
                                         </tr>
                                     </thead>
@@ -93,6 +94,7 @@
                                                 <td>{{ $details->quantity }}</td>
                                                 <td>{{ $details->name }}</td>
                                                 <td>{{ $details->service }}</td>
+                                                <td style="width:50%;">{{ $details->details }}</td>
                                                 <td>৳ {{ number_format($details->price * $details->quantity, 2) }}</td>
                                             </tr>
                                         @endforeach

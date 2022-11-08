@@ -18,11 +18,11 @@
                             <div class="row">
                                 <div class="form-group">
                                     <input
-                                        type="email"
-                                        name="email"
-                                        placeholder="Email"
+                                        type="number"
+                                        name="phone"
+                                        placeholder="Phone number"
                                         required
-                                        v-model="email"
+                                        v-model="phone"
                                     />
                                 </div>
                                 <div class="form-group">
@@ -69,7 +69,7 @@ import { mapGetters } from 'vuex';
 export default {
     data() {
         return {
-            email: '',
+            phone: '',
             password: '',
             isLoading: false,
             error: null,
@@ -80,7 +80,7 @@ export default {
             this.isLoading = true;
             try {
                 await this.$store.dispatch('setLogin', {
-                    email: this.email,
+                    phone: this.phone,
                     password: this.password,
                 });
                 this.$router.replace({ name: 'dashboard' });

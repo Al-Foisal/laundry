@@ -16,7 +16,12 @@
                                         {{ company.address }}<br />
                                         Phone: {{ company.phone_two }}<br />
                                         Email: {{ company.email }}<br />
-                                        Deliveryman: {{ deliveryman }}
+                                        Deliveryman:
+                                        {{
+                                            deliveryman
+                                                ? deliveryman.name
+                                                : 'Not set yet'
+                                        }}
                                     </address>
                                 </div>
                                 <!-- /.col -->
@@ -164,7 +169,7 @@ export default {
     data() {
         return {
             order: [],
-            deliverynam: [],
+            deliveryman: [],
             company: [],
             user: [],
         };
@@ -173,8 +178,7 @@ export default {
         async invoice() {
             const result = await axios.get('/order-invoice/' + this.id);
             this.order = result.data.order;
-            this.deliverynam = result.data;
-            console.log(result);
+            this.deliveryman = result.data.deliveryman;
         },
         async companyInfo() {
             const result = await axios.get('/hf/company-info');

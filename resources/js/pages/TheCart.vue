@@ -120,7 +120,7 @@
 
                     <div class="row py-5 p-4 bg-white rounded shadow-sm">
                         <div class="col-lg-6">
-                            <div v-if="coupon.discount == null">
+                            <div v-if="!coupon">
                                 <div
                                     class="rounded-pill px-4 py-3 text-uppercase font-weight-bold"
                                     style="background: #006837; color: white"
@@ -191,11 +191,11 @@
                                     </li>
                                     <li
                                         class="d-flex justify-content-between py-3 border-bottom"
-                                        v-if="coupon.discount"
+                                        v-if="coupon"
                                     >
                                         <strong class="text-muted"
                                             >Coupon Discount</strong
-                                        ><strong>৳{{ coupon.discount }}</strong>
+                                        ><strong>৳{{ discount }}</strong>
                                     </li>
                                     <li
                                         class="d-flex justify-content-between py-3 border-bottom"
@@ -273,9 +273,51 @@ export default {
         return {
             total: 0,
             coupon: [],
+            discount: 0,
         };
     },
     methods: {
+        calculateCouponDiscount() {
+            const services = this.$store.getters['cart/cart'];
+            const package_id = this.coupon.package_id;
+            const service_id = [];
+            for (var ser of services) {
+                service_id.push(ser.id);
+            }
+
+            const output = package_id.filter((ele) =>
+                service_id.includes(parseInt(ele))
+            );
+            if (this.coupon.coupon_type == 1) {
+                let s_total = 0;
+                let c_discount = 0;
+                for (let serv of services) {
+                    for (let o of output) {
+                        if (serv.id == o) {
+                            s_total = s_total + serv.price * serv.quantity;
+                            c_discount = parseInt(
+                                (s_total * this.coupon.percentage) / 100
+                            );
+                        }
+                    }
+                }
+                this.discount = c_discount;
+                localStorage.setItem('c_discount', JSON.stringify(c_discount));
+            } else {
+                let s_total = 0;
+                let c_discount = 0;
+                for (let serv of services) {
+                    for (let o of output) {
+                        if (serv.id == o) {
+                            s_total = s_total + serv.price * serv.quantity;
+                            c_discount = this.coupon.percentage;
+                        }
+                    }
+                }
+                this.discount = c_discount;
+                localStorage.setItem('c_discount', JSON.stringify(c_discount));
+            }
+        },
         async applyCoupon() {
             const couponValue = this.$refs.coupon.value;
             if (!couponValue) {
@@ -295,22 +337,24 @@ export default {
                 }
 
                 if (result.data.coupon.cart_amount < this.cartTotal) {
-                    const discount = parseInt(
-                        (parseInt(this.cartTotal) *
-                            parseInt(result.data.coupon.percentage)) /
-                            100
-                    );
+                    // const discount = parseInt(
+                    //     (parseInt(this.cartTotal) *
+                    //         parseInt(result.data.coupon.percentage)) /
+                    //         100
+                    // );
                     this.coupon = {
                         code: result.data.coupon.code,
                         percentage: result.data.coupon.percentage,
                         cart_amount: result.data.coupon.cart_amount,
-                        discount: discount,
+                        coupon_type: result.data.coupon.coupon_type,
+                        package_id: result.data.coupon.package_id.split(' '),
                     };
                     localStorage.setItem('coupon', JSON.stringify(this.coupon));
                     this.toast.success('Coupon applied successfully', {
                         timeout: 5000,
                     });
                     this.coupon = JSON.parse(localStorage.getItem('coupon'));
+                    this.calculateCouponDiscount();
                 } else {
                     this.toast.error(
                         'Make plan more than ' +
@@ -322,6 +366,12 @@ export default {
             }
 
             this.$refs.coupon.value = '';
+        },
+        removeCoupon() {
+            localStorage.removeItem('coupon');
+            this.toast.success('Coupon removed successfully', {
+                timeout: 5000,
+            });
         },
         removeFromCart(cart) {
             this.$store.commit('cart/REMOVE_FROM_CART', cart);
@@ -343,8 +393,8 @@ export default {
             return total;
         },
         paidAmount() {
-            if (this.coupon.discount) {
-                return this.cartTotal - this.coupon.discount;
+            if (this.coupon) {
+                return this.cartTotal - this.discount;
             } else {
                 return this.cartTotal;
             }
@@ -352,6 +402,9 @@ export default {
     },
     mounted() {
         this.coupon = JSON.parse(localStorage.getItem('coupon'));
+        if (this.coupon) {
+            this.calculateCouponDiscount();
+        }
     },
 };
 </script>

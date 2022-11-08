@@ -217,7 +217,6 @@ export default {
             this.pricing = result.data.price;
             this.discountPackages = result.data.discount_packages;
             this.singleService = result.data.service.name;
-            console.log(this.discountPackages);
         },
         addToCart(item) {
             this.price = parseInt(item.price);
@@ -228,6 +227,7 @@ export default {
                 quantity: parseInt(this.quantity),
                 price: this.price,
                 image: item.image,
+                details: item.details,
             });
             this.toast.success(
                 item.name + ' TK ' + this.price + ' added to cart plan!',

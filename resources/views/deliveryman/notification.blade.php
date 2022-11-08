@@ -31,7 +31,7 @@
 
                                 <div class="info-box-content">
                                     <span class="info-box-text">New order placed. <a class="btn btn-info btn-sm"
-                                            href="{{ route('deliveryman.orderAccept', auth()->guard('deliveryman')->user()->id) }}">Click
+                                            href="{{ route('deliveryman.orderAccept', $order->order_id) }}">Click
                                             here</a> to accept.</span>
                                     <span class="info-box-number">{{ $order->created_at->diffForHumans() }}</span>
                                 </div>

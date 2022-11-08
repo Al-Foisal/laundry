@@ -35,9 +35,11 @@
                                     <tr>
                                         <th>Action</th>
                                         <th>Code</th>
-                                        <th>Percentage</th>
+                                        <th>Discount</th>
                                         <th>Cart Amount</th>
-                                        <th>Percentage</th>
+                                        <th>Validity</th>
+                                        <th>Coupon Type</th>
+                                        <th>Packages</th>
                                         <th>Created_at</th>
                                     </tr>
                                 </thead>
@@ -58,9 +60,18 @@
 
                                             </td>
                                             <td>{{ $coupon->code }}</td>
-                                            <td>{{ $coupon->percentage }}</td>
+                                            <td>{{ $coupon->percentage }}{{ $coupon->coupon_type == 1 ? '%' : ' TK' }}</td>
                                             <td>{{ $coupon->cart_amount }}</td>
                                             <td>{{ $coupon->validity }}</td>
+                                            <td>{{ $coupon->coupon_type == 1 ? 'Percentage' : 'Flat' }}</td>
+                                            @php
+                                                $packages = DB::table('packages')->whereIn('id',explode(" ",$coupon->package_id))->get();
+                                            @endphp
+                                            <td>
+                                                @foreach($packages as $package)
+                                                {{ '=> '.$package->name }} <br>
+                                                @endforeach
+                                            </td>
                                             <td>{{ $coupon->created_at }}</td>
                                         </tr>
                                     @endforeach

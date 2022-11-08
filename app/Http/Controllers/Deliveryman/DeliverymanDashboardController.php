@@ -15,7 +15,7 @@ class DeliverymanDashboardController extends Controller {
         $data['pickup_pending'] = Order::where('deliveryman_id', auth()->guard('deliveryman')->user()->id)->where('status', 1)->count();
 
         $data['pickup_done'] = Order::where('deliveryman_id', auth()->guard('deliveryman')->user()->id)->where('status', 2)->count();
-        
+
         $data['handover_to_laundry_partner'] = Order::where('deliveryman_id', auth()->guard('deliveryman')->user()->id)->where('status', 3)->count();
 
         $data['pending_at_laundry_partner'] = Order::where('deliveryman_id', auth()->guard('deliveryman')->user()->id)->where('status', 4)->count();

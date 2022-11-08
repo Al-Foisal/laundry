@@ -62,7 +62,12 @@
                         </li>
                     </ul>
                 </li>
-
+                <li class="nav-item">
+                    <a href="{{ route('admin.coupons.index') }}" class="nav-link">
+                        <i class="nav-icon far fa-circle text-danger"></i>
+                        <p>Coupon</p>
+                    </a>
+                </li>
                 {{-- deliveryman --}}
                 <li class="nav-item">
                     <a href="#" class="nav-link">

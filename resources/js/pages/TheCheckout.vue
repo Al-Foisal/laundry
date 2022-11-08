@@ -47,7 +47,7 @@
                                 <small>{{ coupon.code }}</small>
                             </div>
                             <span class="text-success"
-                                >-৳{{ coupon.discount }}</span
+                                >-৳{{ discount }}</span
                             >
                         </li>
                         <li
@@ -266,6 +266,7 @@ export default {
             areas: [],
             areaDetails: '',
             AmountToBePaid: 0,
+            discount:0
         };
     },
     methods: {
@@ -293,7 +294,7 @@ export default {
                 coupon_percentage: this.coupon ? this.coupon.percentage : null,
 
                 total: this.cartTotal,
-                discount: this.coupon ? this.coupon.discount : null,
+                discount: this.discount,
                 shipping_charge: this.areaDetails.shipping_charge,
                 paid_amount: this.AmountToBePaid,
 
@@ -301,7 +302,7 @@ export default {
 
                 cart: JSON.stringify(this.$store.getters['cart/cart']),
             };
-            
+
             await axios.post('/order/save', formData);
             this.toast.success('Your order placed successfully.', {
                 timeout: 5000,
@@ -313,6 +314,7 @@ export default {
             localStorage.removeItem('cart');
             localStorage.removeItem('coupon');
             localStorage.removeItem('cartCount');
+            localStorage.removeItem('discount');
 
             this.$router.push({ name: 'home' });
         },
@@ -329,13 +331,11 @@ export default {
             this.areaDetails = result;
         },
         paidAmount() {
-            const discount = this.coupon ? this.coupon.discount : 0;
             const ship = this.areaDetails.shipping_charge
                 ? this.areaDetails.shipping_charge
                 : 0;
-            console.log(discount);
-            if (discount > 0) {
-                this.AmountToBePaid = this.cartTotal + ship - discount;
+            if (this.discount > 0) {
+                this.AmountToBePaid = this.cartTotal + ship - this.discount;
             } else {
                 this.AmountToBePaid = this.cartTotal + ship;
             }
@@ -361,6 +361,7 @@ export default {
         this.paidAmount();
         this.coupon = JSON.parse(localStorage.getItem('coupon'));
         this.user = this.$store.getters['user'];
+        this.discount = parseInt(localStorage.getItem('c_discount'));
     },
     watch: {
         city_id(value) {

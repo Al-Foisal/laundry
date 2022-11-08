@@ -61,7 +61,23 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <div class="form-group">
+                                    <label>Coupon Type:</label>
+                                    <select class="form-control  select2bs4" data-placeholder="Select subcategory"
+                                        style="width: 100%" name="coupon_type">
+                                        <option value="">--select coupon type--</option>
+                                        <option value="1">Discount in Percentage</option>
+                                        <option value="2">Discount in Flat Price</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlSelect2">Select packages</label>
+                                    <select multiple class="form-control" id="exampleFormControlSelect2" name="package_id[]">
+                                        @foreach($packages as $package)
+                                        <option value="{{ $package->id }}">{{ $package->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                             <!-- /.card-body -->
 

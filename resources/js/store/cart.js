@@ -25,7 +25,6 @@ export default {
 
             if (index > -1) {
                 let item = state.cart[index];
-                console.log(item);
                 state.cartCount -= item.quantity;
 
                 state.cart.splice(index, 1);

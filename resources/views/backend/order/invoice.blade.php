@@ -24,7 +24,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="callout callout-info">
-                        <h5><i class="fas fa-info"></i> Note:</h5>
+                        <h5><i class="fas fa-info"></i> {{ config('app.name') }}</h5>
                         {{$company->about}}
                     </div>
 
@@ -85,6 +85,7 @@
                                             <th>Qty</th>
                                             <th>Product</th>
                                             <th>Service</th>
+                                            <th>Details</th>
                                             <th>Subtotal</th>
                                         </tr>
                                     </thead>
@@ -94,6 +95,7 @@
                                                 <td>{{ $details->quantity }}</td>
                                                 <td>{{ $details->name }}</td>
                                                 <td>{{ $details->service }}</td>
+                                                <td style="width: 50%">{{ $details->details }}</td>
                                                 <td>৳ {{ number_format($details->price * $details->quantity, 2) }}</td>
                                             </tr>
                                         @endforeach
@@ -107,22 +109,10 @@
                         <div class="row">
                             <!-- accepted payments column -->
                             <div class="col-6">
-                                {{-- <p class="lead">Payment Methods:</p>
-                                <img src="../../dist/img/credit/visa.png" alt="Visa">
-                                <img src="../../dist/img/credit/mastercard.png" alt="Mastercard">
-                                <img src="../../dist/img/credit/american-express.png" alt="American Express">
-                                <img src="../../dist/img/credit/paypal2.png" alt="Paypal">
-
-                                <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
-                                    Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya
-                                    handango imeem
-                                    plugg
-                                    dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
-                                </p> --}}
+                                
                             </div>
                             <!-- /.col -->
                             <div class="col-6">
-                                {{-- <p class="lead">Amount Due 2/22/2014</p> --}}
 
                                 <div class="table-responsive">
                                     <table class="table">

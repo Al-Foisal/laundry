@@ -35,7 +35,7 @@ class OrderManagementController extends Controller {
             'coupon_code'         => $request->coupon_code,
             'coupon_percentage'   => $request->coupon_percentage,
             'total'               => $request->total,
-            'discount'            => $request->discount,
+            'discount'            => $request->discount??0,
             'shipping_charge'     => $request->shipping_charge,
             'paid_amount'         => $request->paid_amount,
             'status'              => 1,
@@ -59,6 +59,7 @@ class OrderManagementController extends Controller {
                 'service'  => $cart->service,
                 'quantity' => $cart->quantity,
                 'price'    => $cart->price,
+                'details'    => $cart->details,
             ]);
         }
 
@@ -85,8 +86,8 @@ class OrderManagementController extends Controller {
         $order = Order::where('id', $id)->with('orderIdentity', 'orderDetails', 'partner')->first();
 
         $data['order']       = $order;
-        $data['deliveryman'] = Deliveryman::where('id', $order->deliveryman_id)->first()->name;
-        $data['partner']     = Partner::where('id', $order->partner_id)->first()->name;
+        $data['deliveryman'] = Deliveryman::where('id', $order->deliveryman_id)->first();
+        $data['partner']     = Partner::where('id', $order->partner_id)->first();
 
         return $data;
     }

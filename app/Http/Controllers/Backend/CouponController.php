@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Coupon;
+use App\Models\Package;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -25,7 +26,9 @@ class CouponController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        return view('backend.coupon.create');
+        $packages = Package::where('status', 1)->get();
+
+        return view('backend.coupon.create', compact('packages'));
     }
 
     /**
@@ -40,13 +43,22 @@ class CouponController extends Controller {
             'percentage'  => 'required|numeric',
             'cart_amount' => 'required|numeric',
             'validity'    => 'required|after_or_equal:today',
+            'coupon_type' => 'required',
+            'package_id'  => 'required',
         ]);
 
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->messages()->all())->withInput();
         }
 
-        Coupon::create($request->all());
+        Coupon::create([
+            'code'        => $request->code,
+            'percentage'  => $request->percentage,
+            'cart_amount' => $request->cart_amount,
+            'validity'    => $request->validity,
+            'coupon_type' => $request->coupon_type,
+            'package_id'  => implode(" ", $request->package_id),
+        ]);
 
         return redirect()->route('admin.coupons.index')->withToastSuccess('Coupon added successfully!!');
     }
