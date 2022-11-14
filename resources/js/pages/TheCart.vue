@@ -410,7 +410,7 @@ export default {
 </script>
 
 <style scoped>
-@import '../asset/cartboot.css';
+/* @import '../asset/cartboot.css'; */
 body {
     background: #eecda3;
     background: -webkit-linear-gradient(to right, #eecda3, #ef629f);

@@ -12,7 +12,7 @@ import Toast from 'vue-toastification';
 // Import the CSS or use your own!
 import 'vue-toastification/dist/index.css';
 
-axios.defaults.baseURL = 'http://laundry.test/api';
+axios.defaults.baseURL = 'https://kingbatechdemo.net/api';
 store.dispatch('getUser').then(() => {
     const app = createApp(App);
 
